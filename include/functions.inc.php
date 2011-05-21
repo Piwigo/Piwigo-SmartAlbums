@@ -6,12 +6,11 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
  * @param int category_id
  * @return array
  */
-function SmartAlbums_make_associations($cat_id)
+function smart_make_associations($cat_id)
 {
   pwg_query("DELETE FROM ".IMAGE_CATEGORY_TABLE." WHERE category_id = ".$cat_id." AND smart = true;");
   
-  $images = SmartAlbums_get_pictures($cat_id);
-  $dbfields = array('image_id', 'category_id', 'smart');
+  $images = smart_get_pictures($cat_id);
   
   if (count($images) != 0)
   {
@@ -23,7 +22,12 @@ function SmartAlbums_make_associations($cat_id)
         'smart' => true,
       );
     }
-    mass_inserts_ignore(IMAGE_CATEGORY_TABLE, $dbfields, $datas);
+    mass_inserts_ignore(
+      IMAGE_CATEGORY_TABLE, 
+      array_keys($datas[0]), 
+      $datas
+    );
+    set_random_representant(array($cat_id));
   }
   
   return $images;
@@ -36,7 +40,7 @@ function SmartAlbums_make_associations($cat_id)
  * @param array filters, if null => catch from db
  * @return array
  */
-function SmartAlbums_get_pictures($cat_id, $filters = null)
+function smart_get_pictures($cat_id, $filters = null)
 {
   global $conf;
 
@@ -160,6 +164,70 @@ function SmartAlbums_get_pictures($cat_id, $filters = null)
   ";
   
   return array_from_query($MainQuery, 'id');
+}
+
+
+/**
+ * Check if the filter is proper
+ *
+ * @param array filter
+ * @return array or false
+ */
+function smart_check_filter($filter)
+{
+  global $limit_is_set, $page;
+  $error = false;
+  
+  # tags
+  if ($filter['type'] == 'tags')
+  {
+    if ($filter['value'] == null) // tags fields musn't be null
+    {
+      $error = true;
+      array_push($page['errors'], l10n('No tag selected'));
+    }
+    else
+    {
+      $filter['value'] = implode(',', get_fckb_tag_ids($filter['value']));
+    }
+  }
+  # date
+  else if ($filter['type'] == 'date')
+  {
+    if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value'])) // dates must be proper
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Date string is malformed'));
+    }
+  }
+  # limit
+  else if ($filter['type'] == 'limit')
+  {
+    if (!preg_match('#([0-9]{1,})#', $filter['value'])) // limit must be an integer
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Limit must be an integer'));
+    }
+    else if ($limit_is_set == true) // only one limit is allowed, first is saved
+    {
+      $error = true;
+      array_push($page['errors'], l10n('You can\'t use more than one limit'));
+    }
+    else
+    {
+      $limit_is_set = true;
+    }
+  }
+  
+  # out
+  if ($error == false)
+  {
+    return $filter;
+  }
+  else
+  {
+    return false;
+  }
 }
 
 

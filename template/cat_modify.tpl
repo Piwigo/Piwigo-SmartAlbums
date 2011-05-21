@@ -1,8 +1,8 @@
 {combine_css path=$SMART_PATH|@cat:"template/style.css"}
 {include file='include/datepicker.inc.tpl'}
-{combine_script id='jquery.fcbkcomplete' load='async' require='jquery' path='themes/default/js/plugins/jquery.fcbkcomplete.js'}
+{combine_script id='jquery.tokeninput' load='async' require='jquery' path='themes/default/js/plugins/jquery.tokeninput.js'}
 
-{footer_script require='jquery,jquery.fcbkcomplete'}
+{footer_script require='jquery.tokeninput'}
 var lang = new Array();
 lang['tags filter'] = "{'tags filter'|@translate}";
 lang['date filter'] = "{'date filter'|@translate}";
@@ -33,27 +33,32 @@ jQuery(document).ready(function() {
   
   $('input[name="is_smart"]').change(function() {
     $('#SmartAlbum_options').toggle();
-    $('input[name="count_images"]').toggle();
+    $('input[name="countImages"]').toggle();
   });
   
-  $('input[name="count_images"]').click(function() {
-    count_images($(this).closest('form'));
+  $('input[name="countImages"]').click(function() {
+    countImages($(this).closest('form'));
     return false;
   });
   
   function add_filter(type) {
+    // add line
     $('<li class="filter_'+ type +'" id="filter_'+ i +'"></li>').appendTo('#filterList');
     
-    $('#filter_'+ i).html(
-      '<a href="#" class="removeFilter" title="'+ lang['remove this filter'] +'"><span>[x]</span></a>'+
-      '<input type="hidden" name="filters['+ i +'][type]" value="'+ type +'"/>'+
-      ' '+ lang[type +' filter'] +
-      
-      ' <select name="filters['+ i +'][cond]">'+ options[type] +'</select>'+
-      ' <input type="text" name="filters['+ i +'][value]"/>'
-    );
+    //set content
+    content = '<a href="#" class="removeFilter" title="'+ lang['remove this filter'] +'"><span>[x]</span></a>'+
+    '<input type="hidden" name="filters['+ i +'][type]" value="'+ type +'"/>&nbsp;'+ lang[type +' filter'] +
+    '&nbsp;<select name="filters['+ i +'][cond]">'+ options[type] +'</select>';
     
-    // reinit handler
+    if (type == 'tags') {
+      content += '&nbsp;<select name="filters['+ i +'][value]" class="tagSelect"></select>';
+    } else {
+      content += '&nbsp;<input type="text" name="filters['+ i +'][value]"/>';
+    }
+    
+    $('#filter_'+ i).html(content);
+    
+    // reinit handlers
     init_jquery_handlers();
     i++;
   }
@@ -68,24 +73,24 @@ jQuery(document).ready(function() {
       $(this).datepicker({dateFormat:'yy-mm-dd', firstDay:1});
     });
     
-    $('.filter_tags input[type="text"]').each(function() {
-      if ($(this).hasClass('fcbk_initialized') == false) {
-        $(this).fcbkcomplete({
-          json_url: "admin.php?fckb_tags=1",
-          cache: false,
-          filter_case: false,
-          filter_hide: true,
-          firstselected: true,
-          filter_selected: true,
-          maxitems: 100,
-          newel: false
-        });
-        $(this).addClass('fcbk_initialized');
-      }
+    jQuery.getJSON('admin.php?fckb_tags=1', function(data) {
+      jQuery(".tagSelect").tokenInput(
+        data,
+        {
+      {/literal}
+          hintText: '{'Type in a search term'|@translate}',
+          noResultsText: '{'No results'|@translate}',
+          searchingText: '{'Searching...'|@translate}',
+          animateDropdown: false,
+          preventDuplicates: true,
+          allowCreation: true
+      {literal}
+        }
+      );
     });
   }
   
-  function count_images(form) {
+  function countImages(form) {
 {/literal}
 		jQuery.post("{$COUNT_SCRIPT_URL}", 'cat_id={$CAT_ID}&'+form.serialize(),
 {literal}
@@ -121,7 +126,15 @@ jQuery(document).ready(function() {
           {html_options options=$options[$filter.TYPE] selected=$filter.COND}
         </select>
         
+      {if $filter.TYPE == 'tags'}
+        <select name="filters[{$i}][value]" class="tagSelect">
+        {foreach from=$filter.VALUE item=tag}
+          <option value="{$tag.id}" class="selected">{$tag.name}</option>
+        {/foreach}
+        </select>
+      {else}
         <input type="text" name="filters[{$i}][value]" value="{$filter.VALUE}"/>
+      {/if}
       </li>
 			{counter}
 		{/foreach}
@@ -143,7 +156,7 @@ jQuery(document).ready(function() {
     
   <p class="actionButtons" id="applyFilterBlock">
     <input class="submit" type="submit" value="{'Submit'|@translate}" name="submitFilters"/>
-    <input class="submit" type="submit" value="{'Count'|@translate}" name="count_images" {if !isset($filters)}style="display:none;"{/if}/>
+    <input class="submit" type="submit" value="{'Count'|@translate}" name="countImages" {if !isset($filters)}style="display:none;"{/if}/>
     <span class="count_images_display">{$IMAGE_COUNT}</span>
   </p>
 

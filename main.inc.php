@@ -2,8 +2,8 @@
 /*
 Plugin Name: SmartAlbums
 Version: auto
-Description: Easy create dynamic albums with tags, date and other criteria
-Plugin URI: http://piwigo.org/ext/extension_view.php?eid=
+Description: Easily create dynamic albums with tags, date and other criteria
+Plugin URI: http://piwigo.org/ext/extension_view.php?eid=544
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
 */
@@ -17,9 +17,19 @@ define('CATEGORY_FILTERS_TABLE', $prefixeTable.'category_filters');
 
 if (script_basename() == 'admin')
 {
-  include_once(SMART_PATH.'init_cat_modify.php');
+  add_event_handler('loc_begin_cat_modify', 'smart_init_cat_modify'); 
+  function smart_init_cat_modify()
+  {
+    include_once(SMART_PATH.'init_cat_modify.php');
+    smart_cat_modify();
+  }
   
-  add_event_handler('loc_begin_cat_modify', 'smart_cat_modify');  
+  add_event_handler('loc_begin_cat_list', 'smart_init_cat_list');
+  function smart_init_cat_list()
+  {
+    include_once(SMART_PATH.'init_cat_list.php');
+    smart_cat_list();
+  }
 }
 
 

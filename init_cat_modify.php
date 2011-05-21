@@ -1,20 +1,32 @@
 <?php
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
-
+/**
+ * Add the SmartAlbums configuration tool to virtual cats' configuration page
+ */
+ 
 function smart_cat_modify()
 {
   global $template;
   include_once(SMART_PATH.'include/functions.inc.php');
-  $cat_id = $_GET['cat_id'];
   
+  $cat_id = $_GET['cat_id'];
+  list($cat_dir) = pwg_db_fetch_row(pwg_query("SELECT dir FROM ".CATEGORIES_TABLE." WHERE id = ".$cat_id.";"));
+  
+  // category must be virtual
+  if ($cat_dir != NULL)
+  {
+    return;
+  }
+  
+  /* SAVE FILTERS */
   if (isset($_POST['submitFilters']))
   {
     // test if it was a Smart Album
     $result = pwg_query("SELECT DISTINCT category_id FROM ".CATEGORY_FILTERS_TABLE." WHERE category_id = ".$cat_id.";");
-    $_was_smart = pwg_db_num_rows($result);
+    $was_smart = pwg_db_num_rows($result);
     
     /* this album is no longer a SmartAlbum */
-    if ($_was_smart AND !isset($_POST['is_smart']))
+    if ($was_smart AND !isset($_POST['is_smart']))
     {
       pwg_query("DELETE FROM ".IMAGE_CATEGORY_TABLE." WHERE category_id = ".$cat_id." AND smart = true;");
       pwg_query("DELETE FROM ".CATEGORY_FILTERS_TABLE." WHERE category_id = ".$cat_id.";");
@@ -28,56 +40,24 @@ function smart_cat_modify()
     else if (isset($_POST['is_smart']) AND count($_POST['filters']) > 0)
     {
       pwg_query("DELETE FROM ".CATEGORY_FILTERS_TABLE." WHERE category_id = ".$cat_id.";");
-
+      
+      $limit_is_set = false;
       foreach ($_POST['filters'] as $filter)
       {
-        $error = false;
-        if ($filter['type'] == 'tags')
-        {
-          $filter['value'] = str_replace(' ', null, $filter['value']);
-        }
-        else if ($filter['type'] == 'date')
-        {
-          if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value']))
-          {
-            $error = true;
-            array_push($page['errors'], l10n('Date string is malformed'));
-          }
-        }
-        else if ($filter['type'] == 'limit')
-        {
-          if (!preg_match('#([0-9]{1,})#', $filter['value']))
-          {
-            $error = true;
-            array_push($page['errors'], l10n('Limit must be an integer'));
-          }
-          else if (isset($limit_is_set))
-          {
-            $error = true;
-            array_push($page['errors'], l10n('You can\'t use more than one limit'));
-          }
-          else
-          {
-            $limit_is_set = true;
-          }
-        }
-        
-        if ($error == false)
+        if (($filter = smart_check_filter($filter)) != false)
         {
           pwg_query("INSERT INTO ".CATEGORY_FILTERS_TABLE."
             VALUES(".$cat_id.", '".$filter['type']."', '".$filter['cond']."', '".$filter['value']."');");
         }
       }
       
-      $associated_images = SmartAlbums_make_associations($cat_id);
-      $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
-      
-      set_random_representant(array($cat_id));
+      $associated_images = smart_make_associations($cat_id);
       invalidate_user_cache(true);
+      $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
     }
   }
       
-  /* select options */
+  /* select options, for html_options */
   $template->assign('options', array(
     'tags' => array(
       'all' => l10n('All these tags'),
@@ -90,13 +70,26 @@ function smart_cat_modify()
       'before' => l10n('Added before the'),
       'after' => l10n('Added after the'),
       ),
-    'limit' => array('limit' => 'limit'),
+    'limit' => array('limit' => 'limit'), // second filter not used
   ));
   
   /* get filters for this album */
   $filters = pwg_query("SELECT * FROM ".CATEGORY_FILTERS_TABLE." WHERE category_id = ".$cat_id." ORDER BY type ASC, cond ASC;");
   while ($filter = pwg_db_fetch_assoc($filters))
   {
+    // get tags name and id
+    if ($filter['type'] == 'tags')
+    {
+      $query = "
+        SELECT
+          id AS tag_id,
+          name AS tag_name
+        FROM ".TAGS_TABLE."
+        WHERE id IN(".$filter['value'].")
+      ";
+      $filter['value'] = get_fckb_taglist($query); 
+    }
+    
     $template->append('filters', array(
       'TYPE' => $filter['type'],
       'COND' => $filter['cond'],

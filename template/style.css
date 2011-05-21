@@ -1,3 +1,13 @@
 .filter_limit select {
   display:none;
 }
+.token-input-list {
+  display:inline-block;
+  vertical-align:bottom;
+}
+#batchManagerGlobal #filterList li.token-input-token {
+  margin-bottom:3px !important
+}
+#batchManagerGlobal #filterList li.token-input-input-token {
+  margin-bottom:0px !important; 
+}
