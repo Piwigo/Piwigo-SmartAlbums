@@ -9,17 +9,25 @@ include_once(PHPWG_ROOT_PATH.'include/common.inc.php');
 include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 include_once(SMART_PATH.'include/functions.inc.php');
 
-$filters = array();
-$limit_is_set = false;
-foreach ($_POST['filters'] as $filter)
+if (isset($_POST['filters']))
 {
-  if (($filter = smart_check_filter($filter)) != false)
+  $filters = array();
+  $limit_is_set = false;
+  foreach ($_POST['filters'] as $filter)
   {
-    array_push($filters, $filter);
+    if (($filter = smart_check_filter($filter)) != false)
+    {
+      array_push($filters, $filter);
+    }
   }
+
+  $associated_images = smart_get_pictures($_POST['cat_id'], $filters);
+}
+else
+{
+  $associated_images = array();
 }
 
-$associated_images = smart_get_pictures($_POST['cat_id'], $filters);
 echo l10n_dec('%d photo', '%d photos', count($associated_images));
 
 ?>

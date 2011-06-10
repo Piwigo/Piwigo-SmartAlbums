@@ -3,10 +3,11 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 /**
  * Add a link into categories list to regenerate associations
  */
- 
+$smart_count = 0;
+
 function smart_cat_list()
 {
-  global $template, $page;
+  global $template, $page, $smart_count;
   include_once(SMART_PATH.'include/functions.inc.php');
   $self_url = get_root_url().'admin.php?page=cat_list'.(isset($_GET['parent_id']) ? '&amp;parent_id='.$_GET['parent_id'] : null);
   
@@ -27,18 +28,20 @@ function smart_cat_list()
   }
   
   $result = pwg_query($query);
-  $categories = array();
+  $smart_cats = array();
   while ($cat = pwg_db_fetch_assoc($result))
   {
-    $categories[$cat['id']] = trigger_event('render_category_name', $cat['name']);
+    $smart_cats[$cat['id']] = trigger_event('render_category_name', $cat['name']);
   }
+  
+  $smart_count = count($smart_cats);
   
   if (isset($_GET['smart_generate']))
   {
     /* regenerate photo list | all (sub) categories */
     if ($_GET['smart_generate'] == 'all')
     {
-      foreach ($categories as $cat => $name)
+      foreach ($smart_cats as $cat => $name)
       {
         $associated_images = smart_make_associations($cat);
         array_push($page['infos'], l10n_args(get_l10n_args(
@@ -53,7 +56,7 @@ function smart_cat_list()
       $associated_images = smart_make_associations($_GET['smart_generate']);    
       array_push($page['infos'], l10n_args(get_l10n_args(
         '%d photos associated to album &laquo;%s&raquo;', 
-        array(count($associated_images), $categories[$_GET['smart_generate']])
+        array(count($associated_images), $smart_cats[$_GET['smart_generate']])
       )));
     }
     
@@ -62,7 +65,7 @@ function smart_cat_list()
   
   // create regenerate link
   $tpl_cat = array();
-  foreach ($categories as $cat => $name)
+  foreach ($smart_cats as $cat => $name)
   {
     $tpl_cat[$cat] = $self_url.'&amp;smart_generate='.$cat;
   }
@@ -79,20 +82,25 @@ function smart_cat_list()
 
 function smart_cat_list_prefilter($content, &$smarty)
 {
-$search[0] = '<ul class="categoryActions">';
-$replacement[0] = $search[0].'
+  global $smart_count;
+  
+  $search[0] = '<ul class="categoryActions">';
+  $replacement[0] = $search[0].'
 {if isset($SMART_URL[$category.ID])}
         <li><a href="{$SMART_URL[$category.ID]}" title="{\'regenerate photos list\'|@translate}"><img src="{$SMART_PATH}template/refresh.png" class="button" alt="{\'regenerate photos list\'|@translate}"></a></li>
 {/if}';
 
-$search[1] = '</ul>
+  if ($smart_count > 0)
+  {
+    $search[1] = '</ul>
 </form>
 {/if}';
-$replacement[1] = $search[1].'
+    $replacement[1] = $search[1].'
 <form method="post" action="{$SMART_URL.all}">
   <input type="hidden" name="pwg_token" value="{$PWG_TOKEN}">
   <p><input class="submit" type="submit" value="{\'regenerate photos list of all SmartAlbums\'|@translate}"></p>
 </form>';
+  }
 
   return str_replace($search, $replacement, $content);
 }

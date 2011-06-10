@@ -1,0 +1,1 @@
+Easily create dynamic albums with tags, date and other criteria

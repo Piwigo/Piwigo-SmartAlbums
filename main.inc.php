@@ -17,6 +17,8 @@ define('CATEGORY_FILTERS_TABLE', $prefixeTable.'category_filters');
 
 if (script_basename() == 'admin')
 {
+  load_language('plugin.lang', SMART_PATH);
+  
   add_event_handler('loc_begin_cat_modify', 'smart_init_cat_modify'); 
   function smart_init_cat_modify()
   {
@@ -31,6 +33,5 @@ if (script_basename() == 'admin')
     smart_cat_list();
   }
 }
-
 
 ?>
