@@ -8,7 +8,7 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
  */
 function smart_make_associations($cat_id)
 {
-  pwg_query("DELETE FROM ".IMAGE_CATEGORY_TABLE." WHERE category_id = ".$cat_id." AND smart = true;");
+  pwg_query('DELETE FROM '.IMAGE_CATEGORY_TABLE.' WHERE category_id = '.$cat_id.' AND smart = true;');
   
   $images = smart_get_pictures($cat_id);
   
@@ -20,13 +20,13 @@ function smart_make_associations($cat_id)
         'image_id' => $img,
         'category_id' => $cat_id,
         'smart' => true,
-      );
+        );
     }
     mass_inserts_ignore(
       IMAGE_CATEGORY_TABLE, 
       array_keys($datas[0]), 
       $datas
-    );
+      );
     set_random_representant(array($cat_id));
   }
   
@@ -47,7 +47,14 @@ function smart_get_pictures($cat_id, $filters = null)
   /* get filters */
   if ($filters == null)
   {
-    $filters = pwg_query("SELECT * FROM ".CATEGORY_FILTERS_TABLE." WHERE category_id = ".$cat_id." ORDER BY type ASC, cond ASC;");
+    $query = '
+SELECT * 
+  FROM '.CATEGORY_FILTERS_TABLE.' 
+  WHERE category_id = '.$cat_id.' 
+  ORDER BY type ASC, cond ASC
+;';
+    $filters = pwg_query($query);
+    
     if (!pwg_db_num_rows($filters)) return array();
     
     while ($filter = pwg_db_fetch_assoc($filters))
@@ -56,7 +63,7 @@ function smart_get_pictures($cat_id, $filters = null)
         'type' => $filter['type'],
         'cond' => $filter['cond'],
         'value' => $filter['value'],
-      );
+        );
     }
      
     $filters = $temp;
@@ -77,43 +84,49 @@ function smart_get_pictures($cat_id, $filters = null)
           
           foreach($tags_arr as $value)
           {
-            $join[] = "".IMAGE_TAG_TABLE." AS it_$i_tags ON i.id = it_$i_tags.image_id";
-            $where[] = "it_$i_tags.tag_id = ".$value."";
+            $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
+            $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
             $i_tags++;
           }
         }
         else if ($filter['cond'] == 'one') 
         {
-          $join[] = "".IMAGE_TAG_TABLE." AS it_$i_tags ON i.id = it_$i_tags.image_id";
-          $where[] = "it_$i_tags.tag_id IN (".$filter['value'].")";
+          $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
+          $where[] = 'it_'.$i_tags.'.tag_id IN ('.$filter['value'].')';
           $i_tags++;
         }
         else if ($filter['cond'] == 'none') 
         {
-          $sub_query = "SELECT it_$i_tags.image_id
-            FROM ".IMAGE_TAG_TABLE." AS it_$i_tags
-            WHERE it_$i_tags.image_id = i.id
-            AND it_$i_tags.tag_id IN (".$filter['value'].")
-            GROUP BY it_$i_tags.image_id";
-          $where[] = "NOT EXISTS (".$sub_query.")";
+          $sub_query = '
+      SELECT it_'.$i_tags.'.image_id
+        FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
+        WHERE 
+          it_'.$i_tags.'.image_id = i.id AND
+          it_'.$i_tags.'.tag_id IN ('.$filter['value'].')
+        GROUP BY it_'.$i_tags.'.image_id
+    ';
+          $where[] = 'NOT EXISTS ('.$sub_query.')';
           $i_tags++;
         }
         else if ($filter['cond'] == 'only') 
         {
-          $sub_query = "SELECT it_$i_tags.image_id
-            FROM ".IMAGE_TAG_TABLE." AS it_$i_tags
-            WHERE it_$i_tags.image_id = i.id
-            AND it_$i_tags.tag_id NOT IN (".$filter['value'].")
-            GROUP BY it_$i_tags.image_id";
-          $where[] = "NOT EXISTS (".$sub_query.")";
+          $sub_query = '
+      SELECT it_'.$i_tags.'.image_id
+        FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
+        WHERE 
+          it_'.$i_tags.'.image_id = i.id AND
+          it_'.$i_tags.'.tag_id NOT IN ('.$filter['value'].')
+        GROUP BY it_'.$i_tags.'.image_id
+    ';
+          $where[] = 'NOT EXISTS ('.$sub_query.')';
         
           $i_tags++;
           $tags_arr = explode(',', $filter['value']);
           
           foreach($tags_arr as $value)
           {
-            $join[] = "".IMAGE_TAG_TABLE." AS it_$i_tags ON i.id = it_$i_tags.image_id";
-            $where[] = "it_$i_tags.tag_id = ".$value."";
+            $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
+            $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
             $i_tags++;
           }
         }        
@@ -121,48 +134,50 @@ function smart_get_pictures($cat_id, $filters = null)
     // date
     else if ($filter['type'] == 'date')
     {
-      if ($filter['cond'] == 'the')         $where[] = "date_available BETWEEN '".$filter['value']." 00:00:00' AND '".$filter['value']." 23:59:59'";
-      else if ($filter['cond'] == 'before') $where[] = "date_available < '".$filter['value']." 00:00:00'";
-      else if ($filter['cond'] == 'after')  $where[] = "date_available > '".$filter['value']." 23:59:59'";
+      if      ($filter['cond'] == 'the')    $where[] = 'date_available BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
+      else if ($filter['cond'] == 'before') $where[] = 'date_available < "'.$filter['value'].' 00:00:00"';
+      else if ($filter['cond'] == 'after')  $where[] = 'date_available > "'.$filter['value'].' 23:59:59"';
     }
     // limit
     else if ($filter['type'] == 'limit')
     {
-      $limit = "0, ".$filter['value'];
+      $limit = '0, '.$filter['value'];
     }
   }
   
   /* bluid query */
-  $MainQuery = "SELECT i.id 
-    FROM (
-      SELECT i.id
-      FROM ".IMAGES_TABLE." AS i"."\n";
-      
-      if (isset($join))
+  $MainQuery = '
+SELECT i.id
+  FROM '.IMAGES_TABLE.' AS i';
+    
+    if (isset($join))
+    {
+      foreach ($join as $query)
       {
-        foreach ($join as $query)
-        {
-          $MainQuery .= "LEFT JOIN ".$query."\n";
-        }
+        $MainQuery .= '
+    LEFT JOIN '.$query;
       }
-      if (isset($where))
+    }
+    if (isset($where))
+    {
+      $MainQuery .= '
+  WHERE';
+      $i = 0;
+      foreach ($where as $query)
       {
-        $MainQuery .= "WHERE"."\n";
-        $i = 0;
-        foreach ($where as $query)
-        {
-          if ($i != 0) $MainQuery .= "AND ";
-          $MainQuery .= $query."\n";
-          $i++;
-        }
+        if ($i != 0) $MainQuery .= ' AND';
+        $MainQuery .= '
+    '.$query;
+        $i++;
       }
-  
-      $MainQuery .= "GROUP BY i.id
-      ".$conf['order_by']."
-      ".(isset($limit) ? "LIMIT ".$limit : null)."
-    ) AS i
-  ";
-  
+    }
+
+    $MainQuery .= '
+  GROUP BY i.id
+ '.$conf['order_by_inside_category'].'
+  '.(isset($limit) ? "LIMIT ".$limit : null).'
+;';
+
   return array_from_query($MainQuery, 'id');
 }
 
@@ -188,7 +203,7 @@ function smart_check_filter($filter)
     }
     else
     {
-      $filter['value'] = implode(',', get_fckb_tag_ids($filter['value']));
+      $filter['value'] = implode(',', get_tag_ids($filter['value']));
     }
   }
   # date

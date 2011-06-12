@@ -12,10 +12,11 @@ function smart_cat_list()
   $self_url = get_root_url().'admin.php?page=cat_list'.(isset($_GET['parent_id']) ? '&amp;parent_id='.$_GET['parent_id'] : null);
   
   /* get categories with smart filters */
-  $query = "SELECT DISTINCT id, name 
-    FROM ".CATEGORIES_TABLE." AS c
-    INNER JOIN ".CATEGORY_FILTERS_TABLE." AS cf
-    ON c.id = cf.category_id";
+  $query = '
+SELECT DISTINCT id, name 
+  FROM '.CATEGORIES_TABLE.' AS c
+    INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
+      ON c.id = cf.category_id';
   if (!isset($_GET['parent_id']))
   {
     // $query.= '
@@ -23,9 +24,11 @@ function smart_cat_list()
   }
   else
   {
-    $query.= '
-    WHERE uppercats LIKE \'%'.$_GET['parent_id'].'%\'';
+    $query .= '
+  WHERE uppercats LIKE \'%'.$_GET['parent_id'].'%\'';
   }
+  $query .= '
+;';
   
   $result = pwg_query($query);
   $smart_cats = array();
@@ -44,20 +47,26 @@ function smart_cat_list()
       foreach ($smart_cats as $cat => $name)
       {
         $associated_images = smart_make_associations($cat);
-        array_push($page['infos'], l10n_args(get_l10n_args(
-          '%d photos associated to album &laquo;%s&raquo;', 
-          array(count($associated_images), $name)
-        )));
+        array_push(
+          $page['infos'], 
+          l10n_args(get_l10n_args(
+            '%d photos associated to album &laquo;%s&raquo;', 
+            array(count($associated_images), $name)
+            ))
+          );
       }
     }
     /* regenerate photo list | one category */
     else
     {
       $associated_images = smart_make_associations($_GET['smart_generate']);    
-      array_push($page['infos'], l10n_args(get_l10n_args(
-        '%d photos associated to album &laquo;%s&raquo;', 
-        array(count($associated_images), $smart_cats[$_GET['smart_generate']])
-      )));
+      array_push(
+        $page['infos'], 
+        l10n_args(get_l10n_args(
+          '%d photos associated to album &laquo;%s&raquo;', 
+          array(count($associated_images), $smart_cats[$_GET['smart_generate']])
+          ))
+        );
     }
     
     invalidate_user_cache(true);

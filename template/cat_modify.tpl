@@ -73,21 +73,19 @@ jQuery(document).ready(function() {
       $(this).datepicker({dateFormat:'yy-mm-dd', firstDay:1});
     });
     
-    jQuery.getJSON('admin.php?fckb_tags=1', function(data) {
-      jQuery(".tagSelect").tokenInput(
-        data,
-        {
-      {/literal}
-          hintText: '{'Type in a search term'|@translate}',
-          noResultsText: '{'No results'|@translate}',
-          searchingText: '{'Searching...'|@translate}',
-          animateDropdown: false,
-          preventDuplicates: true,
-          allowCreation: true
-      {literal}
-        }
-      );
-    });
+    jQuery(".tagSelect").tokenInput(
+    {/literal}
+      [{foreach from=$tags item=tag name=tags}{ldelim}"name":"{$tag.name|@escape:'javascript'}","id":"{$tag.id}"{rdelim}{if !$smarty.foreach.tags.last},{/if}{/foreach}],
+      {ldelim}
+        hintText: '{'Type in a search term'|@translate}',
+        noResultsText: '{'No results'|@translate}',
+        searchingText: '{'Searching...'|@translate}',
+        animateDropdown: false,
+        preventDuplicates: true,
+        allowCreation: false
+    {literal}
+      }
+    );
   }
   
   function countImages(form) {
