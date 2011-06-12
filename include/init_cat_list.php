@@ -93,11 +93,12 @@ function smart_cat_list_prefilter($content, &$smarty)
 {
   global $smart_count;
   
-  $search[0] = '<ul class="categoryActions">';
-  $replacement[0] = $search[0].'
+  $search[0] = '{if isset($category.U_SYNC) }';
+  $replacement[0] = '
 {if isset($SMART_URL[$category.ID])}
-        <li><a href="{$SMART_URL[$category.ID]}" title="{\'regenerate photos list\'|@translate}"><img src="{$SMART_PATH}template/refresh.png" class="button" alt="{\'regenerate photos list\'|@translate}"></a></li>
-{/if}';
+        <li><a href="{$SMART_URL[$category.ID]}" title="{\'Regenerate photos list of this SmartAlbum\'|@translate}"><img src="{$ROOT_URL}{$themeconf.admin_icon_dir}/synchronize.png" class="button" alt="{\'regenerate photos list\'|@translate}"></a></li>
+{/if}'
+.$search[0];
 
   if ($smart_count > 0)
   {
@@ -107,7 +108,7 @@ function smart_cat_list_prefilter($content, &$smarty)
     $replacement[1] = $search[1].'
 <form method="post" action="{$SMART_URL.all}">
   <input type="hidden" name="pwg_token" value="{$PWG_TOKEN}">
-  <p><input class="submit" type="submit" value="{\'regenerate photos list of all SmartAlbums\'|@translate}"></p>
+  <p><input class="submit" type="submit" value="{\'Regenerate photos list of all SmartAlbums\'|@translate}"></p>
 </form>';
   }
 

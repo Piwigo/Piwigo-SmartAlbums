@@ -6,7 +6,7 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
  
 function smart_cat_modify()
 {
-  global $template;
+  global $template, $page;
   include_once(SMART_PATH.'include/functions.inc.php');
   
   $cat_id = $_GET['cat_id'];
@@ -30,6 +30,7 @@ function smart_cat_modify()
     {
       pwg_query('DELETE FROM '.IMAGE_CATEGORY_TABLE.' WHERE category_id = '.$cat_id.' AND smart = true;');
       pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE category_id = '.$cat_id.';');
+      set_random_representant(array($cat_id));
     }
     /* no filter selected */
     else if (isset($_POST['is_smart']) AND !isset($_POST['filters']))

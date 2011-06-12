@@ -20,5 +20,7 @@ $lang['date filter'] = 'date filter';
 $lang['limit filter'] = 'limit filter';
 $lang['This album is a SmartAlbum'] = 'This album is a SmartAlbum';
 $lang['Count'] = 'Count';
+$lang['Regenerate photos list of this SmartAlbum'] = 'Regenerate photos list of this SmartAlbum';
+$lang['Regenerate photos list of all SmartAlbums'] = 'Regenerate photos list of all SmartAlbums';
 
 ?>

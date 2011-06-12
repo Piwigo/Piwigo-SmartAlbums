@@ -34,6 +34,7 @@ jQuery(document).ready(function() {
   $('input[name="is_smart"]').change(function() {
     $('#SmartAlbum_options').toggle();
     $('input[name="countImages"]').toggle();
+    $('.count_images_display').toggle();
   });
   
   $('input[name="countImages"]').click(function() {

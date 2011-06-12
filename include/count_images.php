@@ -12,7 +12,9 @@ include_once(SMART_PATH.'include/functions.inc.php');
 if (isset($_POST['filters']))
 {
   $filters = array();
+  $page['errors'] = array();
   $limit_is_set = false;
+  
   foreach ($_POST['filters'] as $filter)
   {
     if (($filter = smart_check_filter($filter)) != false)

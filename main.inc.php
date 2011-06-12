@@ -15,23 +15,20 @@ define('SMART_DIR', basename(dirname(__FILE__)));
 define('SMART_PATH', PHPWG_PLUGINS_PATH.SMART_DIR.'/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable.'category_filters');
 
-if (script_basename() == 'admin')
+if (script_basename() == 'index')
+{
+  add_event_handler('loc_end_section_init', 'smart_init_page_items');
+  include_once(SMART_PATH.'include/init_page_items.php');
+}
+else if (script_basename() == 'admin')
 {
   load_language('plugin.lang', SMART_PATH);
   
-  add_event_handler('loc_begin_cat_modify', 'smart_init_cat_modify'); 
-  function smart_init_cat_modify()
-  {
-    include_once(SMART_PATH.'init_cat_modify.php');
-    smart_cat_modify();
-  }
+  add_event_handler('loc_begin_cat_modify', 'smart_cat_modify'); 
+  include_once(SMART_PATH.'include/init_cat_modify.php');
   
-  add_event_handler('loc_begin_cat_list', 'smart_init_cat_list');
-  function smart_init_cat_list()
-  {
-    include_once(SMART_PATH.'init_cat_list.php');
-    smart_cat_list();
-  }
+  add_event_handler('loc_begin_cat_list', 'smart_cat_list');
+  include_once(SMART_PATH.'include/init_cat_list.php');
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-$lang['%d photos associated to album &laquo;%s&raquo;'] = '%d photos associées à album &laquo;%s&raquo;';
+$lang['%d photos associated to album &laquo;%s&raquo;'] = '%d photos associées à l\'album &laquo;%s&raquo;';
 $lang['No filter selected'] = 'Aucun filter sélectionné';
 $lang['No tag selected'] = 'Aucun tag sélectionné';
 $lang['Date string is malformed'] = 'La date n\'est pas correcte';
@@ -20,5 +20,7 @@ $lang['date filter'] = 'filtrer par date';
 $lang['limit filter'] = 'nombre max. d\'éléments';
 $lang['This album is a SmartAlbum'] = 'Cet album est un SmartAlbum';
 $lang['Count'] = 'Compter';
+$lang['Regenerate photos list of this SmartAlbum'] = 'Régénérer les photos de ce SmartAlbum';
+$lang['Regenerate photos list of all SmartAlbums'] = 'Régénérer les photos de tous les SmartAlbums';
 
 ?>

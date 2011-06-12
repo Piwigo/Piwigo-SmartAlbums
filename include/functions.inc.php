@@ -27,8 +27,9 @@ function smart_make_associations($cat_id)
       array_keys($datas[0]), 
       $datas
       );
-    set_random_representant(array($cat_id));
   }
+  
+  set_random_representant(array($cat_id));
   
   return $images;
 }
