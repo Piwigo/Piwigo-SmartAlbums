@@ -29,9 +29,51 @@ function smart_make_associations($cat_id)
       );
   }
   
+  if (!function_exists('set_rendom_representant'))
+  {
+    include(PHPWG_ROOT_PATH.'admin/include/functions.php');
+  }
   set_random_representant(array($cat_id));
   
   return $images;
+}
+
+
+/*
+ * Make associations for all SmartAlbums
+ * Called with invalidate_user_cache and/or on admin login
+ * @param string login (not mandatory)
+ */
+function smart_make_all_associations($login = false)
+{
+  global $conf;
+    
+  if (!is_array($conf['SmartAlbums'])) $conf['SmartAlbums'] = unserialize($conf['SmartAlbums']);
+  
+  if ( !$login AND !defined('SMART_NOT_UPDATE') AND $conf['SmartAlbums']['update_on_upload'] != 'false' )
+    continue;
+  else if ( is_string($login) AND is_admin() AND $conf['SmartAlbums']['update_on_login'] != 'false' )
+    continue;
+  else
+    return;
+  
+  /* get categories with smart filters */
+  $query = '
+SELECT DISTINCT id
+  FROM '.CATEGORIES_TABLE.' AS c
+    INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
+    ON c.id = cf.category_id
+;';
+  
+  /* regenerate photo list */
+  $smart_cats = array_from_query($query, 'id');
+  array_map('smart_make_associations', $smart_cats);
+  
+  if (is_string($login))
+  {
+    define('SMART_NOT_UPDATE', 1);
+    invalidate_user_cache();
+  }
 }
 
 

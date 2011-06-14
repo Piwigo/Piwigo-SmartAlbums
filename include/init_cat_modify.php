@@ -7,7 +7,6 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 function smart_cat_modify()
 {
   global $template, $page;
-  include_once(SMART_PATH.'include/functions.inc.php');
   
   $cat_id = $_GET['cat_id'];
   list($cat_dir) = pwg_db_fetch_row(pwg_query('SELECT dir FROM '.CATEGORIES_TABLE.' WHERE id = '.$cat_id.';'));
@@ -61,8 +60,10 @@ INSERT INTO '.CATEGORY_FILTERS_TABLE.'
       }
       
       $associated_images = smart_make_associations($cat_id);
-      invalidate_user_cache(true);
       $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
+      
+      define('SMART_NOT_UPDATE', 1);
+      invalidate_user_cache();
     }
   }
       

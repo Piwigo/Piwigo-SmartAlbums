@@ -8,7 +8,7 @@ $smart_count = 0;
 function smart_cat_list()
 {
   global $template, $page, $smart_count;
-  include_once(SMART_PATH.'include/functions.inc.php');
+
   $self_url = get_root_url().'admin.php?page=cat_list'.(isset($_GET['parent_id']) ? '&amp;parent_id='.$_GET['parent_id'] : null);
   
   /* get categories with smart filters */
@@ -69,7 +69,8 @@ SELECT DISTINCT id, name
         );
     }
     
-    invalidate_user_cache(true);
+    define('SMART_NOT_UPDATE', 1);
+    invalidate_user_cache();
   }
   
   // create regenerate link

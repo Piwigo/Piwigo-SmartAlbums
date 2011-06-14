@@ -22,5 +22,7 @@ $lang['This album is a SmartAlbum'] = 'Cet album est un SmartAlbum';
 $lang['Count'] = 'Compter';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Régénérer les photos de ce SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Régénérer les photos de tous les SmartAlbums';
+$lang['Update albums on file upload'] = 'Mettre à jour les albums après la mise en ligne d\'un fichier';
+$lang['Update albums when an admin logins'] = 'Mettre à jour les albums quand un admin se connecte';
 
 ?>
