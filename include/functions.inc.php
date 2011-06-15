@@ -29,7 +29,7 @@ function smart_make_associations($cat_id)
       );
   }
   
-  if (!function_exists('set_rendom_representant'))
+  if (!function_exists('set_random_representant'))
   {
     include(PHPWG_ROOT_PATH.'admin/include/functions.php');
   }
@@ -49,7 +49,7 @@ function smart_make_all_associations()
     
   if (!is_array($conf['SmartAlbums'])) $conf['SmartAlbums'] = unserialize($conf['SmartAlbums']);
   
-  if ( defined('SMART_NOT_UPDATE') OR $conf['SmartAlbums']['update_on_upload'] == 'false' ) return;
+  if ( defined('SMART_NOT_UPDATE') OR !$conf['SmartAlbums']['update_on_upload'] ) return;
   
   /* get categories with smart filters */
   $query = '

@@ -10,7 +10,7 @@ if (!is_array($conf['SmartAlbums'])) $conf['SmartAlbums'] = unserialize($conf['S
 if (isset($_POST['submit']))
 {
 	$conf['SmartAlbums'] = array(
-    'update_on_upload' => $_POST['update_on_upload'], 
+    'update_on_upload' => isset($_POST['update_on_upload']), 
     );    
 	
   conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));

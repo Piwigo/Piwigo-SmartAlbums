@@ -7,9 +7,10 @@
 		<legend>{'Configuration'|@translate}</legend>	  
 		<ul>			
 			<li>
-				<span class="property">{'Update albums on file upload'|@translate}</span>
-				<label><input type="radio" name="update_on_upload" value="true" {if $update_on_upload == 'true'}checked="checked"{/if}/> {'Yes'|@translate}</label>
-				<label><input type="radio" name="update_on_upload" value="false" {if $update_on_upload == 'false'}checked="checked"{/if}/> {'No'|@translate}</label>
+        <label>
+          <span class="property">{'Update albums on file upload'|@translate}</span>
+          <input type="checkbox" name="update_on_upload" value="true" {if $update_on_upload}checked="checked"{/if}/>
+        </label>
 			</li>
 		</ul>
 	</fieldset>
