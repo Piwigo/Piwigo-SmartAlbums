@@ -41,21 +41,15 @@ function smart_make_associations($cat_id)
 
 /*
  * Make associations for all SmartAlbums
- * Called with invalidate_user_cache and/or on admin login
- * @param string login (not mandatory)
+ * Called with invalidate_user_cache
  */
-function smart_make_all_associations($login = false)
+function smart_make_all_associations()
 {
   global $conf;
     
   if (!is_array($conf['SmartAlbums'])) $conf['SmartAlbums'] = unserialize($conf['SmartAlbums']);
   
-  if ( !$login AND !defined('SMART_NOT_UPDATE') AND $conf['SmartAlbums']['update_on_upload'] != 'false' )
-    continue;
-  else if ( is_string($login) AND is_admin() AND $conf['SmartAlbums']['update_on_login'] != 'false' )
-    continue;
-  else
-    return;
+  if ( defined('SMART_NOT_UPDATE') OR $conf['SmartAlbums']['update_on_upload'] == 'false' ) return;
   
   /* get categories with smart filters */
   $query = '
@@ -68,12 +62,6 @@ SELECT DISTINCT id
   /* regenerate photo list */
   $smart_cats = array_from_query($query, 'id');
   array_map('smart_make_associations', $smart_cats);
-  
-  if (is_string($login))
-  {
-    define('SMART_NOT_UPDATE', 1);
-    invalidate_user_cache();
-  }
 }
 
 
@@ -177,9 +165,27 @@ SELECT *
     // date
     else if ($filter['type'] == 'date')
     {
-      if      ($filter['cond'] == 'the')    $where[] = 'date_available BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
-      else if ($filter['cond'] == 'before') $where[] = 'date_available < "'.$filter['value'].' 00:00:00"';
-      else if ($filter['cond'] == 'after')  $where[] = 'date_available > "'.$filter['value'].' 23:59:59"';
+      switch ($filter['cond'])
+      {
+        case 'the':
+          $where[] = 'date_available BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
+          break;
+        case 'before':
+          $where[] = 'date_available < "'.$filter['value'].' 00:00:00"';
+          break;
+        case 'after':
+          $where[] = 'date_available > "'.$filter['value'].' 23:59:59"';
+          break;
+        case 'the_crea':
+          $where[] = 'date_creation BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
+          break;
+        case 'before_crea':
+          $where[] = 'date_creation < "'.$filter['value'].' 00:00:00"';
+          break;
+        case 'after_crea':
+          $where[] = 'date_creation > "'.$filter['value'].' 23:59:59"';
+          break;
+      }
     }
     // limit
     else if ($filter['type'] == 'limit')

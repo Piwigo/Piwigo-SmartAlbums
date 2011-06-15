@@ -25,7 +25,6 @@ INSERT INTO `' . CONFIG_TABLE . '`
     \'SmartAlbums\', 
     \''.serialize(array(
         'update_on_upload' => false,
-        'update_on_login' => false,
         )
       ).'\',
     \'Configuration for SmartAlbums plugin\'
@@ -46,7 +45,6 @@ INSERT INTO `' . CONFIG_TABLE . '`
     \'SmartAlbums\', 
     \''.serialize(array(
         'update_on_upload' => false,
-        'update_on_login' => false,
         )
       ).'\',
     \'Configuration for SmartAlbums plugin\'

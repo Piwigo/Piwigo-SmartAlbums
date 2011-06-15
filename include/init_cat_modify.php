@@ -78,9 +78,12 @@ INSERT INTO '.CATEGORY_FILTERS_TABLE.'
         'only' => l10n('Only these tags'),
         ),
       'date' => array(
-        'the' => l10n('Added the'),
-        'before' => l10n('Added before the'),
-        'after' => l10n('Added after the'),
+        'the' => l10n('Added on'),
+        'before' => l10n('Added before'),
+        'after' => l10n('Added after'),
+        'the_crea' => l10n('Created on'),
+        'before_crea' => l10n('Created before'),
+        'after_crea' => l10n('Created after'),
         ),
       'limit' => array('limit' => 'limit'), // second filter not used
       )

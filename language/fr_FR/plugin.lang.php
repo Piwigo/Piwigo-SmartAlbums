@@ -10,9 +10,12 @@ $lang['All these tags'] = 'Tous les tags';
 $lang['One of these tags'] = 'Un des tags';
 $lang['None of these tags'] = 'Aucun des tags';
 $lang['Only these tags'] = 'Seulement les tags';
-$lang['Added the'] = 'Ajouté le';
-$lang['Added before the'] = 'Ajouté avant le';
-$lang['Added after the'] = 'Ajouté après le';
+$lang['Added on'] = 'Ajouté le';
+$lang['Added before'] = 'Ajouté avant le';
+$lang['Added after'] = 'Ajouté après le';
+$lang['Created on'] = 'Créé le';
+$lang['Created before'] = 'Créé avant le';
+$lang['Created after'] = 'Créé après le';
 $lang['%d photo'] = '%d photo';
 $lang['%d photos'] = '%d photos';
 $lang['tags filter'] = 'filtrer par tags';
@@ -23,6 +26,5 @@ $lang['Count'] = 'Compter';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Régénérer les photos de ce SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Régénérer les photos de tous les SmartAlbums';
 $lang['Update albums on file upload'] = 'Mettre à jour les albums après la mise en ligne d\'un fichier';
-$lang['Update albums when an admin logins'] = 'Mettre à jour les albums quand un admin se connecte';
 
 ?>

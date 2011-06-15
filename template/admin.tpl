@@ -11,11 +11,6 @@
 				<label><input type="radio" name="update_on_upload" value="true" {if $update_on_upload == 'true'}checked="checked"{/if}/> {'Yes'|@translate}</label>
 				<label><input type="radio" name="update_on_upload" value="false" {if $update_on_upload == 'false'}checked="checked"{/if}/> {'No'|@translate}</label>
 			</li>
-			<li>
-				<span class="property">{'Update albums when an admin logins'|@translate}</span>
-				<label><input type="radio" name="update_on_login" value="true" {if $update_on_login == 'true'}checked="checked"{/if}/> {'Yes'|@translate}</label>
-				<label><input type="radio" name="update_on_login" value="false" {if $update_on_login == 'false'}checked="checked"{/if}/> {'No'|@translate}</label>
-			</li>   
 		</ul>
 	</fieldset>
 		

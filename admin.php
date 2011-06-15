@@ -11,7 +11,6 @@ if (isset($_POST['submit']))
 {
 	$conf['SmartAlbums'] = array(
     'update_on_upload' => $_POST['update_on_upload'], 
-    'update_on_login' => $_POST['update_on_login'], 
     );    
 	
   conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
@@ -21,7 +20,6 @@ if (isset($_POST['submit']))
 $template->assign(array(
   'SMART_PATH' => SMART_PATH,
 	'update_on_upload' => $conf['SmartAlbums']['update_on_upload'],
-	'update_on_login' => $conf['SmartAlbums']['update_on_login'],
 ));
 	
 $template->set_filename('SmartAlbums_conf', dirname(__FILE__).'/template/admin.tpl');

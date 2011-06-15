@@ -16,7 +16,6 @@ define('SMART_PATH', PHPWG_PLUGINS_PATH.SMART_DIR.'/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable.'category_filters');
 
 add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
-add_event_handler('login_success', 'smart_make_all_associations');
 include_once(SMART_PATH.'include/functions.inc.php');
 
 if (script_basename() == 'index')
