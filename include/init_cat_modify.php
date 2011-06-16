@@ -86,6 +86,7 @@ INSERT INTO '.CATEGORY_FILTERS_TABLE.'
         'after_crea' => l10n('Created after'),
         ),
       'limit' => array('limit' => 'limit'), // second filter not used
+      // TODO : new filter by album
       )
     );
   
@@ -129,6 +130,11 @@ SELECT
     $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', $image_num));
   }
   
+  if (isset($_GET['new_smart']))
+  {
+    $template->assign('new_smart', true);
+  }
+  
   $template->assign(array(
     'SMART_PATH' => SMART_PATH,
     'COUNT_SCRIPT_URL' => SMART_PATH.'include/count_images.php',
@@ -140,7 +146,7 @@ SELECT
 
 function smart_cat_modify_prefilter($content, &$smarty)
 {
-  $search = '<form action="{$F_ACTION}" method="POST" id="links">';
+  $search = '<form action="{$F_ACTION}" method="POST" id="catModify">';
   $replacement = file_get_contents(SMART_PATH.'template/cat_modify.tpl')."\n".$search;
   return str_replace($search, $replacement, $content);
 }

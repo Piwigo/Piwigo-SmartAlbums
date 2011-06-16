@@ -25,6 +25,7 @@ INSERT INTO `' . CONFIG_TABLE . '`
     \'SmartAlbums\', 
     \''.serialize(array(
         'update_on_upload' => true,
+        'show_list_messages' => true,
         )
       ).'\',
     \'Configuration for SmartAlbums plugin\'
@@ -35,9 +36,7 @@ INSERT INTO `' . CONFIG_TABLE . '`
 
 function plugin_activate()
 { 
-  $sa_config = pwg_query('SELECT * FROM `' . CONFIG_TABLE . '` WHERE param = \'SmartAlbums\';');
-  
-  if (!pwg_db_num_rows($sa_config))
+  if (!isset($conf['SmartAlbums']))
   {
     pwg_query('
 INSERT INTO `' . CONFIG_TABLE . '`
@@ -45,6 +44,7 @@ INSERT INTO `' . CONFIG_TABLE . '`
     \'SmartAlbums\', 
     \''.serialize(array(
         'update_on_upload' => true,
+        'show_list_messages' => true,
         )
       ).'\',
     \'Configuration for SmartAlbums plugin\'

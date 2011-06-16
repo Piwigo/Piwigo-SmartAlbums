@@ -42,6 +42,8 @@ jQuery(document).ready(function() {
     return false;
   });
   
+
+  
   function add_filter(type) {
     // add line
     $('<li class="filter_'+ type +'" id="filter_'+ i +'"></li>').appendTo('#filterList');
@@ -99,6 +101,16 @@ jQuery(document).ready(function() {
 		);
 	}
   
+  function doBlink(obj,start,finish) { 
+    jQuery(obj).fadeOut(400).fadeIn(400); 
+    if(start!=finish) { 
+      doBlink(obj,start+1,finish);
+    } else {
+      jQuery(obj).fadeOut(400);
+    }
+  }
+    
+  doBlink('.new_smart', 0, 3);
   init_jquery_handlers();
 });
 {/literal}
@@ -110,9 +122,9 @@ jQuery(document).ready(function() {
 
   <legend>{'SmartAlbums'|@translate}</legend>
   
-  <label><input type="checkbox" name="is_smart" {if isset($filters)}checked="checked"{/if}/> {'This album is a SmartAlbum'|@translate}</label>
+  <label><input type="checkbox" name="is_smart" {if isset($filters) OR isset($new_smart)}checked="checked"{/if}/> {'This album is a SmartAlbum'|@translate}</label>
   
-<div id="SmartAlbum_options" style="margin-top:1em;{if !isset($filters)}display:none;{/if}">
+<div id="SmartAlbum_options" style="margin-top:1em;{if !isset($filters) AND !isset($new_smart)}display:none;{/if}">
   <ul id="filterList">
     {counter start=0 assign=i}
     {foreach from=$filters item=filter}
@@ -150,12 +162,13 @@ jQuery(document).ready(function() {
         <option value="limit">{'limit filter'|@translate}</option>
       </select>
       <a id="removeFilters">{'Remove all filters'|@translate}</a>
+      {if isset($new_smart)}<span class="new_smart">{'Add filters here'|@translate}</span>{/if}
   </p>
 </div>
     
   <p class="actionButtons" id="applyFilterBlock">
     <input class="submit" type="submit" value="{'Submit'|@translate}" name="submitFilters"/>
-    <input class="submit" type="submit" value="{'Count'|@translate}" name="countImages" {if !isset($filters)}style="display:none;"{/if}/>
+    <input class="submit" type="submit" value="{'Count'|@translate}" name="countImages" {if !isset($filters) AND !isset($new_smart)}style="display:none;"{/if}/>
     <span class="count_images_display">{$IMAGE_COUNT}</span>
   </p>
 

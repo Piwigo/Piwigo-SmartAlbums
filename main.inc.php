@@ -14,6 +14,7 @@ global $prefixeTable;
 define('SMART_DIR', basename(dirname(__FILE__)));
 define('SMART_PATH', PHPWG_PLUGINS_PATH.SMART_DIR.'/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable.'category_filters');
+define('SMART_ADMIN', get_root_url().'admin.php?page=plugin-' . SMART_DIR);
 
 add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
 include_once(SMART_PATH.'include/functions.inc.php');
@@ -38,7 +39,9 @@ else if (script_basename() == 'admin')
 	{
 		array_push($menu, array(
 			'NAME' => 'SmartAlbums',
-			'URL' => get_root_url().'admin.php?page=plugin-' . SMART_DIR));
+			'URL' => SMART_ADMIN,
+      )
+    );
 		return $menu;
 	}
 }

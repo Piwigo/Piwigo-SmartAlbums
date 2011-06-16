@@ -11,3 +11,12 @@
 #batchManagerGlobal #filterList li.token-input-input-token {
   margin-bottom:0px !important; 
 }
+
+.new_smart {
+  color:#00AA00;
+  background-color:#C2F5C2;
+  font-weight:bold;
+  padding:3px 10px;
+  border-radius:4px;
+  box-shadow:0 0 2px #0a0;
+}

@@ -30,13 +30,7 @@ SELECT DISTINCT id, name
   $query .= '
 ;';
   
-  $result = pwg_query($query);
-  $smart_cats = array();
-  while ($cat = pwg_db_fetch_assoc($result))
-  {
-    $smart_cats[$cat['id']] = trigger_event('render_category_name', $cat['name']);
-  }
-  
+  $smart_cats = hash_from_query($query, 'id'); 
   $smart_count = count($smart_cats);
   
   if (isset($_GET['smart_generate']))
@@ -44,14 +38,21 @@ SELECT DISTINCT id, name
     /* regenerate photo list | all (sub) categories */
     if ($_GET['smart_generate'] == 'all')
     {
-      foreach ($smart_cats as $cat => $name)
+      foreach ($smart_cats as $category)
       {
-        $associated_images = smart_make_associations($cat);
+        $associated_images = smart_make_associations($category['id']);
         array_push(
           $page['infos'], 
           l10n_args(get_l10n_args(
             '%d photos associated to album &laquo;%s&raquo;', 
-            array(count($associated_images), $name)
+            array(
+              count($associated_images), 
+              trigger_event(
+                'render_category_name',
+                $category['name'],
+                'admin_cat_list'
+                )
+              )
             ))
           );
       }
@@ -64,7 +65,14 @@ SELECT DISTINCT id, name
         $page['infos'], 
         l10n_args(get_l10n_args(
           '%d photos associated to album &laquo;%s&raquo;', 
-          array(count($associated_images), $smart_cats[$_GET['smart_generate']])
+          array(
+            count($associated_images), 
+            trigger_event(
+              'render_category_name',
+              $smart_cats[$_GET['smart_generate']]['name'],
+              'admin_cat_list'
+              )
+            )
           ))
         );
     }
@@ -97,7 +105,7 @@ function smart_cat_list_prefilter($content, &$smarty)
   $search[0] = '{if isset($category.U_SYNC) }';
   $replacement[0] = '
 {if isset($SMART_URL[$category.ID])}
-        <li><a href="{$SMART_URL[$category.ID]}" title="{\'Regenerate photos list of this SmartAlbum\'|@translate}"><img src="{$ROOT_URL}{$themeconf.admin_icon_dir}/synchronize.png" class="button" alt="{\'regenerate photos list\'|@translate}"></a></li>
+        <li><a href="{$SMART_URL[$category.ID]}" title="{\'Regenerate photos list of this SmartAlbum\'|@translate}"><img src="{$ROOT_URL}{$themeconf.admin_icon_dir}/synchronize.png" class="button" alt="{\'Regenerate photos list of this SmartAlbum\'|@translate}"></a></li>
 {/if}'
 .$search[0];
 
