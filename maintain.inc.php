@@ -36,6 +36,8 @@ INSERT INTO `' . CONFIG_TABLE . '`
 
 function plugin_activate()
 { 
+  global $conf;
+  
   if (!isset($conf['SmartAlbums']))
   {
     pwg_query('
@@ -51,7 +53,6 @@ INSERT INTO `' . CONFIG_TABLE . '`
   )
 ;');
   }
-  
 }
 
 function plugin_uninstall() 
