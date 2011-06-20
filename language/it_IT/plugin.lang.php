@@ -33,6 +33,6 @@ $lang['SmartAlbum deleted'] = 'SmartAlbum aggiunto';
 $lang['SmartAlbum added'] = 'SmartAlbum cancellato';
 $lang['Only SmartAlbums are displayed on this page'] = 'Solo i SmartAlbums sono visualizzati su questa pagina';
 $lang['To order albums please go the main albums management page'] = 'Per l\'ordinamento degli album recarsi sulla pagina principale della gestione degli album';
-$lang['Don\'t show this message again'] = 'Non visualissare più questo messagio';
+$lang['Don\'t show this message again'] = 'Non visualizzare piu questo messagio';
 
 ?>
