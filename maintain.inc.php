@@ -24,7 +24,7 @@ INSERT INTO `' . CONFIG_TABLE . '`
   VALUES (
     \'SmartAlbums\', 
     \''.serialize(array(
-        'update_on_upload' => true,
+        'update_on_upload' => false,
         'show_list_messages' => true,
         )
       ).'\',
@@ -45,7 +45,7 @@ INSERT INTO `' . CONFIG_TABLE . '`
   VALUES (
     \'SmartAlbums\', 
     \''.serialize(array(
-        'update_on_upload' => true,
+        'update_on_upload' => false,
         'show_list_messages' => true,
         )
       ).'\',

@@ -27,12 +27,13 @@ $lang['Count'] = 'Comptare';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Rigenerare le foto di questo SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Rigenerare le foto di tutti i SmartAlbums';
 $lang['Update albums on file upload'] = 'Aggiornare gli album dopo il caricamento di un file';
+$lang['(can cause slowdowns on admin pages)'] = '(può causare rallentamenti)';
 $lang['All SmartAlbums'] = 'Tutti i SmartAlbums';
 $lang['Add a SmartAlbum'] = 'Aggiungere un SmartAlbum';
 $lang['SmartAlbum deleted'] = 'SmartAlbum aggiunto';
 $lang['SmartAlbum added'] = 'SmartAlbum cancellato';
 $lang['Only SmartAlbums are displayed on this page'] = 'Solo i SmartAlbums sono visualizzati su questa pagina';
-$lang['To order albums please go the main albums management page'] = 'Per l\'ordinamento degli album recarsi sulla pagina principale della gestione degli album';
+$lang['To order albums please go the main albums management page'] = 'Per l\'ordinamento degli album recarsi sulla pagina principale della <a href="admin.php?page=cat_list">gestione degli album</a>';
 $lang['Don\'t show this message again'] = 'Non visualizzare piu questo messagio';
 
 ?>

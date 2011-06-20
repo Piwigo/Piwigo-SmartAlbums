@@ -32,7 +32,7 @@ $lang['Add a SmartAlbum'] = 'Pievienot SmartAlbum';
 $lang['SmartAlbum deleted'] = 'SmartAlbum izdzēsts';
 $lang['SmartAlbum added'] = 'SmartAlbum pievienots';
 $lang['Only SmartAlbums are displayed on this page'] = 'Šajā lapā attēloti tikai  SmartAlbumi ';
-$lang['To order albums please go the main albums management page'] = 'Lai kārtotu albūmus, izvēlieties albūmu pārvaldības galveno lapu';
+$lang['To order albums please go the main albums management page'] = 'Lai kārtotu albūmus, izvēlieties <a href="admin.php?page=cat_list">albūmu pārvaldības galveno lapu</a>';
 $lang['Don\'t show this message again'] = 'Nerādīt šo ziņojumu atkārtoti';
 
 ?>

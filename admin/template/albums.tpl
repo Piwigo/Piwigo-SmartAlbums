@@ -30,10 +30,6 @@
 <form id="categoryOrdering" action="{$F_ACTION}" method="post">
   <input type="hidden" name="pwg_token" value="{$PWG_TOKEN}">
 
-  <div class="orderParams">
-    
-  </div>
-
   <ul class="categoryUl">
 
     {foreach from=$categories item=category}

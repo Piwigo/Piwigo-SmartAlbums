@@ -27,12 +27,13 @@ $lang['Count'] = 'Count';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Regenerate photos list of this SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Regenerate photos list of all SmartAlbums';
 $lang['Update albums on file upload'] = 'Update albums on file upload';
+$lang['(can cause slowdowns on admin pages)'] = '(can cause slowdowns on admin pages)';
 $lang['All SmartAlbums'] = 'All SmartAlbums';
 $lang['Add a SmartAlbum'] = 'Add a SmartAlbum';
 $lang['SmartAlbum deleted'] = 'SmartAlbum deleted';
 $lang['SmartAlbum added'] = 'SmartAlbum added';
 $lang['Only SmartAlbums are displayed on this page'] = 'Only SmartAlbums are displayed on this page';
-$lang['To order albums please go the main albums management page'] = 'To order albums please go the main albums management page';
+$lang['To order albums please go the main albums management page'] = 'To order albums please go the main albums <a href="admin.php?page=cat_list">management page</a>';
 $lang['Don\'t show this message again'] = 'Don\'t show this message again';
 
 ?>
