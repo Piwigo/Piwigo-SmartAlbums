@@ -1,6 +1,6 @@
 <?php
 
-$lang['%d photos associated to album &laquo;%s&raquo;'] = '%d foto associate all\'album "%s"';
+$lang['%d photos associated to album %s'] = '%d foto associate all\'album %s';
 $lang['No filter selected'] = 'Nessun filtro selezionato';
 $lang['No tag selected'] = 'Nessun tag selezionato';
 $lang['Date string is malformed'] = 'La data non è correta';

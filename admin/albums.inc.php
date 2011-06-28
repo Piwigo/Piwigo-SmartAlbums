@@ -64,17 +64,15 @@ else if (isset($_GET['smart_generate']))
       $associated_images = smart_make_associations($category['id']);
       array_push(
         $page['infos'], 
-        l10n_args(get_l10n_args(
-          '%d photos associated to album &laquo;%s&raquo;', 
-          array(
-            count($associated_images), 
-            trigger_event(
-              'render_category_name',
-              $category['name'],
-              'admin_cat_list'
-              )
-            )
-          ))
+        sprintf(
+          l10n('%d photos associated to album %s'), 
+          count($associated_images), 
+          '&laquo;'.trigger_event(
+            'render_category_name',
+            $category['name'],
+            'admin_cat_list'
+            ).'&raquo;'
+          )
         );
     }
   }
@@ -84,17 +82,15 @@ else if (isset($_GET['smart_generate']))
     $associated_images = smart_make_associations($_GET['smart_generate']);    
     array_push(
       $page['infos'], 
-      l10n_args(get_l10n_args(
-        '%d photos associated to album &laquo;%s&raquo;', 
-        array(
-          count($associated_images), 
-          trigger_event(
-            'render_category_name',
-            $categories[$_GET['smart_generate']]['name'],
-            'admin_cat_list'
-            )
-          )
-        ))
+      sprintf(
+        l10n('%d photos associated to album %s'), 
+        count($associated_images), 
+        '&laquo;'.trigger_event(
+          'render_category_name',
+          $categories[$_GET['smart_generate']]['name'],
+          'admin_cat_list'
+          ).'&raquo;'
+        )
       );
   }
   

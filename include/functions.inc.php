@@ -8,7 +8,13 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
  */
 function smart_make_associations($cat_id)
 {
-  pwg_query('DELETE FROM '.IMAGE_CATEGORY_TABLE.' WHERE category_id = '.$cat_id.' AND smart = true;');
+  $query = '
+DELETE FROM '.IMAGE_CATEGORY_TABLE.' 
+  WHERE 
+    category_id = '.$cat_id.' 
+    AND smart = true
+;';
+  pwg_query($query);
   
   $images = smart_get_pictures($cat_id);
   
@@ -29,11 +35,22 @@ function smart_make_associations($cat_id)
       );
   }
   
-  if (!function_exists('set_random_representant'))
+  // represantant, try to not overwrite if still in images list
+  $query = '
+SELECT representative_picture_id
+  FROM '.CATEGORIES_TABLE.'
+  WHERE id = '.$cat_id.'
+;';
+  list($rep_id) = pwg_db_fetch_row(pwg_query($query));
+  
+  if ( !in_array($rep_id, $images) )
   {
-    include(PHPWG_ROOT_PATH.'admin/include/functions.php');
+    if (!function_exists('set_random_representant'))
+    {
+      include(PHPWG_ROOT_PATH.'admin/include/functions.php');
+    }
+    set_random_representant(array($cat_id));
   }
-  set_random_representant(array($cat_id));
   
   return $images;
 }
@@ -78,26 +95,26 @@ function smart_get_pictures($cat_id, $filters = null)
   /* get filters */
   if ($filters == null)
   {
+    $filters = array();
+    
     $query = '
 SELECT * 
   FROM '.CATEGORY_FILTERS_TABLE.' 
   WHERE category_id = '.$cat_id.' 
   ORDER BY type ASC, cond ASC
 ;';
-    $filters = pwg_query($query);
+    $result = pwg_query($query);
     
-    if (!pwg_db_num_rows($filters)) return array();
+    if (!pwg_db_num_rows($result)) return $filters;
     
-    while ($filter = pwg_db_fetch_assoc($filters))
+    while ($row = pwg_db_fetch_assoc($result))
     {
-      $temp[] = array(
-        'type' => $filter['type'],
-        'cond' => $filter['cond'],
-        'value' => $filter['value'],
+      $filters[] = array(
+        'type' => $row['type'],
+        'cond' => $row['cond'],
+        'value' => $row['value'],
         );
     }
-     
-    $filters = $temp;
   }
     
   /* build constrains */
@@ -109,26 +126,26 @@ SELECT *
     // tags
     if ($filter['type'] == 'tags')
     {
-        if($filter['cond'] == "all")
-        {
-          $tags_arr = explode(',', $filter['value']);
-          
-          foreach($tags_arr as $value)
-          {
-            $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-            $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
-            $i_tags++;
-          }
-        }
-        else if ($filter['cond'] == 'one') 
+      if($filter['cond'] == "all")
+      {
+        $tags_arr = explode(',', $filter['value']);
+        
+        foreach($tags_arr as $value)
         {
           $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-          $where[] = 'it_'.$i_tags.'.tag_id IN ('.$filter['value'].')';
+          $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
           $i_tags++;
         }
-        else if ($filter['cond'] == 'none') 
-        {
-          $sub_query = '
+      }
+      else if ($filter['cond'] == 'one') 
+      {
+        $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
+        $where[] = 'it_'.$i_tags.'.tag_id IN ('.$filter['value'].')';
+        $i_tags++;
+      }
+      else if ($filter['cond'] == 'none') 
+      {
+        $sub_query = '
       SELECT it_'.$i_tags.'.image_id
         FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
         WHERE 
@@ -136,12 +153,12 @@ SELECT *
           it_'.$i_tags.'.tag_id IN ('.$filter['value'].')
         GROUP BY it_'.$i_tags.'.image_id
     ';
-          $where[] = 'NOT EXISTS ('.$sub_query.')';
-          $i_tags++;
-        }
-        else if ($filter['cond'] == 'only') 
-        {
-          $sub_query = '
+        $where[] = 'NOT EXISTS ('.$sub_query.')';
+        $i_tags++;
+      }
+      else if ($filter['cond'] == 'only') 
+      {
+        $sub_query = '
       SELECT it_'.$i_tags.'.image_id
         FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
         WHERE 
@@ -149,18 +166,18 @@ SELECT *
           it_'.$i_tags.'.tag_id NOT IN ('.$filter['value'].')
         GROUP BY it_'.$i_tags.'.image_id
     ';
-          $where[] = 'NOT EXISTS ('.$sub_query.')';
+        $where[] = 'NOT EXISTS ('.$sub_query.')';
+      
+        $i_tags++;
+        $tags_arr = explode(',', $filter['value']);
         
+        foreach($tags_arr as $value)
+        {
+          $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
+          $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
           $i_tags++;
-          $tags_arr = explode(',', $filter['value']);
-          
-          foreach($tags_arr as $value)
-          {
-            $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-            $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
-            $i_tags++;
-          }
-        }        
+        }
+      }        
     }
     // date
     else if ($filter['type'] == 'date')
@@ -233,7 +250,6 @@ SELECT i.id
 
 /**
  * Check if the filter is proper
- *
  * @param array filter
  * @return array or false
  */
@@ -245,7 +261,7 @@ function smart_check_filter($filter)
   # tags
   if ($filter['type'] == 'tags')
   {
-    if ($filter['value'] == null) // tags fields musn't be null
+    if ($filter['value'] == null)
     {
       $error = true;
       array_push($page['errors'], l10n('No tag selected'));
@@ -258,7 +274,7 @@ function smart_check_filter($filter)
   # date
   else if ($filter['type'] == 'date')
   {
-    if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value'])) // dates must be proper
+    if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value']))
     {
       $error = true;
       array_push($page['errors'], l10n('Date string is malformed'));
@@ -267,7 +283,7 @@ function smart_check_filter($filter)
   # limit
   else if ($filter['type'] == 'limit')
   {
-    if (!preg_match('#([0-9]{1,})#', $filter['value'])) // limit must be an integer
+    if (!preg_match('#([0-9]{1,})#', $filter['value']))
     {
       $error = true;
       array_push($page['errors'], l10n('Limit must be an integer'));
@@ -297,7 +313,6 @@ function smart_check_filter($filter)
 
 /**
  * inserts multiple lines in a table, ignore duplicate entries
- *
  * @param string table_name
  * @param array dbfields
  * @param array inserts

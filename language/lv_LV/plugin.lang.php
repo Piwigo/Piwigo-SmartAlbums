@@ -1,6 +1,6 @@
 <?php
 
-$lang['%d photos associated to album «%s»'] = '%d fotogrāfiju saistītas ar albūmu «%s»';
+$lang['%d photos associated to album %s'] = '%d fotogrāfiju saistītas ar albūmu %s';
 $lang['No filter selected'] = 'Nav izvēlēts neviens no filtriem';
 $lang['No tag selected'] = 'Nav izvēlēts neviens no tagiem';
 $lang['Date string is malformed'] = 'Datuma rinda ir kļūdaina';
