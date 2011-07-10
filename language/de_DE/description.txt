@@ -1,0 +1,1 @@
+Einfach dynamische Alben nach Kriterien wie Stichworte, Datum, usw. erstellen
