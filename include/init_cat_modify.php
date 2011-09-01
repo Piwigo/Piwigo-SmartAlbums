@@ -108,8 +108,8 @@ INSERT INTO '.CATEGORY_FILTERS_TABLE.'
     {
       $query = '
 SELECT
-    id AS tag_id,
-    name AS tag_name
+    id,
+    name
   FROM '.TAGS_TABLE.'
   WHERE id IN('.$filter['value'].')
 ';
@@ -126,8 +126,8 @@ SELECT
   /* all tags */
   $query = '
 SELECT
-    id AS tag_id,
-    name AS tag_name
+    id,
+    name
   FROM '.TAGS_TABLE.'
 ;';
   $tags = get_taglist($query);
