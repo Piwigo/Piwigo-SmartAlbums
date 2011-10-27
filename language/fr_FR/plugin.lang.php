@@ -30,8 +30,8 @@ $lang['Update albums on file upload'] = 'Mettre à jour les albums après la mis
 $lang['(can cause slowdowns on admin pages)'] = '(peut causer des ralentissements)';
 $lang['All SmartAlbums'] = 'Tous les SmartAlbums';
 $lang['Add a SmartAlbum'] = 'Ajouter un SmartAlbum';
-$lang['SmartAlbum deleted'] = 'SmartAlbum ajouté';
-$lang['SmartAlbum added'] = 'SmartAlbum supprimé';
+$lang['SmartAlbum deleted'] = 'SmartAlbum supprimé';
+$lang['SmartAlbum added'] = 'SmartAlbum ajouté';
 $lang['Only SmartAlbums are displayed on this page'] = 'Seuls les SmartAlbums sont affichés sur cette page';
 $lang['To order albums please go the main albums management page'] = 'Pour ordonner les albums veuillez vous rendre sur la page principale de <a href="admin.php?page=cat_list">gestion des albums</a>';
 $lang['Don\'t show this message again'] = 'Ne plus afficher ce message';

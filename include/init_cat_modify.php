@@ -112,7 +112,7 @@ SELECT
     name
   FROM '.TAGS_TABLE.'
   WHERE id IN('.$filter['value'].')
-';
+;';
       $filter['value'] = get_taglist($query); 
     }
     
