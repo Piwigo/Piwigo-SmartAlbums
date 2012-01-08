@@ -240,7 +240,7 @@ SELECT i.id
 
     $MainQuery .= '
   GROUP BY i.id
- '.$conf['order_by_inside_category'].'
+ '.$conf['order_by'].'
   '.(isset($limit) ? "LIMIT ".$limit : null).'
 ;';
 
