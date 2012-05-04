@@ -1,0 +1,1 @@
+Li permet crear &agrave;lbums din&agrave;mics. Aquest complement cerca totes les imatges que coincideixin amb els criteris de la seva elecci&oacute; (etiquetes, data, nombre d'elements de contorn) i els vincula amb l'&agrave;lbum.
