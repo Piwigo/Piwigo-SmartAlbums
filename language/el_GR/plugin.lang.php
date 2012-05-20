@@ -37,4 +37,22 @@ $lang['None of these tags'] = 'Καμία από αυτές τις ετικέτ�
 $lang['One of these tags'] = 'Μία από αυτές τις ετικέτες';
 $lang['Only these tags'] = 'Μόνο αυτές οι λέξεις-κλειδιά';
 $lang['You can\'t use more than one limit'] = 'Δεν μπορείτε να χρησιμοποιήσετε περισσότερα από ένα όριο';
+$lang['%d photos'] = '%d φωτογραφίες';
+$lang['(can cause slowdowns on admin pages)'] = '(μπορεί να προκαλέσει επιβράδυνση στις σελίδες διαχείρισης)';
+$lang['Add a SmartAlbum'] = 'Προσθήκη SmartAlbum';
+$lang['Add filters here'] = 'Προσθέστε φίλτρα εδώ';
+$lang['All SmartAlbums'] = 'Όλα τα SmartAlbums';
+$lang['Count'] = 'Αρίθμηση';
+$lang['Don\'t show this message again'] = 'Να μην εμφανιστεί ξανά αυτό το μήνυμα';
+$lang['Only SmartAlbums are displayed on this page'] = 'Μόνο SmartAlbums εμφανίζονται σε αυτή τη σελίδα';
+$lang['Regenerate photos list of all SmartAlbums'] = 'Αναδημιουργία λίστας φωτογραφιών όλων των SmartAlbum';
+$lang['Regenerate photos list of this SmartAlbum'] = 'Αναδημιουργία λίστας φωτογραφιών αυτού του SmartAlbum';
+$lang['SmartAlbum added'] = 'SmartAlbum προστέθηκε';
+$lang['SmartAlbum deleted'] = 'Smart Album διαγράφτηκε ';
+$lang['This album is a SmartAlbum'] = 'Αυτό το άλμπουμ είναι ένα SmartAlbum';
+$lang['To order albums please go the main albums management page'] = 'Για να παραγγείλετε λευκώματα επισκεφθείτε την κύρια σελίδα <a href="admin.php?page=cat_list">διαχείρισης λευκωμάτων</a>';
+$lang['Update albums on file upload'] = 'Ενημέρωση λευκώματος με ανέβασμα αρχείου';
+$lang['date filter'] = 'φίλτρο ημερομηνίας';
+$lang['limit filter'] = 'φίλτρο  ορίου';
+$lang['tags filter'] = 'φίλτρο ετικετών';
 ?>
