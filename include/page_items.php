@@ -2,7 +2,7 @@
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 /**
- * Remove form $page['items'] picture that musn't be displayed
+ * Remove picture that musn't be displayed from $page['items']
  *
  * here we get all pictures that current user could see 
  * if SmartAlbums doesn't exist, and make intersect with pictures

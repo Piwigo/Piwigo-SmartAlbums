@@ -1,0 +1,61 @@
+.token-input-list {
+  display:inline-block;
+  vertical-align:bottom;
+}
+#batchManagerGlobal #filterList li.token-input-token {
+  margin-bottom:0px !important;
+  padding-top:0;
+}
+#batchManagerGlobal #filterList li.token-input-input-token {
+  margin-bottom:-3px !important; 
+}
+
+.new_smart {
+  color:#00AA00;
+  background-color:#C2F5C2;
+  font-weight:bold;
+  padding:3px 10px;
+  border-radius:4px;
+}
+
+#filterList li {
+  padding:2px;
+  border-bottom:1px dotted rgba(100, 100, 100, 0.5);
+}
+#filterList li span {
+  display:inline-block;
+}
+#filterList li span * {
+  vertical-align:middle;
+}
+
+.filter-title {
+  padding-left:10px;
+  width:220px;
+}
+.filter-title:after {
+  content:" :";
+}
+.filter-cond {
+  width:220px;
+}
+
+.filter_limit .filter-cond, .filter_level .filter-cond {
+  display:none !important;
+}
+
+.filter_error {
+  background-color: #FFD5DC;
+  color: #FF2222;
+  padding:3px 10px;
+  font-weight:bold;
+  border-radius:4px;
+}
+
+.count_image {
+  color:#00AA00;
+  background-color:#C2F5C2;
+  font-weight:bold;
+  padding:3px 10px;
+  border-radius:4px;
+}

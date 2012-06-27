@@ -35,7 +35,7 @@ DELETE FROM '.IMAGE_CATEGORY_TABLE.'
       );
   }
   
-  // represantant, try to not overwrite if still in images list
+  // representant, try to not overwrite if still in images list
   $query = '
 SELECT representative_picture_id
   FROM '.CATEGORIES_TABLE.'
@@ -45,10 +45,7 @@ SELECT representative_picture_id
   
   if ( !in_array($rep_id, $images) )
   {
-    if (!function_exists('set_random_representant'))
-    {
-      include(PHPWG_ROOT_PATH.'admin/include/functions.php');
-    }
+    include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
     set_random_representant(array($cat_id));
   }
   
@@ -63,8 +60,6 @@ SELECT representative_picture_id
 function smart_make_all_associations()
 {
   global $conf;
-    
-  if (!is_array($conf['SmartAlbums'])) $conf['SmartAlbums'] = unserialize($conf['SmartAlbums']);
   
   if ( defined('SMART_NOT_UPDATE') OR !$conf['SmartAlbums']['update_on_upload'] ) return;
   
@@ -93,10 +88,8 @@ function smart_get_pictures($cat_id, $filters = null)
   global $conf;
 
   /* get filters */
-  if ($filters == null)
+  if ($filters === null)
   {
-    $filters = array();
-    
     $query = '
 SELECT * 
   FROM '.CATEGORY_FILTERS_TABLE.' 
@@ -105,8 +98,9 @@ SELECT *
 ;';
     $result = pwg_query($query);
     
-    if (!pwg_db_num_rows($result)) return $filters;
+    if (!pwg_db_num_rows($result)) return array();
     
+    $filters = array();
     while ($row = pwg_db_fetch_assoc($result))
     {
       $filters[] = array(
@@ -116,98 +110,204 @@ SELECT *
         );
     }
   }
+  else if (!count($filters))
+  {
+    return array();
+  }
     
   /* build constrains */
   ## generate 'join', 'where' arrays and 'limit' string to create the SQL query
-  ## inspired by PicsEngine by Michael Villar
+  ## inspired by PicsEngine 3 by Michael Villar
   $i_tags = 1;
   foreach ($filters as $filter)
   {
-    // tags
-    if ($filter['type'] == 'tags')
+    switch ($filter['type'])
     {
-      if($filter['cond'] == "all")
+      // tags
+      case 'tags':
       {
-        $tags_arr = explode(',', $filter['value']);
-        
-        foreach($tags_arr as $value)
+        switch ($filter['cond'])
         {
-          $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-          $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
-          $i_tags++;
+          // search images which have all tags
+          case 'all':
+          {
+            $tags_arr = explode(',', $filter['value']);
+            foreach($tags_arr as $value)
+            {
+              $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
+              $where[] = 'it'.$i_tags.'.tag_id = '.$value;
+              $i_tags++;
+            }
+            
+            break;
+          }
+          // search images which tags are in the list
+          case 'one':
+          {
+            $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
+            $where[] = 'it'.$i_tags.'.tag_id IN ('.$filter['value'].')';
+            $i_tags++;
+            
+            break;
+          }
+          // exclude images which tags are in the list
+          case 'none':
+          {
+            $sub_query = '
+      SELECT it'.$i_tags.'.image_id
+        FROM '.IMAGE_TAG_TABLE.' AS it'.$i_tags.'
+        WHERE 
+          it'.$i_tags.'.image_id = i.id AND
+          it'.$i_tags.'.tag_id IN ('.$filter['value'].')
+        GROUP BY it'.$i_tags.'.image_id
+      ';
+            $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
+            $where[] = 'NOT EXISTS ('.$sub_query.')';
+            $i_tags++;
+            
+            break;
+          }
+          // exclude images which tags are not in the list and search images which have all tags
+          case 'only':
+          {
+            $sub_query = '
+      SELECT it'.$i_tags.'.image_id
+        FROM '.IMAGE_TAG_TABLE.' AS it'.$i_tags.'
+        WHERE 
+          it'.$i_tags.'.image_id = i.id AND
+          it'.$i_tags.'.tag_id NOT IN ('.$filter['value'].')
+        GROUP BY it'.$i_tags.'.image_id
+      ';
+            $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
+            $where[] = 'NOT EXISTS ('.$sub_query.')';
+            $i_tags++;
+            
+            $tags_arr = explode(',', $filter['value']);
+            foreach($tags_arr as $value)
+            {
+              $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
+              $where[] = 'it'.$i_tags.'.tag_id = '.$value;
+              $i_tags++;
+            }
+            
+            break;
+          }
         }
+        
+        break;
       }
-      else if ($filter['cond'] == 'one') 
+    
+      // date
+      case 'date':
       {
-        $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-        $where[] = 'it_'.$i_tags.'.tag_id IN ('.$filter['value'].')';
-        $i_tags++;
+        switch ($filter['cond'])
+        {
+          case 'the_post':
+            $where[] = 'date_available BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
+            break;
+          case 'before_post':
+            $where[] = 'date_available < "'.$filter['value'].' 00:00:00"';
+            break;
+          case 'after_post':
+            $where[] = 'date_available > "'.$filter['value'].' 23:59:59"';
+            break;
+          case 'the_taken':
+            $where[] = 'date_creation BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
+            break;
+          case 'before_taken':
+            $where[] = 'date_creation < "'.$filter['value'].' 00:00:00"';
+            break;
+          case 'after_taken':
+            $where[] = 'date_creation > "'.$filter['value'].' 23:59:59"';
+            break;
+        }
+        
+        break;
       }
-      else if ($filter['cond'] == 'none') 
-      {
-        $sub_query = '
-      SELECT it_'.$i_tags.'.image_id
-        FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
-        WHERE 
-          it_'.$i_tags.'.image_id = i.id AND
-          it_'.$i_tags.'.tag_id IN ('.$filter['value'].')
-        GROUP BY it_'.$i_tags.'.image_id
-    ';
-        $where[] = 'NOT EXISTS ('.$sub_query.')';
-        $i_tags++;
-      }
-      else if ($filter['cond'] == 'only') 
-      {
-        $sub_query = '
-      SELECT it_'.$i_tags.'.image_id
-        FROM '.IMAGE_TAG_TABLE.' AS it_'.$i_tags.'
-        WHERE 
-          it_'.$i_tags.'.image_id = i.id AND
-          it_'.$i_tags.'.tag_id NOT IN ('.$filter['value'].')
-        GROUP BY it_'.$i_tags.'.image_id
-    ';
-        $where[] = 'NOT EXISTS ('.$sub_query.')';
       
-        $i_tags++;
-        $tags_arr = explode(',', $filter['value']);
-        
-        foreach($tags_arr as $value)
-        {
-          $join[] = IMAGE_TAG_TABLE.' AS it_'.$i_tags.' ON i.id = it_'.$i_tags.'.image_id';
-          $where[] = 'it_'.$i_tags.'.tag_id = '.$value;
-          $i_tags++;
-        }
-      }        
-    }
-    // date
-    else if ($filter['type'] == 'date')
-    {
-      switch ($filter['cond'])
+      // name
+      case 'name':
       {
-        case 'the':
-          $where[] = 'date_available BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
-          break;
-        case 'before':
-          $where[] = 'date_available < "'.$filter['value'].' 00:00:00"';
-          break;
-        case 'after':
-          $where[] = 'date_available > "'.$filter['value'].' 23:59:59"';
-          break;
-        case 'the_crea':
-          $where[] = 'date_creation BETWEEN "'.$filter['value'].' 00:00:00" AND "'.$filter['value'].' 23:59:59"';
-          break;
-        case 'before_crea':
-          $where[] = 'date_creation < "'.$filter['value'].' 00:00:00"';
-          break;
-        case 'after_crea':
-          $where[] = 'date_creation > "'.$filter['value'].' 23:59:59"';
-          break;
+        switch ($filter['cond'])
+        {
+          case 'contain':
+            $where[] = 'name LIKE "%'.$filter['value'].'%"';
+            break;
+          case 'begin':
+            $where[] = 'name LIKE "'.$filter['value'].'%"';
+            break;
+          case 'end':
+            $where[] = 'name LIKE "%'.$filter['value'].'"';
+            break;
+          case 'not_contain':
+            $where[] = 'name NOT LIKE "%'.$filter['value'].'%"';
+            break;
+          case 'not_begin':
+            $where[] = 'name NOT LIKE "'.$filter['value'].'%"';
+            break;
+          case 'not_end':
+            $where[] = 'name NOT LIKE "%'.$filter['value'].'"';
+            break;
+        }
+        
+        break;
       }
-    }
-    // limit
-    else if ($filter['type'] == 'limit')
-    {
-      $limit = '0, '.$filter['value'];
+      
+      // author
+      case 'author':
+      {
+        switch ($filter['cond'])
+        {
+          case 'is':
+            if ($filter['value'] != 'NULL') $filter['value'] = '"'.$filter['value'].'"';
+            $where[] = 'author = '.$filter['value'].'';
+            break;
+          case 'not_is':
+            if ($filter['value'] != 'NULL') $filter['value'] = '"'.$filter['value'].'"';
+            $where[] = 'author != '.$filter['value'].'';
+            break;
+          case 'in':
+            $filter['value'] = '"'.str_replace(',', '","', $filter['value']).'"';
+            $where[] = 'author IN('.$filter['value'].')';
+            break;
+          case 'not_in':
+            $filter['value'] = '"'.str_replace(',', '","', $filter['value']).'"';
+            $where[] = 'author NOT IN('.$filter['value'].')';
+            break;
+        }
+        
+        break;
+      }
+      
+      // hit
+      case 'hit':
+      {
+        switch ($filter['cond'])
+        {
+          case 'less':
+            $where[] = 'hit < '.$filter['value'].'';
+            break;
+          case 'more':
+            $where[] = 'hit >= '.$filter['value'].'';
+            break;
+        }
+        
+        break;
+      }
+      
+      // level
+      case 'level':
+      {
+        $where[] = 'level = '.$filter['value'].'';
+        break;
+      }
+      
+      // limit
+      case 'limit':
+      {
+        $limit = '0, '.$filter['value'];
+        break;
+      }
     }
   }
   
@@ -218,32 +318,23 @@ SELECT i.id
     
     if (isset($join))
     {
-      foreach ($join as $query)
-      {
-        $MainQuery .= '
-    LEFT JOIN '.$query;
-      }
+      $MainQuery.= '
+    LEFT JOIN '.implode("\n    LEFT JOIN ", $join);
     }
     if (isset($where))
     {
-      $MainQuery .= '
-  WHERE';
-      $i = 0;
-      foreach ($where as $query)
-      {
-        if ($i != 0) $MainQuery .= ' AND';
-        $MainQuery .= '
-    '.$query;
-        $i++;
-      }
+      $MainQuery.= '
+  WHERE
+    '.implode("\n    AND ", $where);
     }
 
-    $MainQuery .= '
+  $MainQuery.= '
   GROUP BY i.id
- '.$conf['order_by'].'
+  '.$conf['order_by'].'
   '.(isset($limit) ? "LIMIT ".$limit : null).'
 ;';
 
+  // file_put_contents(SMART_PATH.'query.sql', $MainQuery);
   return array_from_query($MainQuery, 'id');
 }
 
@@ -255,8 +346,11 @@ SELECT i.id
  */
 function smart_check_filter($filter)
 {
-  global $limit_is_set, $page;
+  global $page, $limit_is_set, $level_is_set;
   $error = false;
+  
+  if (!isset($limit_is_set)) $limit_is_set = false;
+  if (!isset($level_is_set)) $level_is_set = false;
   
   # tags
   if ($filter['type'] == 'tags')
@@ -280,6 +374,50 @@ function smart_check_filter($filter)
       array_push($page['errors'], l10n('Date string is malformed'));
     }
   }
+  # name
+  else if ($filter['type'] == 'name')
+  {
+    if (empty($filter['value']))
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Name is empty'));
+    }
+  }
+  # author
+  else if ($filter['type'] == 'author')
+  {
+    if (empty($filter['value']))
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Author is empty'));
+    }
+    else
+    {
+      $filter['value'] = preg_replace('#([ ]?),([ ]?)#', ',', $filter['value']);
+    }
+  }
+  # hit
+  else if ($filter['type'] == 'hit')
+  {
+    if (!preg_match('#([0-9]{1,})#', $filter['value']))
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Hits must be an integer'));
+    }
+  }
+  # level
+  else if ($filter['type'] == 'level')
+  {
+    if ($level_is_set == true) // only one level is allowed, first is saved
+    {
+      $error = true;
+      array_push($page['errors'], l10n('You can\'t use more than one level filter'));
+    }
+    else
+    {
+      $level_is_set = true;
+    }
+  }
   # limit
   else if ($filter['type'] == 'limit')
   {
@@ -291,7 +429,7 @@ function smart_check_filter($filter)
     else if ($limit_is_set == true) // only one limit is allowed, first is saved
     {
       $error = true;
-      array_push($page['errors'], l10n('You can\'t use more than one limit'));
+      array_push($page['errors'], l10n('You can\'t use more than one limit filter'));
     }
     else
     {
@@ -373,4 +511,5 @@ INSERT IGNORE INTO '.$table_name.'
     pwg_query($query);
   }
 }
+
 ?>

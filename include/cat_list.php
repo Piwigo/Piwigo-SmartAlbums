@@ -41,16 +41,10 @@ SELECT DISTINCT id, name
       foreach ($smart_cats as $category)
       {
         $associated_images = smart_make_associations($category['id']);
-        array_push(
-          $page['infos'], 
-          sprintf(
-            l10n('%d photos associated to album %s'), 
+        array_push($page['infos'], 
+          sprintf(l10n('%d photos associated to album %s'), 
             count($associated_images), 
-            '&laquo;'.trigger_event(
-              'render_category_name',
-              $category['name'],
-              'admin_cat_list'
-              ).'&raquo;'
+            '&laquo;'.trigger_event('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
             )
           );
       }
@@ -59,16 +53,10 @@ SELECT DISTINCT id, name
     else
     {
       $associated_images = smart_make_associations($_GET['smart_generate']);    
-      array_push(
-        $page['infos'], 
-        sprintf(
-          l10n('%d photos associated to album %s'), 
+      array_push($page['infos'], 
+        sprintf(l10n('%d photos associated to album %s'), 
           count($associated_images), 
-          '&laquo;'.trigger_event(
-            'render_category_name',
-            $smart_cats[$_GET['smart_generate']]['name'],
-            'admin_cat_list'
-            ).'&raquo;'
+          '&laquo;'.trigger_event('render_category_name', $smart_cats[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
           )
         );
     }
@@ -98,23 +86,24 @@ function smart_cat_list_prefilter($content, &$smarty)
 {
   global $smart_count;
   
-  $search[0] = '{if isset($category.U_SYNC) }';
-  $replacement[0] = '
+  $search[0] = '{if isset($category.U_MANAGE_ELEMENTS) }';
+  $replacement[0] = $search[0].'
 {if isset($SMART_URL[$category.ID])}
-        <li><a href="{$SMART_URL[$category.ID]}" title="{\'Regenerate photos list of this SmartAlbum\'|@translate}"><img src="{$ROOT_URL}{$themeconf.admin_icon_dir}/synchronize.png" class="button" alt="{\'Regenerate photos list of this SmartAlbum\'|@translate}"></a></li>
-{/if}'
-.$search[0];
+| <a href="{$SMART_URL[$category.ID]}">{\'Regenerate photos list of this SmartAlbum\'|@translate}</a>
+{/if}';
 
   if ($smart_count > 0)
   {
-    $search[1] = '</ul>
-</form>';
+    $search[1] = '<a href="#" id="autoOrderOpen">{\'apply automatic sort order\'|@translate}</a>';
     $replacement[1] = $search[1].'
-<form method="post" action="{$SMART_URL.all}">
-  <input type="hidden" name="pwg_token" value="{$PWG_TOKEN}">
-  <p><input class="submit" type="submit" value="{\'Regenerate photos list of all SmartAlbums\'|@translate}"></p>
-</form>';
+| <a href="{$SMART_URL.all}">{\'Regenerate photos list of all SmartAlbums\'|@translate}</a>';
   }
+  
+  $search[2] = '{$category.NAME}</a></strong>';
+  $replacement[2] = $search[2].'
+{if isset($SMART_URL[$category.ID])}
+<img src="'.SMART_PATH.'admin/template/lightning.png">
+{/if}';
 
   return str_replace($search, $replacement, $content);
 }

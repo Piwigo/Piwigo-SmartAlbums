@@ -14,4 +14,6 @@ $template->assign(array(
   'update_on_upload' => $conf['SmartAlbums']['update_on_upload'],
 ));
 
+$template->set_filename('SmartAlbums_content', dirname(__FILE__).'/template/config.tpl');
+
 ?>

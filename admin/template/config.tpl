@@ -10,7 +10,7 @@
         <label>
           <span class="property">{'Update albums on file upload'|@translate}</span>
           <input type="checkbox" name="update_on_upload" value="true" {if $update_on_upload}checked="checked"{/if}/>
-          {'(can cause slowdowns on admin pages)'|@translate}
+          {'(can cause slowdowns)'|@translate}
         </label>
 			</li>
 		</ul>
