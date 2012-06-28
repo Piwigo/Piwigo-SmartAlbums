@@ -56,5 +56,6 @@ $lang['Regenerate photos list of all SmartAlbums'] = 'Regenerate photos list of 
 $lang['Regenerate photos list of this SmartAlbum'] = 'Regenerate photos list of this SmartAlbum';
 $lang['Update albums on file upload'] = 'Update albums on file upload';
 $lang['(can cause slowdowns)'] = '(can cause slowdowns)';
+$lang['Filters'] = 'Filters';
 
 ?>
