@@ -75,4 +75,5 @@ $lang['level_filter'] = 'Επίπεδο';
 $lang['limit_filter'] = 'Μέγιστος αριθμός εικόνων';
 $lang['name_filter'] = 'Όνομα φωτογραφίας ';
 $lang['tags_filter'] = 'Ετικέτες';
+$lang['Filters'] = 'Φίλτρα';
 ?>
