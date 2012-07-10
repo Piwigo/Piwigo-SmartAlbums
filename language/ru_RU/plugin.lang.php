@@ -75,4 +75,5 @@ $lang['level_filter'] = 'Уровень';
 $lang['limit_filter'] = 'Максимальное число фотографий';
 $lang['name_filter'] = 'Название фото';
 $lang['tags_filter'] = 'Тэги';
+$lang['Filters'] = 'Фильтры';
 ?>
