@@ -48,7 +48,7 @@ function plugin_activate()
     );
   foreach ($name_changes as $old => $new)
   {
-    pwg_query('UPDATE TABLE ' . smart_table . ' SET cond = "'.$new.'" WHERE cond = "'.$old.'";');
+    pwg_query('UPDATE ' . smart_table . ' SET cond = "'.$new.'" WHERE cond = "'.$old.'";');
   }
 }
 
