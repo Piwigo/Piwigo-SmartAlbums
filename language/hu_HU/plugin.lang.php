@@ -70,10 +70,6 @@ $lang['You can\'t use more than one level filter'] = 'Nem használható egyszerr
 $lang['You can\'t use more than one limit filter'] = 'Nem használható egyszerre egynél több határérték szűrő';
 $lang['author_filter'] = 'Szerző';
 $lang['create a new SmartAlbum'] = 'Új dinamikus album létrehozása';
-$lang['date_filter'] = 'Dátum';
-$lang['hit_filter'] = 'Találatok száma';
-$lang['level_filter'] = 'Hozzáférési szint';
-$lang['limit_filter'] = 'Képek max. száma';
-$lang['name_filter'] = 'Kép neve';
-$lang['tags_filter'] = 'Címkék';
+$lang['Hits'] = 'Találatok száma';
+$lang['Max. number of photos'] = 'Képek max. száma';
 ?>

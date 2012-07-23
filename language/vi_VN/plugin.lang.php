@@ -50,10 +50,6 @@ $lang['You can\'t use more than one level filter'] = 'Không thể dùng nhiều
 $lang['You can\'t use more than one limit filter'] = 'Không thể dùng nhiều lọc giới hạn';
 $lang['author_filter'] = 'Tác giả';
 $lang['create a new SmartAlbum'] = 'Tạo SmartAlbum';
-$lang['date_filter'] = 'Ngày';
-$lang['hit_filter'] = 'Số lần truy cập';
-$lang['level_filter'] = 'Cấp';
-$lang['limit_filter'] = 'Số hình tối đa';
-$lang['name_filter'] = 'Tên hình (ảnh)';
-$lang['tags_filter'] = 'Thẻ';
+$lang['Hits'] = 'Số lần truy cập';
+$lang['Max. number of photos'] = 'Số hình tối đa';
 ?>

@@ -7,8 +7,8 @@ var lang = new Array();
 var options = new Array();
 
 {foreach from=$options item=details key=mode}
-  lang['{$mode}_filter'] = '{$mode|cat:'_filter'|@translate|escape:javascript}';
-  {capture assign="option_content"}{html_options options=$details}{/capture}
+  lang['{$mode}_filter'] = '{$details.name|escape:javascript}';
+  {capture assign="option_content"}{html_options options=$details.options}{/capture}
   options['{$mode}'] = "{$option_content|escape:javascript}";
 {/foreach}
 
@@ -143,12 +143,12 @@ init_jquery_handlers();
           <span class="filter-title">
             <a href="#" class="removeFilter" title="{'remove this filter'|@translate}"><span>[x]</span></a>
             <input type="hidden" name="filters[{$i}][type]" value="{$filter.TYPE}"/>
-            {$filter.TYPE|cat:'_filter'|@translate}
+            {$filter.CAPTION}
           </span>
           
           <span class="filter-cond">
             <select name="filters[{$i}][cond]">
-              {html_options options=$options[$filter.TYPE] selected=$filter.COND}
+              {html_options options=$options[$filter.TYPE].options selected=$filter.COND}
             </select>
           </span>
           
@@ -181,13 +181,14 @@ init_jquery_handlers();
         <select id="addFilter">
           <option value="-1">{'Add a filter'|@translate}</option>
           <option disabled="disabled">------------------</option>
-          <option value="tags">{'tags_filter'|@translate}</option>
-          <option value="date">{'date_filter'|@translate}</option>
-          <option value="name">{'name_filter'|@translate}</option>
-          <option value="author">{'author_filter'|@translate}</option>
-          <option value="hit">{'hit_filter'|@translate}</option>
-          <option value="level">{'level_filter'|@translate}</option>
-          <option value="limit">{'limit_filter'|@translate}</option>
+          <option value="tags">{'Tags'|@translate}</option>
+          <option value="date">{'Date'|@translate}</option>
+          <option value="name">{'Photo name'|@translate}</option>
+          <option value="author">{'Author'|@translate}</option>
+          <option value="hit">{'Hits'|@translate}</option>
+          <option value="rating_score">{'Rating score'|@translate}</option>
+          <option value="level">{'Privacy level'|@translate}</option>
+          <option value="limit">{'Max. number of photos'|@translate}</option>
         </select>
         <a id="removeFilters">{'Remove all filters'|@translate}</a>
         {if isset($new_smart)}<span class="new_smart">{'Add filters here'|@translate}</span>{/if}

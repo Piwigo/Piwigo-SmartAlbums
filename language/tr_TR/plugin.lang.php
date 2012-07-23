@@ -70,10 +70,6 @@ $lang['You can\'t use more than one level filter'] = 'Birden fazla seviye filtre
 $lang['You can\'t use more than one limit filter'] = 'Birden fazla limit filtresi kullanamazsınız';
 $lang['author_filter'] = 'Yazar';
 $lang['create a new SmartAlbum'] = 'yeni bir SmartAlbum yarat';
-$lang['date_filter'] = 'Tarih';
-$lang['hit_filter'] = 'Tıklanma sayısı';
-$lang['level_filter'] = 'Seviye';
-$lang['limit_filter'] = 'Maks. fotoğraf sayısı';
-$lang['name_filter'] = 'Fotoğraf ismi';
-$lang['tags_filter'] = 'Etiketler';
+$lang['Hits'] = 'Tıklanma sayısı';
+$lang['Max. number of photos'] = 'Maks. fotoğraf sayısı';
 ?>

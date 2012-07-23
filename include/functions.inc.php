@@ -295,6 +295,22 @@ SELECT *
         break;
       }
       
+      // rating_score
+      case 'rating_score':
+      {
+        switch ($filter['cond'])
+        {
+          case 'less':
+            $where[] = 'rating_score < '.$filter['value'].'';
+            break;
+          case 'more':
+            $where[] = 'rating_score >= '.$filter['value'].'';
+            break;
+        }
+        
+        break;
+      }
+      
       // level
       case 'level':
       {
@@ -403,6 +419,15 @@ function smart_check_filter($filter)
     {
       $error = true;
       array_push($page['errors'], l10n('Hits must be an integer'));
+    }
+  }
+  # rating_score
+  else if ($filter['type'] == 'rating_score')
+  {
+    if (!preg_match('#([0-9]{1,})#', $filter['value']))
+    {
+      $error = true;
+      array_push($page['errors'], l10n('Rating score must be an integer'));
     }
   }
   # level

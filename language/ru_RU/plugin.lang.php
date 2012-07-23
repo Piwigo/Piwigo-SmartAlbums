@@ -69,11 +69,7 @@ $lang['You can\'t use more than one level filter'] = 'Вы не можете и�
 $lang['You can\'t use more than one limit filter'] = 'Вы не можете использовать более одного фильтра предела ';
 $lang['author_filter'] = 'Автор';
 $lang['create a new SmartAlbum'] = 'создать новый Умный Альбом';
-$lang['date_filter'] = 'Дата';
-$lang['hit_filter'] = 'Просмотры';
-$lang['level_filter'] = 'Уровень';
-$lang['limit_filter'] = 'Максимальное число фотографий';
-$lang['name_filter'] = 'Название фото';
-$lang['tags_filter'] = 'Тэги';
+$lang['Hits'] = 'Просмотры';
+$lang['Max. number of photos'] = 'Максимальное число фотографий';
 $lang['Filters'] = 'Фильтры';
 ?>

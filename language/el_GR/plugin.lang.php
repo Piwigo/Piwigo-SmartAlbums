@@ -69,11 +69,7 @@ $lang['You can\'t use more than one level filter'] = 'Δεν μπορείτε ν
 $lang['You can\'t use more than one limit filter'] = 'Δεν μπορείτε να χρησιμοποιήσετε περισσότερα από ένα όριο φίλτρου';
 $lang['author_filter'] = 'Δημιουργός';
 $lang['create a new SmartAlbum'] = 'δημιουργήστε ένα νέο SmartAlbum';
-$lang['date_filter'] = 'Ημερομηνία';
-$lang['hit_filter'] = 'Επισκέψεις';
-$lang['level_filter'] = 'Επίπεδο';
-$lang['limit_filter'] = 'Μέγιστος αριθμός εικόνων';
-$lang['name_filter'] = 'Όνομα φωτογραφίας ';
-$lang['tags_filter'] = 'Ετικέτες';
+$lang['Hits'] = 'Επισκέψεις';
+$lang['Max. number of photos'] = 'Μέγιστος αριθμός εικόνων';
 $lang['Filters'] = 'Φίλτρα';
 ?>

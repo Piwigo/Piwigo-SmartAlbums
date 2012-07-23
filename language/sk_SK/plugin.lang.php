@@ -70,10 +70,6 @@ $lang['You can\'t use more than one level filter'] = 'Nie je mo&#382;n&eacute; p
 $lang['You can\'t use more than one limit filter'] = 'Nie je mo&#382;n&eacute; pou&#382;i&#357; viac ako jednu hranicu filtrovania';
 $lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'vytvor nov&yacute; SmartAlbum';
-$lang['date_filter'] = 'D&aacute;tum';
-$lang['hit_filter'] = 'Pr&iacute;stupov';
-$lang['level_filter'] = '&Uacute;rove&#328;';
-$lang['limit_filter'] = 'Max. po&#269;et fotiek';
-$lang['name_filter'] = 'N&aacute;zov fotky';
-$lang['tags_filter'] = 'Tagov';
+$lang['Hits'] = 'Pr&iacute;stupov';
+$lang['Max. number of photos'] = 'Max. po&#269;et fotiek';
 ?>

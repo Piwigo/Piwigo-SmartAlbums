@@ -51,10 +51,6 @@ $lang['You can\'t use more than one level filter'] = 'Můžete použít pouze je
 $lang['You can\'t use more than one limit filter'] = 'Můžete použít pouze jeden omezující filtr';
 $lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'Vytvořit nové SmartAlbum';
-$lang['date_filter'] = 'Datum';
-$lang['hit_filter'] = 'Počet návštěv';
-$lang['level_filter'] = 'Úroveň';
-$lang['limit_filter'] = 'Max. počet fotek';
-$lang['name_filter'] = 'Název fotky';
-$lang['tags_filter'] = 'Tagy';
+$lang['Hits'] = 'Počet návštěv';
+$lang['Max. number of photos'] = 'Max. počet fotek';
 ?>

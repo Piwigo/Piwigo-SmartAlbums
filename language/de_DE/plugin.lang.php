@@ -51,10 +51,6 @@ $lang['You can\'t use more than one level filter'] = 'Nur ein Ebenen Filter erla
 $lang['You can\'t use more than one limit filter'] = 'Hier ist nur ein Filter erlaubt';
 $lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'Neues Smart Album erstellen';
-$lang['date_filter'] = 'Datum';
-$lang['hit_filter'] = 'Zugriffe';
-$lang['level_filter'] = 'Ebene';
-$lang['limit_filter'] = 'Max. Anzahl Bilder';
-$lang['name_filter'] = 'Bild Name';
-$lang['tags_filter'] = 'Schlagwörter';
+$lang['Hits'] = 'Zugriffe';
+$lang['Max. number of photos'] = 'Max. Anzahl Bilder';
 ?>

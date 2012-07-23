@@ -51,10 +51,6 @@ $lang['You can\'t use more than one level filter'] = 'Nav iespējams pielietot v
 $lang['You can\'t use more than one limit filter'] = 'Nav iespējams pielietot vairāk par vienu limitfiltru';
 $lang['author_filter'] = 'Autors';
 $lang['create a new SmartAlbum'] = 'izveidot jaunu ViedoAlbumu (SmartAlbum)';
-$lang['date_filter'] = 'Datums';
-$lang['hit_filter'] = 'Skatījumi';
-$lang['level_filter'] = 'Līmenis';
-$lang['limit_filter'] = 'Foto maksimālais skaits';
-$lang['name_filter'] = 'Foto nosaukums';
-$lang['tags_filter'] = 'Cilnes (tegi)';
+$lang['Hits'] = 'Skatījumi';
+$lang['Max. number of photos'] = 'Foto maksimālais skaits';
 ?>

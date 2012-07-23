@@ -71,10 +71,6 @@ $lang['You can\'t use more than one level filter'] = 'Não pode usar mais de um 
 $lang['You can\'t use more than one limit filter'] = 'Não pode usar mais de um limite de filtro';
 $lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'Criar um novo SmartAlbum';
-$lang['date_filter'] = 'Data';
-$lang['hit_filter'] = 'Número de vistas ';
-$lang['level_filter'] = 'Nível ';
-$lang['limit_filter'] = 'Número máximo de fotos';
-$lang['name_filter'] = 'Nome da fotografia ';
-$lang['tags_filter'] = 'Tags';
+$lang['Hits'] = 'Número de vistas ';
+$lang['Max. number of photos'] = 'Número máximo de fotos';
 ?>

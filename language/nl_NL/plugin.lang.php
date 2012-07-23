@@ -51,10 +51,6 @@ $lang['You can\'t use more than one level filter'] = 'Je kan niet meer dan een n
 $lang['You can\'t use more than one limit filter'] = 'Je kan niet meer dan een limiet filter gebruiken';
 $lang['author_filter'] = 'Auteur';
 $lang['create a new SmartAlbum'] = 'maak een nieuwe SmartAlbum';
-$lang['date_filter'] = 'Datum';
-$lang['hit_filter'] = 'Hits';
-$lang['level_filter'] = 'Niveau';
-$lang['limit_filter'] = 'Max. aantal foto\'s';
-$lang['name_filter'] = 'Foto naam';
-$lang['tags_filter'] = 'Tags';
+$lang['Hits'] = 'Hits';
+$lang['Max. number of photos'] = 'Max. aantal foto\'s';
 ?>

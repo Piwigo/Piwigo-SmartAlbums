@@ -133,16 +133,19 @@ INSERT IGNORE INTO '.CATEGORY_FILTERS_TABLE.'
 // +-----------------------------------------------------------------------+
 
 /* select options, for html_options */
-$template->assign(
-  'options', 
-  array(
-    'tags' => array(
+$options = array(
+  'tags' => array(
+    'name' => l10n('Tags'),
+    'options' => array(
       'all'   => l10n('All these tags'),
       'one'   => l10n('One of these tags'),
       'none'  => l10n('None of these tags'),
       'only'  => l10n('Only these tags'),
       ),
-    'date' => array(
+    ),
+  'date' => array(
+    'name' => l10n('Date'),
+    'options' => array(
       'the_post'      => l10n('Added on'),
       'before_post'   => l10n('Added before'),
       'after_post'    => l10n('Added after'),
@@ -150,8 +153,10 @@ $template->assign(
       'before_taken'  => l10n('Created before'),
       'after_taken'   => l10n('Created after'),
       ),
-    
-    'name' => array(
+    ),
+  'name' => array(
+    'name' => l10n('Photo name'),
+    'options' => array(
       'contain'     => l10n('Contains'),
       'begin'       => l10n('Begins with'),
       'end'         => l10n('Ends with'),
@@ -159,20 +164,40 @@ $template->assign(
       'not_begin'   => l10n('Doesn\'t begin with'),
       'not_end'     => l10n('Doesn\'t end with'),
       ),
-    'author' => array(
+    ),
+  'author' => array(
+    'name' => l10n('Author'),
+    'options' => array(
       'is'      => l10n('Is'),
       'in'      => l10n('Is in'),
       'not_is'  => l10n('Is not'),
       'not_in'  => l10n('Is not in'),
       ),
-    'hit' => array(
+    ),
+  'hit' => array(
+    'name' => l10n('Hits'),
+    'options' => array(
       'less' => l10n('Bellow'),
       'more' => l10n('Above'),
       ),
-    'level' => array('level' => 'level'), // second filter not used
-    'limit' => array('limit' => 'limit'), // second filter not used
-    )
+    ),
+  'rating_score' => array(
+    'name' => l10n('Rating score'),
+    'options' => array(
+      'less' => l10n('Bellow'),
+      'more' => l10n('Above'),
+      ),
+    ),
+  'level' => array(
+    'name' => l10n('Privacy level'),
+    'options' => array(),
+    ),
+  'limit' => array(
+    'name' => l10n('Max. number of photos'),
+    'options' => array(),
+    ),
   );
+$template->assign('options', $options);
 
 /* get filters for this album */
 $query = '
@@ -204,6 +229,7 @@ SELECT
     'TYPE' => $filter['type'],
     'COND' => $filter['cond'],
     'VALUE' => $filter['value'],
+    'CAPTION' => $options[ $filter['type'] ]['name'],
   ));
 }
 
