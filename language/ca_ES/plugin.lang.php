@@ -23,7 +23,7 @@
 $lang['%d photo'] = '%d imatge';
 $lang['%d photos associated to album %s'] = '%d imatges associades a l\'àlbum %s';
 $lang['%d photos'] = '%d imatges';
-$lang['(can cause slowdowns on admin pages)'] = '(Pot causar retards en les pàgines d\'administració)';
+$lang['can cause slowdowns on admin pages'] = 'Pot causar retards en les pàgines d\'administració';
 $lang['Add a SmartAlbum'] = 'Afegir un SmartAlbum';
 $lang['Add filters here'] = 'Afegir filtres aquí';
 $lang['Added after'] = 'Afegit després de';

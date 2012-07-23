@@ -7,6 +7,7 @@ define('smart_table', $prefixeTable . 'category_filters');
 define('smart_default_config', serialize(array(
     'update_on_upload' => false,
     'show_list_messages' => true,
+    'smart_is_forbidden' => true,
     )));
 
 function plugin_install() 
@@ -36,8 +37,18 @@ function plugin_activate()
   {
     conf_update_param('SmartAlbums', smart_default_config);
   }
+  else
+  {
+    $new_conf = unserialize($conf['SmartAlbums']);
+    // new param in 2.0.2
+    if (!isset($new_conf['smart_is_forbidden']))
+    {
+      $new_conf['smart_is_forbidden'] = true;
+      conf_update_param('SmartAlbums', smart_default_config);
+    }
+  }
   
-  /* some filters renamed in 1.2 */
+  // some filters renamed in 2.0
   $name_changes = array(
     'the' => 'the_post',
     'before' => 'before_post',

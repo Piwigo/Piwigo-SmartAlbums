@@ -28,7 +28,7 @@ $lang['SmartAlbum added'] = 'SmartAlbum přidáno';
 $lang['Only SmartAlbums are displayed on this page'] = 'Pouze SmartAlba jsou zobrazeny na této stránce';
 $lang['Don\'t show this message again'] = 'Ne/zobrazovat příště tuto zprávu';
 
-$lang['(can cause slowdowns)'] = '(může způsobovat zpomalení)';
+$lang['can cause slowdowns'] = 'může způsobovat zpomalení';
 $lang['Above'] = 'Nad';
 $lang['Author is empty'] = 'Autor je prázdný';
 $lang['Begins with'] = 'Začíná';

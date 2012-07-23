@@ -49,7 +49,7 @@ $lang['create a new SmartAlbum'] = 'creare un nuovo SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Rigenerare le foto di tutti i SmartAlbums';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Rigenerare le foto di questo SmartAlbum';
 $lang['Update albums on file upload'] = 'Aggiornare gli album dopo il caricamento di un file';
-$lang['(can cause slowdowns)'] = '(può causare rallentamenti)';
+$lang['can cause slowdowns'] = 'può causare rallentamenti';
 $lang['Filters'] = 'Filtri';
 
 ?>

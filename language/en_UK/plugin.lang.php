@@ -51,7 +51,9 @@ $lang['create a new SmartAlbum'] = 'create a new SmartAlbum';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Regenerate photos list of all SmartAlbums';
 $lang['Regenerate photos list of this SmartAlbum'] = 'Regenerate photos list of this SmartAlbum';
 $lang['Update albums on file upload'] = 'Update albums on file upload';
-$lang['(can cause slowdowns)'] = '(can cause slowdowns)';
+$lang['can cause slowdowns'] = 'can cause slowdowns';
 $lang['Filters'] = 'Filters';
+$lang['Exclude SmartAlbums from permissions management'] = 'Exclude SmartAlbums from permissions management';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.';
 
 ?>

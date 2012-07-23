@@ -28,7 +28,7 @@ $lang['SmartAlbum added'] = 'SmartAlbum pievienots';
 $lang['Only SmartAlbums are displayed on this page'] = 'Šajā lapā attēloti tikai  SmartAlbumi ';
 $lang['Don\'t show this message again'] = 'Nerādīt šo ziņojumu atkārtoti';
 
-$lang['(can cause slowdowns)'] = '(var izraisīt lēnu lejuplādi)';
+$lang['can cause slowdowns'] = 'var izraisīt lēnu lejuplādi';
 $lang['Above'] = 'Virs';
 $lang['Author is empty'] = 'Lauks Autors ir tukšs';
 $lang['Begins with'] = 'Sākas ar';

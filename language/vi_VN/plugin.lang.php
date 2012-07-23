@@ -28,7 +28,7 @@ $lang['SmartAlbum added'] = 'Đã thêm album Ảnh thông minh';
 $lang['Only SmartAlbums are displayed on this page'] = 'Chỉ có album Ảnh Thông minh mới hiển thị trên trang này';
 $lang['Don\'t show this message again'] = 'Không hiển thị thông báo này nữa';
 
-$lang['(can cause slowdowns)'] = '(có thể làm chậm Piwwigo)';
+$lang['can cause slowdowns'] = 'có thể làm chậm Piwwigo';
 $lang['Above'] = 'Bên trên';
 $lang['Author is empty'] = 'Không có thông tin Tác giả';
 $lang['Begins with'] = 'Bắt đầu với';

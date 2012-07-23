@@ -28,7 +28,7 @@ $lang['SmartAlbum added'] = 'SmartAlbum erstellt';
 $lang['Only SmartAlbums are displayed on this page'] = 'Auf dieser Seite werden nur SmartAlben angezeigt';
 $lang['Don\'t show this message again'] = 'Diese Nachricht nicht mehr anzeigen';
 
-$lang['(can cause slowdowns)'] = 'Kann das System verlangsamen';
+$lang['can cause slowdowns'] = 'Kann das System verlangsamen';
 $lang['Above'] = 'Darüber';
 $lang['Author is empty'] = 'Autor ist leer';
 $lang['Begins with'] = 'Beginnt mit';

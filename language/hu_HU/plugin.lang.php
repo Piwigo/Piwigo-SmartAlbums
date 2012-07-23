@@ -23,7 +23,7 @@
 $lang['%d photo'] = '%d kép';
 $lang['%d photos associated to album %s'] = '%d kép társítva a(z) %s albumhoz';
 $lang['%d photos'] = '%d kép';
-$lang['(can cause slowdowns)'] = '(lassulást okozhat)';
+$lang['can cause slowdowns'] = 'lassulást okozhat';
 $lang['Above'] = 'Felett';
 $lang['Add filters here'] = 'Adjon hozzá szűrőt!';
 $lang['Added after'] = 'Hozzáadva után';

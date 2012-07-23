@@ -28,7 +28,7 @@ $lang['SmartAlbum added'] = 'SmartAlbum toegevoegd';
 $lang['Only SmartAlbums are displayed on this page'] = 'Alleen SmartAlbums worden op deze pagina weergegeven';
 $lang['Don\'t show this message again'] = 'Toon dit bericht niet meer opnieuw';
 
-$lang['(can cause slowdowns)'] = '(kan vertraging veroorzaken)';
+$lang['can cause slowdowns'] = 'kan vertraging veroorzaken';
 $lang['Above'] = 'Boven';
 $lang['Author is empty'] = 'Auteur is leeg';
 $lang['Begins with'] = 'Starts met';
