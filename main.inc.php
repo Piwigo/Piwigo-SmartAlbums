@@ -38,9 +38,23 @@ function smart_init()
     
   include_once(SMART_PATH.'include/cat_list.php');
   
+  
   add_event_handler('loc_begin_cat_list', 'smart_cat_list');
-  add_event_handler('loc_begin_admin_page', 'smart_add_admin_album_tab');
+  add_event_handler('tabsheet_before_select','smart_tab', 50, 2); 
   add_event_handler('get_admin_plugin_menu_links', 'smart_admin_menu');
+}
+
+function smart_tab($sheets, $id)
+{
+  if ($id == 'album')
+  {
+    $sheets['smartalbum'] = array(
+      'caption' => 'SmartAlbum',
+      'url' => SMART_ADMIN.'-album&amp;cat_id='.$_GET['cat_id'],
+      );
+  }
+  
+  return $sheets;
 }
 
 function smart_admin_menu($menu) 
@@ -52,21 +66,4 @@ function smart_admin_menu($menu)
   return $menu;
 }
 
-function smart_add_admin_album_tab()
-{
-  global $page, $template;
-  if ($page['page'] != 'album') return;
-  
-  $template->assign('SMART_CAT_ID', $_GET['cat_id']);
-  $template->set_prefilter('tabsheet', 'smart_add_admin_album_tab_prefilter');
-}
-function smart_add_admin_album_tab_prefilter($content)
-{
-  $search = '{/foreach}';
-  $add = '
-<li class="{if false}selected_tab{else}normal_tab{/if}">
-  <a href="'.SMART_ADMIN.'-album&amp;cat_id={$SMART_CAT_ID}"><span>SmartAlbum</span></a>
-</li>';
-  return str_replace($search, $search.$add, $content);
-}
 ?>

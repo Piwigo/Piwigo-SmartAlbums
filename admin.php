@@ -3,7 +3,7 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 
 global $conf, $template, $page;
 
-$page['tab'] = (isset($_GET['tab'])) ? $_GET['tab'] : $page['tab'] = 'cat_list';
+$page['tab'] = (isset($_GET['tab'])) ? $_GET['tab'] : 'cat_list';
 
 if ($page['tab'] == 'album')
 {
@@ -17,10 +17,6 @@ else
   $tabsheet->add('config', l10n('Configuration'), SMART_ADMIN.'-config');
   $tabsheet->select($page['tab']);
   $tabsheet->assign();
-
-  $template->assign(array(
-    'SMART_PATH' => SMART_PATH,
-  ));
 
   include(SMART_PATH . 'admin/'.$page['tab'].'.php');
 }
