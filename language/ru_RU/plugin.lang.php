@@ -67,9 +67,12 @@ $lang['Name is empty'] = 'Название не указано';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Чтобы отсортировать альбомы, перейдите на <a href="%s">страницу управления</a> родительским альбом ';
 $lang['You can\'t use more than one level filter'] = 'Вы не можете использовать более одного фильтра уровня ';
 $lang['You can\'t use more than one limit filter'] = 'Вы не можете использовать более одного фильтра предела ';
-$lang['author_filter'] = 'Автор';
 $lang['create a new SmartAlbum'] = 'создать новый Умный Альбом';
 $lang['Hits'] = 'Просмотры';
 $lang['Max. number of photos'] = 'Максимальное число фотографий';
 $lang['Filters'] = 'Фильтры';
+$lang['Exclude SmartAlbums from permissions management'] = 'Исключить Умные Альбомы из управления правам доступа';
+$lang['Rating score must be an integer'] = 'Оценка должна быть целым числом';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Умные Альбомы считаются приватными для всех и пользователь может видеть их содержание только если изображения доступны ему в другом альбоме. ';
+$lang['limit_filter'] = 'Макс. количество изображений';
 ?>
