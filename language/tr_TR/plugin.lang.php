@@ -20,7 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['Contains'] = 'İçerir';
+$lang['Contains'] = 'İçermekte';
 $lang['%d photos associated to album %s'] = '%d fotoğraf %s albümüne ilişkilendirildi';
 $lang['%d photos'] = '%d fotoğraf';
 $lang['%d photo'] = '%d fotoğraf';
@@ -68,8 +68,11 @@ $lang['To order albums please go the main albums <a href="%s">management page</a
 $lang['Update albums on file upload'] = 'Dosya yüklemesi sırasında albümü güncelle';
 $lang['You can\'t use more than one level filter'] = 'Birden fazla seviye filtresi kullanamazsınız';
 $lang['You can\'t use more than one limit filter'] = 'Birden fazla limit filtresi kullanamazsınız';
-$lang['author_filter'] = 'Yazar';
 $lang['create a new SmartAlbum'] = 'yeni bir SmartAlbum yarat';
 $lang['Hits'] = 'Tıklanma sayısı';
 $lang['Max. number of photos'] = 'Maks. fotoğraf sayısı';
+$lang['Exclude SmartAlbums from permissions management'] = 'SmartAlbums\'ü izin yönetiminden hariç tut';
+$lang['Rating score must be an integer'] = 'Rating skoru tamsayı olmalıdır';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums herkes için özel olarak kabul edilir ve bir kullanıcı sadece başka bir albümde erişim hakkı varsa onun içeriğini görebilir.';
+$lang['limit_filter'] = 'Maks. fotoğraf sayısı';
 ?>
