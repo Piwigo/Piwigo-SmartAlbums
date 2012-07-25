@@ -52,4 +52,8 @@ $lang['Update albums on file upload'] = 'Aggiornare gli album dopo il caricament
 $lang['can cause slowdowns'] = 'può causare rallentamenti';
 $lang['Filters'] = 'Filtri';
 
+$lang['Exclude SmartAlbums from permissions management'] = 'Escludi SmartAlbums dalla gestione delle autorizzazioni';
+$lang['Rating score must be an integer'] = 'Punteggio di valutazione deve essere numero intero';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Gli SmartAlbums sono considerati privati per tutti, un utente può vedere il suo contenuto solo se disponibile in un altro album che ha accesso.';
+$lang['limit_filter'] = 'Massimo numero di foto';
 ?>
