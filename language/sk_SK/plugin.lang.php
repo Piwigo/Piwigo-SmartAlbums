@@ -68,8 +68,11 @@ $lang['Name is empty'] = 'Meno je pr&aacute;zdne';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Pre objednanie albumov prejdite na <a href="%s">str&aacute;nku spr&aacute;vy</a> hlavn&yacute;ch albumov.';
 $lang['You can\'t use more than one level filter'] = 'Nie je mo&#382;n&eacute; pou&#382;i&#357; viac ako jednu &uacute;rove&#328; filtrovania';
 $lang['You can\'t use more than one limit filter'] = 'Nie je mo&#382;n&eacute; pou&#382;i&#357; viac ako jednu hranicu filtrovania';
-$lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'vytvor nov&yacute; SmartAlbum';
 $lang['Hits'] = 'Pr&iacute;stupov';
 $lang['Max. number of photos'] = 'Max. po&#269;et fotiek';
+$lang['Exclude SmartAlbums from permissions management'] = 'Vylúčiť SmartAlbumy z riadenia oprávnení';
+$lang['Rating score must be an integer'] = 'Stav hodnotenia musí byť celé číslo';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbumy su považované za osobné pre všetkých, a užívateľ môže vidieť ich obsah iba ak sú k dispozícii v inom albume ku ktorému má prístup.';
+$lang['limit_filter'] = 'Max. počet fotiek';
 ?>
