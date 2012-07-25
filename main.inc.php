@@ -39,6 +39,7 @@ function smart_init()
     add_event_handler('loc_begin_cat_list', 'smart_cat_list');
     add_event_handler('tabsheet_before_select','smart_tab', EVENT_HANDLER_PRIORITY_NEUTRAL, 2); 
     add_event_handler('get_admin_plugin_menu_links', 'smart_admin_menu');
+    add_event_handler('delete_categories', 'smart_delete_categories');
   }
 }
 

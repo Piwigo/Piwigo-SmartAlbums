@@ -537,4 +537,16 @@ INSERT IGNORE INTO '.$table_name.'
   }
 }
 
+/**
+ * clean table when categories are deleted
+ */
+function smart_delete_categories($ids)
+{
+  $query = '
+DELETE FROM '.CATEGORY_FILTERS_TABLE.'
+  WHERE category_id IN('.implode(',', $ids).')
+;';
+  pwg_query($query);
+}
+
 ?>
