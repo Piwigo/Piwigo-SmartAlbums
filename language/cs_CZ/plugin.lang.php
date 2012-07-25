@@ -49,8 +49,10 @@ $lang['Name is empty'] = 'Jméno je prázdné';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Pro setřízení alb prosím jděte na <a href="%s">ovládací stránku</a>';
 $lang['You can\'t use more than one level filter'] = 'Můžete použít pouze jednoúrovňový filtr';
 $lang['You can\'t use more than one limit filter'] = 'Můžete použít pouze jeden omezující filtr';
-$lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'Vytvořit nové SmartAlbum';
 $lang['Hits'] = 'Počet návštěv';
 $lang['Max. number of photos'] = 'Max. počet fotek';
+$lang['Exclude SmartAlbums from permissions management'] = 'Vyřaď SmartAlbum ze správy práv';
+$lang['Rating score must be an integer'] = 'Skóre hodnocení musí být celočíselné číslo';
+$lang['limit_filter'] = 'Maximální množství fotografií';
 ?>
