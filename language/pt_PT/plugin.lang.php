@@ -69,8 +69,11 @@ $lang['To order albums please go the main albums <a href="%s">management page</a
 <a href="%s">gestão dos álbuns</a>';
 $lang['You can\'t use more than one level filter'] = 'Não pode usar mais de um nível de filtro';
 $lang['You can\'t use more than one limit filter'] = 'Não pode usar mais de um limite de filtro';
-$lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'Criar um novo SmartAlbum';
 $lang['Hits'] = 'Número de vistas ';
 $lang['Max. number of photos'] = 'Número máximo de fotos';
+$lang['Exclude SmartAlbums from permissions management'] = 'Excluiros Albuns Smartdas permissões';
+$lang['Rating score must be an integer'] = 'A avaliação deve ser um número integro';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Albuns Smart são considerados privados ara todos, e um utilizadorerá ver o conteúdo apenas se xistente noutro album onde ele tenha acesso';
+$lang['limit_filter'] = 'Número máximo de fotos';
 ?>
