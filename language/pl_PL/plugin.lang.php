@@ -68,8 +68,9 @@ $lang['Name is empty'] = 'Brak nazwy';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Aby posortować albumy udaj się do <a href="%s">zarządzania</a> głównymi albumami';
 $lang['You can\'t use more than one level filter'] = 'Nie możesz użyć więcej niż jednego filtra';
 $lang['You can\'t use more than one limit filter'] = 'Nie możesz użyć więcej niż jednego filtra dot. limitów';
-$lang['author_filter'] = 'Autor';
 $lang['create a new SmartAlbum'] = 'stwórz nowy SmartAlbum';
 $lang['Hits'] = 'Wyświetlenia';
 $lang['Max. number of photos'] = 'Maksymalna liczba zdjęć';
+$lang['Rating score must be an integer'] = 'Ocena musi być liczbą całkowitą';
+$lang['limit_filter'] = 'Maksymalna ilość zdjęć';
 ?>
