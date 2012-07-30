@@ -45,7 +45,11 @@ function smart_init()
 
 function smart_tab($sheets, $id)
 {
-  if ($id == 'album')
+  if ($id != 'album') return $sheets;
+  
+  global $category;
+  
+  if ($category['dir'] == null)
   {
     $sheets['smartalbum'] = array(
       'caption' => 'SmartAlbum',
