@@ -67,9 +67,12 @@ $lang['Name is empty'] = 'Το όνομα είναι άδειο';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Για να παραγγείλετε παρακαλούμε επισκεφθείτε τη <a href="%s">Σελίδα Διαχείρισης</a> του λευκώματος';
 $lang['You can\'t use more than one level filter'] = 'Δεν μπορείτε να χρησιμοποιήσετε περισσότερα από ένα επίπεδο φιλτραρίσματος';
 $lang['You can\'t use more than one limit filter'] = 'Δεν μπορείτε να χρησιμοποιήσετε περισσότερα από ένα όριο φίλτρου';
-$lang['author_filter'] = 'Δημιουργός';
 $lang['create a new SmartAlbum'] = 'δημιουργήστε ένα νέο SmartAlbum';
 $lang['Hits'] = 'Επισκέψεις';
 $lang['Max. number of photos'] = 'Μέγιστος αριθμός εικόνων';
 $lang['Filters'] = 'Φίλτρα';
+$lang['Exclude SmartAlbums from permissions management'] = 'Εξαίρεση των SmartAlbums από τη διαχείριση δικαιωμάτων';
+$lang['Rating score must be an integer'] = 'Η Βαθμολογία κατάταξης πρέπει να είναι ακέραιος';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Τα SmartAlbums θεωρούνται ιδιωτικά για όλους, και ο χρήστης μπορεί να δει το περιεχόμενο τους εαν είναι διαθέσιμο μόνο σε ένα άλμπουμ που έχει πρόσβαση.';
+$lang['limit_filter'] = 'Μέγιστος αριθμός φωτογραφιών';
 ?>
