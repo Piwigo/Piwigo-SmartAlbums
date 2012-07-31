@@ -37,11 +37,13 @@ $lang['Name is empty'] = 'Il nome è vuoto';
 $lang['Author is empty'] = 'L\'autore è vuoto';
 $lang['Hits must be an integer'] = 'Il numero di visite deve essere un numero intero';
 $lang['Limit must be an integer'] = 'Il limite deve essere un numero intero';
+$lang['Rating score must be an integer'] = 'Punteggio di valutazione deve essere numero intero';
 $lang['You can\'t use more than one limit filter'] = 'Potete scegliere un solo limite per il numero di elementi';
 $lang['You can\'t use more than one level filter'] = 'Potete scegliere un solo livello di privacy';
 $lang['Hits'] = 'Numero di visite';
 $lang['Max. number of photos'] = 'Numero massimo di elementi';
 $lang['For "Is (not) in", separate each author by a comma'] = 'Per "È/Non è nel", separare ogni autore da una virgola';
+$lang['limit_filter'] = 'Massimo numero di foto';
 $lang['This album is a SmartAlbum'] = 'Questo album è uno SmartAlbum';
 $lang['Add filters here'] = 'Aggiungere i filtri quì';
 $lang['Count'] = 'Contare';
@@ -51,9 +53,7 @@ $lang['Regenerate photos list of this SmartAlbum'] = 'Rigenerare le foto di ques
 $lang['Update albums on file upload'] = 'Aggiornare gli album dopo il caricamento di un file';
 $lang['can cause slowdowns'] = 'può causare rallentamenti';
 $lang['Filters'] = 'Filtri';
-
 $lang['Exclude SmartAlbums from permissions management'] = 'Escludi SmartAlbums dalla gestione delle autorizzazioni';
-$lang['Rating score must be an integer'] = 'Punteggio di valutazione deve essere numero intero';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Gli SmartAlbums sono considerati privati per tutti, un utente può vedere il suo contenuto solo se disponibile in un altro album che ha accesso.';
-$lang['limit_filter'] = 'Massimo numero di foto';
+
 ?>
