@@ -55,4 +55,5 @@ $lang['Max. number of photos'] = 'Max. počet fotek';
 $lang['Exclude SmartAlbums from permissions management'] = 'Vyřaď SmartAlbum ze správy práv';
 $lang['Rating score must be an integer'] = 'Skóre hodnocení musí být celočíselné číslo';
 $lang['limit_filter'] = 'Maximální množství fotografií';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlba jsou považována za soukromá (private) pro všechny uživatele a uživatel může vidět jejich obsah pouze, pokud má přístup do alba odkud je obsah brán.';
 ?>
