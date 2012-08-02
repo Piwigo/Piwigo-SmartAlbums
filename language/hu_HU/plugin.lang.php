@@ -68,8 +68,9 @@ $lang['To order albums please go the main albums <a href="%s">management page</a
 $lang['Update albums on file upload'] = 'Albumok frissítése képek feltöltésekor';
 $lang['You can\'t use more than one level filter'] = 'Nem használható egyszerre egynél több szintű szűrő';
 $lang['You can\'t use more than one limit filter'] = 'Nem használható egyszerre egynél több határérték szűrő';
-$lang['author_filter'] = 'Szerző';
 $lang['create a new SmartAlbum'] = 'Új dinamikus album létrehozása';
 $lang['Hits'] = 'Találatok száma';
 $lang['Max. number of photos'] = 'Képek max. száma';
+$lang['limit_filter'] = 'Képek maximális száma';
+$lang['Rating score must be an integer'] = 'Az értékelés pontszáma egész szám legyen!';
 ?>
