@@ -49,8 +49,11 @@ $lang['Name is empty'] = 'Lauks Nosaukums ir tukšs';
 $lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Lai pasūtītu albūmus, lūdzu ejiet uz galveno albūmu izvēlni <a href="%s">pārvaldes lapa</a>';
 $lang['You can\'t use more than one level filter'] = 'Nav iespējams pielietot vairāk par vienu līmeņa filtru';
 $lang['You can\'t use more than one limit filter'] = 'Nav iespējams pielietot vairāk par vienu limitfiltru';
-$lang['author_filter'] = 'Autors';
 $lang['create a new SmartAlbum'] = 'izveidot jaunu ViedoAlbumu (SmartAlbum)';
 $lang['Hits'] = 'Skatījumi';
 $lang['Max. number of photos'] = 'Foto maksimālais skaits';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums tiek uzskatīti kā privāti ikvienam, un lietotājs var redzēt tā saturu tikai tad, ja tas ir pieejams citā albumā, kur viņam ir dota pieeja.';
+$lang['Exclude SmartAlbums from permissions management'] = 'Izslēgt SmartAlbums no atļauju pārvadības';
+$lang['Rating score must be an integer'] = 'Vērtējumam jābūt veselam skaitlim';
+$lang['limit_filter'] = 'Fotogrāfiju maksimālais skaits';
 ?>
