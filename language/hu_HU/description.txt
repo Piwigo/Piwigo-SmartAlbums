@@ -1,1 +1,1 @@
-Dinamikus albumok létrehozása címkék, dátomok vagy egyéb kritériumok alapján.
+Intelligens albumok létrehozása címkék, dátomok vagy egyéb kritériumok alapján.
