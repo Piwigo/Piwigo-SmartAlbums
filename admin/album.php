@@ -161,6 +161,15 @@ $options = array(
       'not_end'     => l10n('Doesn\'t end with'),
       ),
     ),
+  'album' => array(
+    'name' => l10n('Album'),
+    'options' => array(
+      'all'   => l10n('All these albums'),
+      'one'   => l10n('One of these albums'),
+      'none'  => l10n('None of these albums'),
+      'only'  => l10n('Only these albums'),
+      ),
+    ),
   'author' => array(
     'name' => l10n('Author'),
     'options' => array(
@@ -220,6 +229,10 @@ SELECT
 ;';
     $filter['value'] = get_taglist($query); 
   }
+  else if ($filter['type'] == 'album')
+  {
+    $filter['value'] = explode(',', $filter['value']); 
+  }
   
   $template->append('filters', array(
     'TYPE' => $filter['type'],
@@ -236,7 +249,18 @@ SELECT
     name
   FROM '.TAGS_TABLE.'
 ;';
-$all_tags = get_taglist($query);
+$template->assign('all_tags', get_taglist($query));
+
+/* all albums */
+$query = '
+SELECT 
+    id, 
+    name, 
+    uppercats, 
+    global_rank
+  FROM '.CATEGORIES_TABLE.'
+;';
+display_select_cat_wrapper($query, array(), 'all_albums');
 
 /* get image number */
 if ($template->get_template_vars('IMAGE_COUNT') == null)
@@ -253,6 +277,8 @@ SELECT count(1)
   $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', $image_num));
 }
 
+
+/* template vars */
 if (isset($_GET['new_smart']))
 {
   $template->assign('new_smart', true);
@@ -260,7 +286,6 @@ if (isset($_GET['new_smart']))
 
 $template->assign(array(
   'COUNT_SCRIPT_URL' => SMART_PATH.'include/count_images.php',
-  'all_tags' => $all_tags,
   'level_options' => get_privacy_level_options(),
   'F_ACTION' => $self_url,
   'CATEGORIES_NAV' => get_cat_display_name_cache(

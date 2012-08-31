@@ -1,8 +1,12 @@
 {combine_css path=$SMART_PATH|@cat:"admin/template/style.css"}
+
 {include file='include/datepicker.inc.tpl'}
 {combine_script id='jquery.tokeninput' load='async' require='jquery' path='themes/default/js/plugins/jquery.tokeninput.js'}
 
-{footer_script require='jquery.tokeninput'}
+{combine_css path="themes/default/js/plugins/chosen.css"}
+{combine_script id='jquery.chosen' load='footer' path='themes/default/js/plugins/chosen.jquery.min.js'}
+
+{footer_script require='jquery.tokeninput,jquery.chosen'}
 var lang = new Array();
 var options = new Array();
 
@@ -12,10 +16,13 @@ var options = new Array();
   options['{$mode}'] = "{$option_content|escape:javascript}";
 {/foreach}
 
+lang['Select albums...'] = '{'Select albums...'|@translate}';
 lang['For "Is (not) in", separate each author by a comma'] = '{'For "Is (not) in", separate each author by a comma'|@translate|escape:javascript}';
 lang['remove this filter'] = '{'remove this filter'|@translate|escape:javascript}';
 {capture assign="option_content"}{html_options options=$level_options selected=0}{/capture}
 options['level_options'] = "{$option_content|escape:javascript}";
+{capture assign="option_content"}{html_options options=$all_albums selected=0}{/capture}
+options['album_options'] = "{$option_content|escape:javascript}";
 
 {literal}
 $('#addFilter').change(function() {
@@ -57,15 +64,22 @@ function add_filter(type) {
     '</span>'+
     ' <span class="filter-value">';
   
-  if (type == 'tags')
+  if (type == 'tags') {
     content+= ' <select name="filters['+ i +'][value]" class="tagSelect"></select>';
-  else if (type == 'level')
+  }
+  else if (type == 'album') {
+    content+= ' <select name="filters['+ i +'][value][]" class="albumSelect" multiple="multiple" data-placeholder="'+ lang['Select albums...'] +'">'+ options['album_options'] +'</select>';
+  }
+  else if (type == 'level') {
     content+= ' <select name="filters['+ i +'][value]">'+ options['level_options'] +'</select>';
-  else
+  }
+  else {
     content+= ' <input type="text" name="filters['+ i +'][value]" size="30"/>';
+  }
   
-  if (type == 'author')
+  if (type == 'author') {
     content+= ' <i>'+ lang['For "Is (not) in", separate each author by a comma'] +'</i>';
+  }
     
   content+= '</span>';
   
@@ -99,6 +113,8 @@ function init_jquery_handlers() {
   {literal}
     }
   );
+  
+  jQuery(".albumSelect").chosen();
 }
 
 function countImages(form) {
@@ -159,6 +175,10 @@ init_jquery_handlers();
               <option value="{$tag.id}" class="selected">{$tag.name}</option>
             {/foreach}
             </select>
+          {elseif $filter.TYPE == 'album'}
+            <select name="filters[{$i}][value][]" class="albumSelect" multiple="multiple" data-placeholder="{'Select albums...'|@translate}">
+              {html_options options=$all_albums selected=$filter.VALUE}
+            </select>
           {elseif $filter.TYPE == 'level'}
             <select name="filters[{$i}][value]">
               {html_options options=$level_options selected=$filter.VALUE}
@@ -184,6 +204,7 @@ init_jquery_handlers();
           <option value="tags">{'Tags'|@translate}</option>
           <option value="date">{'Date'|@translate}</option>
           <option value="name">{'Photo name'|@translate}</option>
+          <option value="album">{'Album'|@translate}</option>
           <option value="author">{'Author'|@translate}</option>
           <option value="hit">{'Hits'|@translate}</option>
           <option value="rating_score">{'Rating score'|@translate}</option>

@@ -253,6 +253,79 @@ SELECT *
         break;
       }
       
+      // album
+      case 'album':
+      {
+        switch ($filter['cond'])
+        {
+          // search images existing in all albums
+          case 'all':
+          {
+            $albums_arr = explode(',', $filter['value']);
+            foreach($albums_arr as $value)
+            {
+              $sub_query = '
+      SELECT image_id 
+        FROM '.IMAGE_CATEGORY_TABLE.'
+        WHERE category_id = '.$value.'
+      ';
+              $where[] = 'i.id IN ('.$sub_query.')';
+            }
+            
+            break;
+          }
+          // search images existing in one of these albums
+          case 'one':
+          {
+            $sub_query = '
+      SELECT image_id
+        FROM '.IMAGE_CATEGORY_TABLE.'
+        WHERE category_id IN('.$filter['value'].')
+      ';
+            $where[] = 'i.id IN ('.$sub_query.')';
+            
+            break;
+          }
+          // exclude images existing in one of these albums
+          case 'none':
+          {
+            $sub_query = '
+      SELECT image_id
+        FROM '.IMAGE_CATEGORY_TABLE.'
+        WHERE category_id IN('.$filter['value'].')
+      ';
+            $where[] = 'i.id NOT IN ('.$sub_query.')';
+            
+            break;
+          }
+          // exclude images existing on other albums, and search images existing in all albums
+          case 'only':
+          {
+            $sub_query = '
+      SELECT image_id
+        FROM '.IMAGE_CATEGORY_TABLE.'
+        WHERE category_id NOT IN('.$filter['value'].')
+      ';
+            $where[] = 'i.id NOT IN ('.$sub_query.')';
+            
+            $albums_arr = explode(',', $filter['value']);
+            foreach($albums_arr as $value)
+            {
+              $sub_query = '
+      SELECT image_id 
+        FROM '.IMAGE_CATEGORY_TABLE.'
+        WHERE category_id = '.$value.'
+      ';
+              $where[] = 'i.id IN ('.$sub_query.')';
+            }
+            
+            break;
+          }
+        }
+        
+        break;
+      }
+      
       // author
       case 'author':
       {
@@ -397,6 +470,19 @@ function smart_check_filter($filter)
     {
       $error = true;
       array_push($page['errors'], l10n('Name is empty'));
+    }
+  }
+  # album
+  else if ($filter['type'] == 'album')
+  {
+    if (@$filter['value'] == null)
+    {
+      $error = true;
+      array_push($page['errors'], l10n('No album selected'));
+    }
+    else
+    {
+      $filter['value'] = implode(',', $filter['value']);
     }
   }
   # author
