@@ -75,4 +75,9 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Vylúčiť SmartAlbu
 $lang['Rating score must be an integer'] = 'Stav hodnotenia musí byť celé číslo';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbumy su považované za osobné pre všetkých, a užívateľ môže vidieť ich obsah iba ak sú k dispozícii v inom albume ku ktorému má prístup.';
 $lang['limit_filter'] = 'Max. počet fotiek';
+$lang['Only these albums'] = 'Len tieto albumy';
+$lang['One of these albums'] = 'Jeden z týchto albumov';
+$lang['None of these albums'] = 'Žiaden z týchto albumov';
+$lang['No album selected'] = 'Žiaden album označený';
+$lang['All these albums'] = 'Všetky tieto albumy';
 ?>
