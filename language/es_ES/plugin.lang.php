@@ -56,4 +56,9 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Excluir SmartAlbums 
 $lang['Rating score must be an integer'] = 'Calificación de puntuación debe ser un entero';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums se considera privado para todo el mundo, un usuario puede ver su contenido sólo si está disponible en otro álbum donde tiene acceso.';
 $lang['limit_filter'] = 'Numero máximo de fotos';
+$lang['All these albums'] = 'Todos estos álbumes ';
+$lang['No album selected'] = 'Ningún álbum seleccionado ';
+$lang['None of these albums'] = 'Ninguno de estos álbumes';
+$lang['One of these albums'] = 'Uno de estos álbumes';
+$lang['Only these albums'] = 'Solo este àlbum';
 ?>
