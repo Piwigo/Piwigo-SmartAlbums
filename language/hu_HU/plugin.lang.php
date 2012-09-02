@@ -73,4 +73,9 @@ $lang['Hits'] = 'Találatok száma';
 $lang['Max. number of photos'] = 'Képek max. száma';
 $lang['limit_filter'] = 'Képek maximális száma';
 $lang['Rating score must be an integer'] = 'Az értékelés pontszáma egész szám legyen!';
+$lang['None of these albums'] = 'Ezen albumok egyike sem';
+$lang['One of these albums'] = 'Ezen albumok egyike';
+$lang['Only these albums'] = 'Csak ezek az albumok';
+$lang['All these albums'] = 'Ezen albumok mindegyike';
+$lang['No album selected'] = 'Nincs album kiválasztva';
 ?>
