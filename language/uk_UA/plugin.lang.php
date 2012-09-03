@@ -75,4 +75,9 @@ $lang['Above'] = 'Вище';
 $lang['Author is empty'] = 'Автор порожній';
 $lang['Begins with'] = 'Починається з';
 $lang['Contains'] = 'Містить';
+$lang['All these albums'] = 'Усі ці альбоми';
+$lang['No album selected'] = 'Немає вибраного альбому';
+$lang['None of these albums'] = 'Жоден з цих альбомів';
+$lang['One of these albums'] = 'Один з цих альбомів';
+$lang['Only these albums'] = 'Тільки ці альбоми';
 ?>
