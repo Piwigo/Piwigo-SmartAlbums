@@ -75,4 +75,9 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Εξαίρεση τ�
 $lang['Rating score must be an integer'] = 'Η Βαθμολογία κατάταξης πρέπει να είναι ακέραιος';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Τα SmartAlbums θεωρούνται ιδιωτικά για όλους, και ο χρήστης μπορεί να δει το περιεχόμενο τους εαν είναι διαθέσιμο μόνο σε ένα άλμπουμ που έχει πρόσβαση.';
 $lang['limit_filter'] = 'Μέγιστος αριθμός φωτογραφιών';
+$lang['Only these albums'] = 'Μόνο αυτά τα λευκώματα';
+$lang['One of these albums'] = 'Ένα από αυτά τα λευκώματα';
+$lang['None of these albums'] = 'Κανένα από αυτά τα λευκώματα';
+$lang['No album selected'] = 'Δεν επιλέχτηκε λεύκωμα';
+$lang['All these albums'] = 'Όλα αυτά τα λευκώματα';
 ?>
