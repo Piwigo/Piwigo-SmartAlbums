@@ -56,4 +56,9 @@ $lang['SmartAlbums are considered private for everyone, and a user can see it\'s
 $lang['Exclude SmartAlbums from permissions management'] = 'Izslēgt SmartAlbums no atļauju pārvadības';
 $lang['Rating score must be an integer'] = 'Vērtējumam jābūt veselam skaitlim';
 $lang['limit_filter'] = 'Fotogrāfiju maksimālais skaits';
+$lang['Only these albums'] = 'Tikai šie albūmi';
+$lang['One of these albums'] = 'Viens no šiem albūmiem';
+$lang['None of these albums'] = 'Neviens no šiem albūmiem';
+$lang['No album selected'] = 'Nav izvēlēts neviens albūms';
+$lang['All these albums'] = 'Visi šie albūmi';
 ?>
