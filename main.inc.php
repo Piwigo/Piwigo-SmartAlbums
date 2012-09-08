@@ -14,7 +14,7 @@ global $prefixeTable;
 define('SMART_PATH',    PHPWG_PLUGINS_PATH . 'SmartAlbums/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable . 'category_filters');
 define('SMART_ADMIN',   get_root_url() . 'admin.php?page=plugin-SmartAlbums');
-define('SMART_VERSION', '2.0.3');
+define('SMART_VERSION', '2.0.4');
 
 
 add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
