@@ -1,1 +1,1 @@
-Tilføjelse af dynamiske albums med tags, dato og andre kriterier
+Tilføjelse af dynamiske albummer med tags, dato og andre kriterier.
