@@ -56,4 +56,9 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Vyřaď SmartAlbum z
 $lang['Rating score must be an integer'] = 'Skóre hodnocení musí být celočíselné číslo';
 $lang['limit_filter'] = 'Maximální množství fotografií';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlba jsou považována za soukromá (private) pro všechny uživatele a uživatel může vidět jejich obsah pouze, pokud má přístup do alba odkud je obsah brán.';
+$lang['All these albums'] = 'Všechna tato alba';
+$lang['No album selected'] = 'Žádné album nebylo vybráno';
+$lang['None of these albums'] = 'Žádné z těchto alb';
+$lang['One of these albums'] = 'Jedno z těchto alb';
+$lang['Only these albums'] = 'Pouze tato alba';
 ?>
