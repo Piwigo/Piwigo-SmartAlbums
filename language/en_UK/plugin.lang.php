@@ -48,7 +48,6 @@ $lang['You can\'t use more than one level filter'] = 'You can\'t use more than o
 $lang['Hits'] = 'Hits';
 $lang['Max. number of photos'] = 'Max. number of photos';
 $lang['For "Is (not) in", separate each author by a comma'] = 'For "Is (not) in", separate each author by a comma';
-$lang['limit_filter'] = 'Max. number of photos';
 $lang['This album is a SmartAlbum'] = 'This album is a SmartAlbum';
 $lang['Add filters here'] = 'Add filters here';
 $lang['Count'] = 'Count';
