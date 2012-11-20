@@ -57,7 +57,7 @@ $lang['Regenerate photos list of this SmartAlbum'] = 'Régénérer les photos de
 $lang['Update albums on file upload'] = 'Mettre à jour les albums après la mise en ligne d\'un fichier';
 $lang['can cause slowdowns'] = 'peut causer des ralentissements';
 $lang['Filters'] = 'Filtres';
-$lang['Exclude SmartAlbums from permissions management'] = 'Exlure les SmartAlbums de la gestion des droits d\'accès';
+$lang['Exclude SmartAlbums from permissions management'] = 'Exclure les SmartAlbums de la gestion des droits d\'accès';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Les SmartAlbums sont considérés comme privés pour tout le monde, et un utilisateur ne peut voir leur contenu que si disponible dans un autre album auquel il a accès.';
 
 ?>
