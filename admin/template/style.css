@@ -2,12 +2,17 @@
   display:inline-block;
   vertical-align:bottom;
 }
-#batchManagerGlobal #filterList li.token-input-token {
+#batchManagerGlobal #filtersList li.token-input-token {
   margin-bottom:0px !important;
   padding-top:0;
 }
-#batchManagerGlobal #filterList li.token-input-input-token {
+#batchManagerGlobal #filtersList li.token-input-input-token {
   margin-bottom:-3px !important; 
+}
+
+#batchManagerGlobal .filter_dimensions .ui-slider-horizontal {
+    margin: 5px 0 10px;
+    width: 500px;
 }
 
 .new_smart {
@@ -18,14 +23,15 @@
   border-radius:4px;
 }
 
-#filterList li {
+#filtersList li {
   padding:2px;
   border-bottom:1px dotted rgba(100, 100, 100, 0.5);
+  display:block;
 }
-#filterList li span {
+#filtersList li>span {
   display:inline-block;
 }
-#filterList li span * {
+#filtersList li span * {
   vertical-align:middle;
 }
 
@@ -38,10 +44,6 @@
 }
 .filter-cond {
   width:220px;
-}
-
-.filter_limit .filter-cond, .filter_level .filter-cond {
-  display:none !important;
 }
 
 .filter_error {

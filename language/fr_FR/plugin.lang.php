@@ -22,6 +22,7 @@ $lang['Ends with'] = 'Fini par';
 $lang['Doesn\'t contain'] = 'Ne contient pas';
 $lang['Doesn\'t begin with'] = 'Ne commence pas par';
 $lang['Doesn\'t end with'] = 'Ne fini pas par';
+$lang['Regular expression'] = 'Expression régulière';
 $lang['Is'] = 'Est';
 $lang['Is in'] = 'Est dans';
 $lang['Is not'] = 'N\'est pas';
@@ -43,6 +44,7 @@ $lang['Author is empty'] = 'L\'auteur est vide';
 $lang['Hits must be an integer'] = 'Le nombre de vues doit être un entier';
 $lang['Limit must be an integer'] = 'La nombre d\'éléments doit être un entier';
 $lang['Rating score must be an integer'] = 'Le score doit être un entier';
+$lang['Regex is malformed'] = 'Regex malformée';
 $lang['You can\'t use more than one limit filter'] = 'Vous ne pouvez choisir qu\'une seule limite de nombre d\'éléments';
 $lang['You can\'t use more than one level filter'] = 'Vous ne pouvez choisir qu\'un seul niveau de confidentialité';
 $lang['Hits'] = 'Nombre de vues';
@@ -59,5 +61,6 @@ $lang['can cause slowdowns'] = 'peut causer des ralentissements';
 $lang['Filters'] = 'Filtres';
 $lang['Exclude SmartAlbums from permissions management'] = 'Exclure les SmartAlbums de la gestion des droits d\'accès';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Les SmartAlbums sont considérés comme privés pour tout le monde, et un utilisateur ne peut voir leur contenu que si disponible dans un autre album auquel il a accès.';
+$lang['Update albums every %s days'] = 'Mettre à jour les albums tous les %s jours';
 
 ?>

@@ -10,8 +10,11 @@ function smart_albums_install()
   {
     $smart_default_config = serialize(array(
       'update_on_upload' => false,
+      'update_on_date' => true,
+      'update_timeout' => 3,
       'show_list_messages' => true,
       'smart_is_forbidden' => true,
+      'last_update' => 0,
       ));
     
     conf_update_param('SmartAlbums', $smart_default_config);
@@ -24,9 +27,16 @@ function smart_albums_install()
     if (!isset($new_conf['smart_is_forbidden']))
     {
       $new_conf['smart_is_forbidden'] = true;
-      conf_update_param('SmartAlbums', serialize($new_conf));
-      $conf['SmartAlbums'] = serialize($new_conf);
     }
+    // new params in 2.1.0
+    if (!isset($new_conf['update_on_date']))
+    {
+      $new_conf['update_on_date'] = true;
+      $new_conf['update_timeout'] = 3;
+      $new_conf['last_update'] = 0;
+    }
+    conf_update_param('SmartAlbums', serialize($new_conf));
+    $conf['SmartAlbums'] = serialize($new_conf);
   }
   
   // new table
@@ -44,6 +54,13 @@ function smart_albums_install()
   if (!pwg_db_num_rows($result))
   {      
     pwg_query('ALTER TABLE `' . IMAGE_CATEGORY_TABLE . '` ADD `smart` ENUM(\'true\', \'false\') NOT NULL DEFAULT \'false\';');
+  }
+  
+  // new column on category table
+  $result = pwg_query('SHOW COLUMNS FROM `' . CATEGORIES_TABLE . '` LIKE "smart_update";');
+  if (!pwg_db_num_rows($result))
+  {      
+    pwg_query('ALTER TABLE `' . CATEGORIES_TABLE . '` ADD `smart_update` DATETIME NOT NULL;');
   }
   
   // date filters renamed in 2.0
@@ -67,7 +84,7 @@ SELECT category_id
       );
     foreach ($name_changes as $old => $new)
     {
-      pwg_query('UPDATE `' . $prefixeTable . 'category_filters` SET cond = "'.$new.'" WHERE cond = "'.$old.'";');
+      pwg_query('UPDATE `' . $prefixeTable . 'category_filters` SET cond = "'.$new.'" WHERE type = "date" AND cond = "'.$old.'";');
     }
   }
 }

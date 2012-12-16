@@ -20,8 +20,7 @@ SELECT
     name,
     permalink,
     dir,
-    rank,
-    status
+    smart_update
   FROM '.CATEGORIES_TABLE.' AS cat
   INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
     ON cf.category_id = cat.id
@@ -123,15 +122,18 @@ if ($conf['SmartAlbums']['show_list_messages'])
 // |                          Categories display                           |
 // +-----------------------------------------------------------------------+
 
-// get the categories containing images directly 
-$categories_with_images = array();
+$categories_count_images = array();
 if ( count($categories) )
 {
   $query = '
-SELECT DISTINCT category_id 
+SELECT 
+    category_id, 
+    COUNT(image_id) AS total_images
   FROM '.IMAGE_CATEGORY_TABLE.'
-  WHERE category_id IN ('.implode(',', array_keys($categories)).')';
-  $categories_with_images = array_flip( array_from_query($query, 'category_id') );
+  WHERE category_id IN ('.implode(',', array_keys($categories)).')
+  GROUP BY category_id
+;';
+  $categories_count_images = simple_hash_from_query($query, 'category_id', 'total_images');
 }
 
 $template->assign('categories', array());
@@ -140,26 +142,16 @@ foreach ($categories as $category)
 {
   $tpl_cat =
     array(
-      'NAME'       => get_cat_display_name_from_id($category['id'], $base_url.'album-'),
-      'ID'         => $category['id'],
-      'RANK'       => $category['rank']*10,
+      'NAME'        => get_cat_display_name_from_id($category['id'], $base_url.'album-'),
+      'ID'          => $category['id'],
+      'IMG_COUNT'   => !empty($categories_count_images[ $category['id'] ]) ? $categories_count_images[ $category['id'] ] : 0,
+      'LAST_UPDATE' => format_date($category['smart_update'], true),
 
-      'U_JUMPTO'   => make_index_url(
-        array(
-          'category' => $category
-          )
-        ),
-
-      'U_EDIT'     => $base_url.'album-'.$category['id'],
-      'U_DELETE'   => $self_url.'&amp;delete='.$category['id'].'&amp;pwg_token='.get_pwg_token(),
-      'U_SMART'    => $self_url.'&amp;smart_generate='.$category['id'],
+      'U_JUMPTO'    => make_index_url(array('category' => $category)),
+      'U_EDIT'      => SMART_ADMIN.'-album&amp;cat_id='.$category['id'],
+      'U_DELETE'    => $self_url.'&amp;delete='.$category['id'].'&amp;pwg_token='.get_pwg_token(),
+      'U_SMART'     => $self_url.'&amp;smart_generate='.$category['id'],
     );
-
-  if ( array_key_exists($category['id'], $categories_with_images) )
-  {
-    $tpl_cat['U_MANAGE_ELEMENTS'] =
-      $base_url.'batch_manager&amp;cat='.$category['id'];
-  }
   
   $template->append('categories', $tpl_cat);
 }

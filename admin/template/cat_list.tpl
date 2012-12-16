@@ -59,14 +59,12 @@ jQuery(document).ready(function(){
       <p class="albumTitle">
         <strong><a href="{$category.U_CHILDREN}" title="{'manage sub-albums'|@translate}">{$category.NAME}</a></strong>
         <img src="{$SMART_PATH}admin/template/lightning.png">
+        {'%d photos'|@translate|sprintf:$category.IMG_COUNT}
       </p>
 
       <p class="albumActions">
         <a href="{$category.U_EDIT}">{'Edit'|@translate}</a>
-        | <a href="{$category.U_SMART}">{'Regenerate photos list of this SmartAlbum'|@translate}</a>
-        {if isset($category.U_MANAGE_ELEMENTS) }
-        | <a href="{$category.U_MANAGE_ELEMENTS}">{'manage album photos'|@translate}</a>
-        {/if}
+        | <a href="{$category.U_SMART}" title="{$category.LAST_UPDATE}">{'Regenerate photos list of this SmartAlbum'|@translate}</a>
         {if isset($category.U_DELETE) }
         | <a href="{$category.U_DELETE}" onclick="return confirm('{'Are you sure?'|@translate|@escape:javascript}');">{'delete album'|@translate}</a>
         {/if}

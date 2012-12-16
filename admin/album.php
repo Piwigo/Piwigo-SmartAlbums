@@ -71,6 +71,11 @@ if ($category['dir'] != NULL)
 
 if (isset($_POST['submitFilters']))
 {
+  if (defined('SMART_DEBUG'))
+  {
+    var_dump($_POST['filters']);
+  }
+  
   // test if it was a Smart Album
   $query = '
 SELECT DISTINCT category_id 
@@ -97,22 +102,22 @@ SELECT DISTINCT category_id
   {
     pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE category_id = '.$cat_id.';');
     
+    $inserts = array();
     foreach ($_POST['filters'] as $filter)
     {
       if (($filter = smart_check_filter($filter)) != false)
       {
-        $query = '
-INSERT IGNORE INTO '.CATEGORY_FILTERS_TABLE.' 
-  VALUES(
-    '.$cat_id.', 
-    "'.$filter['type'].'", 
-    "'.$filter['cond'].'", 
-    "'.$filter['value'].'"
-  )
-;';
-      pwg_query($query);
+        $filter['category_id'] = $cat_id;
+        $inserts[] = $filter;
       }
     }
+    
+    mass_inserts(
+      CATEGORY_FILTERS_TABLE, 
+      array('category_id', 'type', 'cond', 'value'), 
+      $inserts,
+      array('ignore'=>true)
+      );
     
     $associated_images = smart_make_associations($cat_id);
     $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
@@ -142,12 +147,12 @@ $options = array(
   'date' => array(
     'name' => l10n('Date'),
     'options' => array(
-      'the_post'      => l10n('Added on'),
-      'before_post'   => l10n('Added before'),
-      'after_post'    => l10n('Added after'),
-      'the_taken'     => l10n('Created on'),
-      'before_taken'  => l10n('Created before'),
-      'after_taken'   => l10n('Created after'),
+      'the_post'     => l10n('Added on'),
+      'before_post'  => l10n('Added before'),
+      'after_post'   => l10n('Added after'),
+      'the_taken'    => l10n('Created on'),
+      'before_taken' => l10n('Created before'),
+      'after_taken'  => l10n('Created after'),
       ),
     ),
   'name' => array(
@@ -159,6 +164,7 @@ $options = array(
       'not_contain' => l10n('Doesn\'t contain'),
       'not_begin'   => l10n('Doesn\'t begin with'),
       'not_end'     => l10n('Doesn\'t end with'),
+      'regex'       => l10n('Regular expression'),
       ),
     ),
   'album' => array(
@@ -170,6 +176,14 @@ $options = array(
       'only'  => l10n('Only these albums'),
       ),
     ),
+  'dimensions' => array(
+    'name' => l10n('Dimensions'),
+    'options' => array(
+      'width'  => l10n('Width'),
+      'height' => l10n('Height'),
+      'ratio'  => l10n('Ratio').' ('.l10n('Width').'/'.l10n('Height').')',
+      ),
+    ),
   'author' => array(
     'name' => l10n('Author'),
     'options' => array(
@@ -177,6 +191,7 @@ $options = array(
       'in'      => l10n('Is in'),
       'not_is'  => l10n('Is not'),
       'not_in'  => l10n('Is not in'),
+      'regex'   => l10n('Regular expression'),
       ),
     ),
   'hit' => array(
@@ -204,49 +219,52 @@ $options = array(
   );
 $template->assign('options', $options);
 
+
 /* get filters for this album */
 $query = '
 SELECT * 
   FROM '.CATEGORY_FILTERS_TABLE.' 
-  WHERE category_id = '.$cat_id.' 
+  WHERE category_id = '.$cat_id.'
   ORDER BY 
     type ASC, 
     cond ASC
 ;';
 $result = pwg_query($query);
 
+$template->assign('filter_mode', 'and');
+
 while ($filter = pwg_db_fetch_assoc($result))
 {
-  // get tags name and id
-  if ($filter['type'] == 'tags')
+  if ($filter['type'] == 'mode')
+  {
+    $template->assign('filter_mode', $filter['value']);
+    continue;
+  }
+  else if ($filter['type'] == 'tags')
   {
     $query = '
-SELECT
-    id,
-    name
+SELECT id, name
   FROM '.TAGS_TABLE.'
   WHERE id IN('.$filter['value'].')
 ;';
     $filter['value'] = get_taglist($query); 
   }
-  else if ($filter['type'] == 'album')
-  {
-    $filter['value'] = explode(',', $filter['value']); 
-  }
   
-  $template->append('filters', array(
-    'TYPE' => $filter['type'],
-    'COND' => $filter['cond'],
-    'VALUE' => $filter['value'],
-    'CAPTION' => $options[ $filter['type'] ]['name'],
-  ));
+  $template->append('filters', $filter);
 }
+
+
+/* format types */
+$template->assign('format_options', array(
+  'portrait' => l10n('Portrait'),
+  'square'   => l10n('Square'),
+  'lanscape' => l10n('Landscape'),
+  'panorama' => l10n('Panorama'),
+  ));
 
 /* all tags */
 $query = '
-SELECT
-    id,
-    name
+SELECT id, name
   FROM '.TAGS_TABLE.'
 ;';
 $template->assign('all_tags', get_taglist($query));
@@ -261,6 +279,90 @@ SELECT
   FROM '.CATEGORIES_TABLE.'
 ;';
 display_select_cat_wrapper($query, array(), 'all_albums');
+
+// +-----------------------------------------------------------------------+
+// |                              dimensions                               |
+// +-----------------------------------------------------------------------+
+
+$widths = array();
+$heights = array();
+$ratios = array();
+
+// get all width, height and ratios
+$query = '
+SELECT
+  DISTINCT width, height
+  FROM '.IMAGES_TABLE.'
+  WHERE width IS NOT NULL
+    AND height IS NOT NULL
+;';
+$result = pwg_query($query);
+
+while ($row = pwg_db_fetch_assoc($result))
+{
+  $widths[] = $row['width'];
+  $heights[] = $row['height'];
+  $ratios[] = floor($row['width'] * 100 / $row['height']) / 100;
+}
+
+$widths = array_unique($widths);
+sort($widths);
+
+$heights = array_unique($heights);
+sort($heights);
+
+$ratios = array_unique($ratios);
+sort($ratios);
+
+$dimensions['bounds'] = array(
+  'min_width' => $widths[0],
+  'max_width' => $widths[count($widths)-1],
+  'min_height' => $heights[0],
+  'max_height' => $heights[count($heights)-1],
+  'min_ratio' => $ratios[0],
+  'max_ratio' => $ratios[count($ratios)-1],
+  );
+
+// find ratio categories
+$ratio_categories = array(
+  'portrait' => array(),
+  'square' => array(),
+  'landscape' => array(),
+  'panorama' => array(),
+  );
+
+foreach ($ratios as $ratio)
+{
+  if ($ratio < 0.95)
+  {
+    $ratio_categories['portrait'][] = $ratio;
+  }
+  else if ($ratio >= 0.95 and $ratio <= 1.05)
+  {
+    $ratio_categories['square'][] = $ratio;
+  }
+  else if ($ratio > 1.05 and $ratio < 2)
+  {
+    $ratio_categories['landscape'][] = $ratio;
+  }
+  else if ($ratio >= 2)
+  {
+    $ratio_categories['panorama'][] = $ratio;
+  }
+}
+
+foreach (array_keys($ratio_categories) as $ratio_category)
+{
+  if (count($ratio_categories[$ratio_category]) > 0)
+  {
+    $dimensions['ratio_'.$ratio_category] = array(
+      'min' => $ratio_categories[$ratio_category][0],
+      'max' => $ratio_categories[$ratio_category][count($ratio_categories[$ratio_category]) - 1]
+      );
+  }
+}
+
+$template->assign('dimensions', $dimensions);
 
 /* get image number */
 if ($template->get_template_vars('IMAGE_COUNT') == null)
@@ -288,10 +390,7 @@ $template->assign(array(
   'COUNT_SCRIPT_URL' => SMART_PATH.'include/count_images.php',
   'level_options' => get_privacy_level_options(),
   'F_ACTION' => $self_url,
-  'CATEGORIES_NAV' => get_cat_display_name_cache(
-    $category['uppercats'],
-    SMART_ADMIN.'-album&amp;cat_id='
-    ),
+  'CATEGORIES_NAV' => get_cat_display_name_cache($category['uppercats'], SMART_ADMIN.'-album&amp;cat_id='),
 ));
 
 $template->set_filename('SmartAlbums_content', dirname(__FILE__).'/template/album.tpl');

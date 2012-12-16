@@ -28,10 +28,11 @@ DELETE FROM '.IMAGE_CATEGORY_TABLE.'
         'smart' => true,
         );
     }
-    mass_inserts_ignore(
+    mass_inserts(
       IMAGE_CATEGORY_TABLE, 
       array_keys($datas[0]), 
-      $datas
+      $datas,
+      array('ignore'=>true)
       );
   }
   
@@ -49,6 +50,13 @@ SELECT representative_picture_id
     set_random_representant(array($cat_id));
   }
   
+  $query = '
+UPDATE '.CATEGORIES_TABLE.'
+  SET smart_update = NOW()
+  WHERE id = '.$cat_id.'
+;';
+  pwg_query($query);
+  
   return $images;
 }
 
@@ -63,7 +71,7 @@ function smart_make_all_associations()
   
   if ( defined('SMART_NOT_UPDATE') OR !$conf['SmartAlbums']['update_on_upload'] ) return;
   
-  /* get categories with smart filters */
+  // get categories with smart filters
   $query = '
 SELECT DISTINCT id
   FROM '.CATEGORIES_TABLE.' AS c
@@ -71,7 +79,7 @@ SELECT DISTINCT id
     ON c.id = cf.category_id
 ;';
   
-  /* regenerate photo list */
+  // regenerate photo list
   $smart_cats = array_from_query($query, 'id');
   array_map('smart_make_associations', $smart_cats);
 }
@@ -114,7 +122,9 @@ SELECT *
   {
     return array();
   }
-    
+  
+  $mode = 'and';
+  
   /* build constrains */
   ## generate 'join', 'where' arrays and 'limit' string to create the SQL query
   ## inspired by PicsEngine 3 by Michael Villar
@@ -248,6 +258,9 @@ SELECT *
           case 'not_end':
             $where[] = 'name NOT LIKE "%'.$filter['value'].'"';
             break;
+          case 'regex':
+            $where[] = 'name REGEXP "'.$filter['value'].'"';
+            break;
         }
         
         break;
@@ -326,6 +339,25 @@ SELECT *
         break;
       }
       
+      // dimensions
+      case 'dimensions':
+      {
+        $filter['value'] = explode(',', $filter['value']);
+        
+        switch ($filter['cond'])
+        {
+          case 'width':
+            $where[] = 'width >= '.$filter['value'][0].' AND width <= '.$filter['value'][1];
+            break;
+          case 'height':
+            $where[] = 'height >= '.$filter['value'][0].' AND height <= '.$filter['value'][1];
+            break;
+          case 'ratio':
+            $where[] = 'width/height >= '.$filter['value'][0].' AND width/height < '.($filter['value'][1]+0.01);
+            break;
+        }
+      }
+      
       // author
       case 'author':
       {
@@ -346,6 +378,9 @@ SELECT *
           case 'not_in':
             $filter['value'] = '"'.str_replace(',', '","', $filter['value']).'"';
             $where[] = 'author NOT IN('.$filter['value'].')';
+            break;
+          case 'regex':
+            $where[] = 'author REGEXP "'.$filter['value'].'"';
             break;
         }
         
@@ -397,6 +432,13 @@ SELECT *
         $limit = '0, '.$filter['value'];
         break;
       }
+      
+      // mode
+      case 'mode':
+      {
+        $mode = $filter['value'];
+        break;
+      }
     }
   }
   
@@ -414,7 +456,7 @@ SELECT i.id
     {
       $MainQuery.= '
   WHERE
-    '.implode("\n    AND ", $where);
+    '.implode("\n    ".$mode." ", $where);
     }
 
   $MainQuery.= '
@@ -423,7 +465,12 @@ SELECT i.id
   '.(isset($limit) ? "LIMIT ".$limit : null).'
 ;';
 
-  // file_put_contents(SMART_PATH.'query.sql', $MainQuery);
+  if (defined('SMART_DEBUG'))
+  {
+    file_put_contents(SMART_PATH.'dump_filters.txt', print_r($filters, true));
+    file_put_contents(SMART_PATH.'dump_query.sql', $MainQuery);
+  }
+  
   return array_from_query($MainQuery, 'id');
 }
 
@@ -441,114 +488,163 @@ function smart_check_filter($filter)
   if (!isset($limit_is_set)) $limit_is_set = false;
   if (!isset($level_is_set)) $level_is_set = false;
   
-  # tags
-  if ($filter['type'] == 'tags')
+  switch ($filter['type'])
   {
-    if ($filter['value'] == null)
+    # tags
+    case 'tags':
+    {
+      if ($filter['value'] == null)
+      {
+        $error = true;
+        array_push($page['errors'], l10n('No tag selected'));
+      }
+      else
+      {
+        $filter['value'] = implode(',', get_tag_ids($filter['value']));
+      }
+      break;
+    }
+    # date
+    case 'date':
+    {
+      if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Date string is malformed'));
+      }
+      break;
+    }
+    # name
+    case 'name':
+    {
+      if (empty($filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Name is empty'));
+      }
+      else if ( $filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false )
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Regex is malformed'));
+      }
+      break;
+    }
+    # album
+    case 'album':
+    {
+      if (@$filter['value'] == null)
+      {
+        $error = true;
+        array_push($page['errors'], l10n('No album selected'));
+      }
+      else
+      {
+        $filter['value'] = implode(',', $filter['value']);
+      }
+      break;
+    }
+    # dimensions
+    case 'dimensions':
+    {
+      if ( empty($filter['value']['min']) or empty($filter['value']['max']) )
+      {
+        $error = true;
+      }
+      else
+      {
+        $filter['value'] = $filter['value']['min'].','.$filter['value']['max'];
+      }
+      break;
+    }
+    # author
+    case 'author':
+    {
+      if (empty($filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Author is empty'));
+      }
+      else if ( $filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false )
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Regex is malformed'));
+      }
+      else
+      {
+        $filter['value'] = preg_replace('#([ ]?),([ ]?)#', ',', $filter['value']);
+      }
+      break;
+    }
+    # hit
+    case 'hit':
+    {
+      if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Hits must be an integer'));
+      }
+      break;
+    }
+    # rating_score
+    case 'rating_score':
+    {
+      if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Rating score must be an integer'));
+      }
+      break;
+    }
+    # level
+    case 'level':
+    {
+      if ($level_is_set == true) // only one level is allowed, first is saved
+      {
+        $error = true;
+        array_push($page['errors'], l10n('You can\'t use more than one level filter'));
+      }
+      else
+      {
+        $filter['cond'] = 'level';
+        $level_is_set = true;
+      }
+      break;
+    }
+    # limit
+    case 'limit':
+    {
+      if ($limit_is_set == true) // only one limit is allowed, first is saved
+      {
+        $error = true;
+        array_push($page['errors'], l10n('You can\'t use more than one limit filter'));
+      }
+      else if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      {
+        $error = true;
+        array_push($page['errors'], l10n('Limit must be an integer'));
+      }
+      else 
+      {
+        $filter['cond'] = 'level';
+        $limit_is_set = true;
+      }
+      break;
+    }
+    # mode
+    case 'mode':
+    {
+      $filter['cond'] = 'mode';
+      break;
+    }
+    
+    default:
     {
       $error = true;
-      array_push($page['errors'], l10n('No tag selected'));
-    }
-    else
-    {
-      $filter['value'] = implode(',', get_tag_ids($filter['value']));
-    }
-  }
-  # date
-  else if ($filter['type'] == 'date')
-  {
-    if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Date string is malformed'));
-    }
-  }
-  # name
-  else if ($filter['type'] == 'name')
-  {
-    if (empty($filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Name is empty'));
-    }
-  }
-  # album
-  else if ($filter['type'] == 'album')
-  {
-    if (@$filter['value'] == null)
-    {
-      $error = true;
-      array_push($page['errors'], l10n('No album selected'));
-    }
-    else
-    {
-      $filter['value'] = implode(',', $filter['value']);
-    }
-  }
-  # author
-  else if ($filter['type'] == 'author')
-  {
-    if (empty($filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Author is empty'));
-    }
-    else
-    {
-      $filter['value'] = preg_replace('#([ ]?),([ ]?)#', ',', $filter['value']);
-    }
-  }
-  # hit
-  else if ($filter['type'] == 'hit')
-  {
-    if (!preg_match('#([0-9]{1,})#', $filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Hits must be an integer'));
-    }
-  }
-  # rating_score
-  else if ($filter['type'] == 'rating_score')
-  {
-    if (!preg_match('#([0-9]{1,})#', $filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Rating score must be an integer'));
-    }
-  }
-  # level
-  else if ($filter['type'] == 'level')
-  {
-    if ($level_is_set == true) // only one level is allowed, first is saved
-    {
-      $error = true;
-      array_push($page['errors'], l10n('You can\'t use more than one level filter'));
-    }
-    else
-    {
-      $level_is_set = true;
-    }
-  }
-  # limit
-  else if ($filter['type'] == 'limit')
-  {
-    if (!preg_match('#([0-9]{1,})#', $filter['value']))
-    {
-      $error = true;
-      array_push($page['errors'], l10n('Limit must be an integer'));
-    }
-    else if ($limit_is_set == true) // only one limit is allowed, first is saved
-    {
-      $error = true;
-      array_push($page['errors'], l10n('You can\'t use more than one limit filter'));
-    }
-    else
-    {
-      $limit_is_set = true;
+      break;
     }
   }
   
-  # out
+  
   if ($error == false)
   {
     return $filter;
@@ -561,69 +657,6 @@ function smart_check_filter($filter)
 
 
 /**
- * inserts multiple lines in a table, ignore duplicate entries
- * @param string table_name
- * @param array dbfields
- * @param array inserts
- * @return void
- */
-function mass_inserts_ignore($table_name, $dbfields, $datas)
-{
-  if (count($datas) != 0)
-  {
-    $first = true;
-
-    $query = 'SHOW VARIABLES LIKE \'max_allowed_packet\'';
-    list(, $packet_size) = pwg_db_fetch_row(pwg_query($query));
-    $packet_size = $packet_size - 2000; // The last list of values MUST not exceed 2000 character*/
-    $query = '';
-
-    foreach ($datas as $insert)
-    {
-      if (strlen($query) >= $packet_size)
-      {
-        pwg_query($query);
-        $first = true;
-      }
-
-      if ($first)
-      {
-        $query = '
-INSERT IGNORE INTO '.$table_name.'
-  ('.implode(',', $dbfields).')
-  VALUES';
-        $first = false;
-      }
-      else
-      {
-        $query .= '
-  , ';
-      }
-
-      $query .= '(';
-      foreach ($dbfields as $field_id => $dbfield)
-      {
-        if ($field_id > 0)
-        {
-          $query .= ',';
-        }
-
-        if (!isset($insert[$dbfield]) or $insert[$dbfield] === '')
-        {
-          $query .= 'NULL';
-        }
-        else
-        {
-          $query .= "'".$insert[$dbfield]."'";
-        }
-      }
-      $query .= ')';
-    }
-    pwg_query($query);
-  }
-}
-
-/**
  * clean table when categories are deleted
  */
 function smart_delete_categories($ids)
@@ -633,6 +666,33 @@ DELETE FROM '.CATEGORY_FILTERS_TABLE.'
   WHERE category_id IN('.implode(',', $ids).')
 ;';
   pwg_query($query);
+}
+
+/**
+ * update images list periodically
+ */
+function smart_periodic_update()
+{
+  global $conf;
+  
+  // we only search for old albums every hour, nevermind which user is connected
+  if ($conf['SmartAlbums']['last_update'] > time() - 3600) return;
+  
+  $conf['SmartAlbums']['last_update'] = time();
+  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
+  
+  // get categories with smart filters
+  $query = '
+SELECT DISTINCT id
+  FROM '.CATEGORIES_TABLE.' AS c
+    INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
+    ON c.id = cf.category_id
+  WHERE smart_update < DATE_SUB(NOW(), INTERVAL '.$conf['SmartAlbums']['update_timeout'].' DAY)
+;';
+  
+  // regenerate photo list
+  $smart_cats = array_from_query($query, 'id');
+  array_map('smart_make_associations', $smart_cats);
 }
 
 ?>

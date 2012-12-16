@@ -22,6 +22,7 @@ $lang['Ends with'] = 'Ends with';
 $lang['Doesn\'t contain'] = 'Doesn\'t contain';
 $lang['Doesn\'t begin with'] = 'Doesn\'t begin with';
 $lang['Doesn\'t end with'] = 'Doesn\'t end with';
+$lang['Regular expression'] = 'Regular expression';
 $lang['Is'] = 'Is';
 $lang['Is in'] = 'Is in';
 $lang['Is not'] = 'Is not';
@@ -43,6 +44,7 @@ $lang['Author is empty'] = 'Author is empty';
 $lang['Hits must be an integer'] = 'Hits must be an integer';
 $lang['Limit must be an integer'] = 'Limit must be an integer';
 $lang['Rating score must be an integer'] = 'Rating score must be an integer';
+$lang['Regex is malformed'] = 'Regex is malformed';
 $lang['You can\'t use more than one limit filter'] = 'You can\'t use more than one limit filter';
 $lang['You can\'t use more than one level filter'] = 'You can\'t use more than one level filter';
 $lang['Hits'] = 'Hits';
@@ -59,5 +61,6 @@ $lang['can cause slowdowns'] = 'can cause slowdowns';
 $lang['Filters'] = 'Filters';
 $lang['Exclude SmartAlbums from permissions management'] = 'Exclude SmartAlbums from permissions management';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.';
+$lang['Update albums every %s days'] = 'Update albums every %s days';
 
 ?>

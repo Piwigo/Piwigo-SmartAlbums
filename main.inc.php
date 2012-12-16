@@ -11,14 +11,16 @@ Author URI: http://www.strangeplanet.fr
 if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 global $prefixeTable;
 
-define('SMART_PATH',    PHPWG_PLUGINS_PATH . 'SmartAlbums/');
+define('SMART_PATH',     PHPWG_PLUGINS_PATH . 'SmartAlbums/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable . 'category_filters');
-define('SMART_ADMIN',   get_root_url() . 'admin.php?page=plugin-SmartAlbums');
-define('SMART_VERSION', '2.0.4');
+define('SMART_ADMIN',    get_root_url() . 'admin.php?page=plugin-SmartAlbums');
+define('SMART_VERSION',  'auto');
+//define('SMART_DEBUG',    true);
 
 
-add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
 add_event_handler('init', 'smart_init');
+add_event_handler('init', 'smart_periodic_update');
+add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
 
 if (defined('IN_ADMIN'))
 {
@@ -40,6 +42,7 @@ function smart_init()
   global $conf, $pwg_loaded_plugins;
   
   if (
+    SMART_VERSION == 'auto' or
     $pwg_loaded_plugins['SmartAlbums']['version'] == 'auto' or
     version_compare($pwg_loaded_plugins['SmartAlbums']['version'], SMART_VERSION, '<')
   )
@@ -47,7 +50,7 @@ function smart_init()
     include_once(SMART_PATH . 'include/install.inc.php');
     smart_albums_install();
     
-    if ($pwg_loaded_plugins['SmartAlbums']['version'] != 'auto')
+    if ( $pwg_loaded_plugins['SmartAlbums']['version'] != 'auto' and SMART_VERSION != 'auto' )
     {
       $query = '
 UPDATE '. PLUGINS_TABLE .'
