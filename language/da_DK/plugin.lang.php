@@ -80,4 +80,7 @@ $lang['Add filters here'] = 'Tilføj filtre her';
 $lang['Added after'] = 'Tilføjet efter';
 $lang['Added before'] = 'Tilføjet før';
 $lang['Added on'] = 'Tilføjet den';
+$lang['Regex is malformed'] = 'Regex er misdannet';
+$lang['Regular expression'] = 'Regulært udtryk';
+$lang['Update albums every %s days'] = 'Opdater albummer hver %s dage';
 ?>
