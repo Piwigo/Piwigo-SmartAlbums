@@ -80,4 +80,7 @@ $lang['No album selected'] = 'Hiç bir albüm seçilmedi';
 $lang['None of these albums'] = 'Bu albümlerin hiçbiri';
 $lang['One of these albums'] = 'Bu albümlerden biri';
 $lang['Only these albums'] = 'Sadece bu albümler';
+$lang['Regex is malformed'] = 'Düzenli ifade bozuk';
+$lang['Regular expression'] = 'Düzenli ifade';
+$lang['Update albums every %s days'] = 'Her %s günde albümleri güncelle';
 ?>
