@@ -80,4 +80,7 @@ $lang['One of these albums'] = 'Jeden z týchto albumov';
 $lang['None of these albums'] = 'Žiaden z týchto albumov';
 $lang['No album selected'] = 'Žiaden album označený';
 $lang['All these albums'] = 'Všetky tieto albumy';
+$lang['Update albums every %s days'] = 'Aktualizovať albumy každých %s dní';
+$lang['Regex is malformed'] = 'Regex je chybne vytvorený';
+$lang['Regular expression'] = 'Správny vzorec';
 ?>
