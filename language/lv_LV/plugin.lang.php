@@ -61,4 +61,7 @@ $lang['One of these albums'] = 'Viens no šiem albūmiem';
 $lang['None of these albums'] = 'Neviens no šiem albūmiem';
 $lang['No album selected'] = 'Nav izvēlēts neviens albūms';
 $lang['All these albums'] = 'Visi šie albūmi';
+$lang['Regex is malformed'] = 'Regex ir nepareizi veidots';
+$lang['Regular expression'] = 'parasta izpausme';
+$lang['Update albums every %s days'] = 'Atjaunināt albūmus katras %s dienas ';
 ?>
