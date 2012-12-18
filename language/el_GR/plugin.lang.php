@@ -80,4 +80,7 @@ $lang['One of these albums'] = 'Ένα από αυτά τα λευκώματα';
 $lang['None of these albums'] = 'Κανένα από αυτά τα λευκώματα';
 $lang['No album selected'] = 'Δεν επιλέχτηκε λεύκωμα';
 $lang['All these albums'] = 'Όλα αυτά τα λευκώματα';
+$lang['Regex is malformed'] = 'Η Κανονική Έκφραση έχει λανθασμένη μορφή';
+$lang['Regular expression'] = 'Κανονικές Εκφράσεις';
+$lang['Update albums every %s days'] = 'Ενημέρωση λευκωμάτων κάθε %s μέρες';
 ?>
