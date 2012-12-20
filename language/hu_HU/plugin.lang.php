@@ -78,6 +78,9 @@ $lang['One of these albums'] = 'Ezen albumok egyike';
 $lang['Only these albums'] = 'Csak ezek az albumok';
 $lang['All these albums'] = 'Ezen albumok mindegyike';
 $lang['No album selected'] = 'Nincs album kiválasztva';
-$lang['Exclude SmartAlbums from permissions management'] = 'Zárd ki a SmartAlbum -okat az engedély-kezelésből';
-$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'A SmartAlbum-ok mindenki számára magán természetűek és egy felhasználó csak akkor láthatja a tartalmukat, ha azok benne vannak más, olyan albumban, amihez van engedélye. ';
+$lang['Exclude SmartAlbums from permissions management'] = 'Zárja ki az intelligens albumokatokat az engedély-kezelésből';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Az intelligens albumok mindenki számára magán természetűek és egy felhasználó csak akkor láthatja a tartalmukat, ha azok benne vannak más, olyan albumban, amelyhez engedélye van. ';
+$lang['Regex is malformed'] = 'Hibás reguláris (Regex) kifejezés';
+$lang['Regular expression'] = 'Reguláris kifejezés';
+$lang['Update albums every %s days'] = 'Albumok frissítése %s naponta';
 ?>
