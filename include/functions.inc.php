@@ -500,6 +500,7 @@ function smart_check_filter($filter)
       }
       else
       {
+        include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
         $filter['value'] = implode(',', get_tag_ids($filter['value']));
       }
       break;

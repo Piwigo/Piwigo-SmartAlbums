@@ -122,7 +122,7 @@ SELECT DISTINCT category_id
     $associated_images = smart_make_associations($cat_id);
     $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
     
-    array_push($page['infos'], sprintf('%d photos associated to the album %s', count($associated_images), ''));
+    array_push($page['infos'], sprintf(l10n('%d photos associated to album %s'), count($associated_images), ''));
     
     define('SMART_NOT_UPDATE', 1);
     invalidate_user_cache();

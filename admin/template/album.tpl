@@ -249,6 +249,10 @@ function doBlink(obj,start,finish) {
   <h2><span style="letter-spacing:0">{$CATEGORIES_NAV}</span> &#8250; {'Edit album'|@translate} [SmartAlbum]</h2>
 </div>
 
+<noscript>
+<div class="errors"><ul><li>JavaScript required!</li></ul></div>
+</noscript>
+
 <div id="batchManagerGlobal">
 <form action="{$F_ACTION}" method="POST" id="smart">
   <p style="text-align:left;"><label><input type="checkbox" name="is_smart" {if isset($filters) OR isset($new_smart)}checked="checked"{/if}/> {'This album is a SmartAlbum'|@translate}</label></p>
@@ -421,18 +425,20 @@ function doBlink(obj,start,finish) {
     </span>
 
     <span class="filter-value">
-      <span class="filter_dimension_info"></span>
       <span class="dimension_width">
+      <span class="filter_dimension_info"></span>
         | <a class="dimensions-choice" data-type="width" data-min="{$dimensions.bounds.min_width}" data-max="{$dimensions.bounds.max_width}">{'Reset'|@translate}</a>
         <div class="filter_dimension_width_slider"></div>
       </span>
 
       <span class="filter-value dimension_height">
+      <span class="filter_dimension_info"></span>
         | <a class="dimensions-choice" data-type="height" data-min="{$dimensions.bounds.min_height}" data-max="{$dimensions.bounds.max_height}">{'Reset'|@translate}</a>
         <div class="filter_dimension_height_slider"></div>
       </span>
 
       <span class="filter-value dimension_ratio">
+      <span class="filter_dimension_info"></span>
 {if isset($dimensions.ratio_portrait)}
         | <a class="dimensions-choice" data-type="ratio" data-min="{$dimensions.ratio_portrait.min}" data-max="{$dimensions.ratio_portrait.max}">{'Portrait'|@translate}</a>
 {/if}

@@ -11,7 +11,7 @@
 }
 
 #batchManagerGlobal .filter_dimensions .ui-slider-horizontal {
-    margin: 5px 0 10px;
+    margin: 5px 0 3px 0;
     width: 500px;
 }
 
@@ -23,27 +23,28 @@
   border-radius:4px;
 }
 
+#filtersList {
+  padding-left:0px;
+}
 #filtersList li {
-  padding:2px;
+  padding:3px 0;
   border-bottom:1px dotted rgba(100, 100, 100, 0.5);
   display:block;
 }
 #filtersList li>span {
   display:inline-block;
-}
-#filtersList li span * {
   vertical-align:middle;
 }
 
 .filter-title {
   padding-left:10px;
-  width:220px;
+  width:200px;
 }
 .filter-title:after {
   content:" :";
 }
 .filter-cond {
-  width:220px;
+  width:200px;
 }
 
 .filter_error {
