@@ -80,4 +80,7 @@ $lang['Created after'] = 'Criado depois';
 $lang['Created before'] = 'Criado antes';
 $lang['Date string is malformed'] = 'Data está mal formada';
 $lang['Doesn\'t begin with'] = 'Não inicia com';
+$lang['Regex is malformed'] = 'Regex está mal formada.';
+$lang['Regular expression'] = 'Expressão Regular';
+$lang['Update albums every %s days'] = 'Atualize albuns a cada %s dias';
 ?>
