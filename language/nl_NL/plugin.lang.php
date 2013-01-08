@@ -61,4 +61,7 @@ $lang['None of these albums'] = 'Geen van deze albums';
 $lang['One of these albums'] = 'Een van deze albums';
 $lang['Only these albums'] = 'Alleen deze albums';
 $lang['limit_filter'] = 'Maximaal aantal afbeeldingen';
+$lang['Regex is malformed'] = 'Tekstpatroon is ongeldig';
+$lang['Regular expression'] = 'Tekstpatroon';
+$lang['Update albums every %s days'] = 'Ververs het album elke %s dagen';
 ?>
