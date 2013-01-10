@@ -80,4 +80,7 @@ $lang['No album selected'] = 'Немає вибраного альбому';
 $lang['None of these albums'] = 'Жоден з цих альбомів';
 $lang['One of these albums'] = 'Один з цих альбомів';
 $lang['Only these albums'] = 'Тільки ці альбоми';
+$lang['Regex is malformed'] = 'Регулярне вираження неправильне';
+$lang['Regular expression'] = 'Регулярне вираження';
+$lang['Update albums every %s days'] = 'Оновлювати альбоми кожні %s днів';
 ?>
