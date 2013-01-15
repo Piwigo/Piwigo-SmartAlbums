@@ -79,4 +79,7 @@ $lang['SmartAlbums are considered private for everyone, and a user can see it\'s
 $lang['This album is a SmartAlbum'] = '本相册是一个SmartAlbum';
 $lang['Update albums on file upload'] = '文件上传后更新相册';
 $lang['can cause slowdowns'] = '可能引起处理速度下降';
+$lang['Regex is malformed'] = '正则表达式异常';
+$lang['Regular expression'] = '正则表达式';
+$lang['Update albums every %s days'] = '第 %s 表更新一次相册';
 ?>
