@@ -80,4 +80,7 @@ $lang['None of these albums'] = 'Żaden z tych albumów';
 $lang['One of these albums'] = 'Jeden z tych albumów';
 $lang['Only these albums'] = 'Tylko te albumy';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums są traktowane jako prywatne dla wszystkich, ich zawartość jest widoczna dla użytkownika tylko wtedy, kiedy jest umieszczona w innym albumie do którego uzytkownik ma dostęp.';
+$lang['Regex is malformed'] = 'Wyrażenie regularne jest niepoprawne';
+$lang['Regular expression'] = 'Wyrażenie regularne';
+$lang['Update albums every %s days'] = 'Aktualizuj albumy co %s dni';
 ?>
