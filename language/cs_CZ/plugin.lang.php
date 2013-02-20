@@ -61,4 +61,7 @@ $lang['No album selected'] = 'Žádné album nebylo vybráno';
 $lang['None of these albums'] = 'Žádné z těchto alb';
 $lang['One of these albums'] = 'Jedno z těchto alb';
 $lang['Only these albums'] = 'Pouze tato alba';
+$lang['Regex is malformed'] = 'Regulární výraz je ve špatném tvaru';
+$lang['Regular expression'] = 'Regulární výraz';
+$lang['Update albums every %s days'] = 'Aktualizovat alba každé %s dny';
 ?>
