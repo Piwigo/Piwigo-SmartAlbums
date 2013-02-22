@@ -81,4 +81,7 @@ $lang['No album selected'] = 'Não existem albuns selecionados';
 $lang['None of these albums'] = 'Nenhum destes albuns';
 $lang['One of these albums'] = 'Um destes albuns';
 $lang['Only these albums'] = 'Apenas estes albuns';
+$lang['Regex is malformed'] = 'Regex está mal formado ';
+$lang['Regular expression'] = 'Expressão regular';
+$lang['Update albums every %s days'] = 'Actualizar álbuns todos os %s dias';
 ?>
