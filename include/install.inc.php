@@ -13,7 +13,7 @@ function smart_albums_install()
       'update_on_date' => true,
       'update_timeout' => 3,
       'show_list_messages' => true,
-      'smart_is_forbidden' => true,
+      'smart_is_forbidden' => false,
       'last_update' => 0,
       ));
     

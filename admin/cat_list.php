@@ -24,7 +24,7 @@ SELECT
   FROM '.CATEGORIES_TABLE.' AS cat
   INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
     ON cf.category_id = cat.id
-  ORDER BY rank ASC
+  ORDER BY global_rank ASC
 ;';
 $categories = hash_from_query($query, 'id');
 

@@ -29,6 +29,8 @@ if(!defined("PHPWG_ROOT_PATH")) die ("Hacking attempt!");
 
 check_status(ACCESS_ADMINISTRATOR);
 
+$page['active_menu'] = get_active_menu('album');
+
 check_input_parameter('cat_id', $_GET, false, PATTERN_ID);
 
 $admin_album_base_url = get_root_url().'admin.php?page=album-'.$_GET['cat_id'];
