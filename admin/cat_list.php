@@ -20,10 +20,11 @@ SELECT
     name,
     permalink,
     dir,
-    smart_update
+    cf.updated
   FROM '.CATEGORIES_TABLE.' AS cat
   INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
     ON cf.category_id = cat.id
+  GROUP BY id
   ORDER BY global_rank ASC
 ;';
 $categories = hash_from_query($query, 'id');
@@ -145,7 +146,7 @@ foreach ($categories as $category)
       'NAME'        => get_cat_display_name_from_id($category['id'], $base_url.'album-'),
       'ID'          => $category['id'],
       'IMG_COUNT'   => !empty($categories_count_images[ $category['id'] ]) ? $categories_count_images[ $category['id'] ] : 0,
-      'LAST_UPDATE' => format_date($category['smart_update'], true),
+      'LAST_UPDATE' => format_date($category['updated'], true),
 
       'U_JUMPTO'    => make_index_url(array('category' => $category)),
       'U_EDIT'      => SMART_ADMIN.'-album&amp;cat_id='.$category['id'],

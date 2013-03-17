@@ -23,7 +23,6 @@ function plugin_uninstall()
   
   pwg_query('DROP TABLE `' . $prefixeTable . 'category_filters`;');
   pwg_query('ALTER TABLE `' . IMAGE_CATEGORY_TABLE . '` DROP `smart`;');
-  pwg_query('ALTER TABLE `' . CATEGORIES_TABLE . '` DROP `smart_update`;');
   pwg_query('DELETE FROM `' . CONFIG_TABLE . '` WHERE param = \'SmartAlbums\' LIMIT 1;');
 }
 

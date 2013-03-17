@@ -51,9 +51,9 @@ SELECT representative_picture_id
   }
   
   $query = '
-UPDATE '.CATEGORIES_TABLE.'
-  SET smart_update = NOW()
-  WHERE id = '.$cat_id.'
+UPDATE '.CATEGORY_FILTERS_TABLE.'
+  SET updated = NOW()
+  WHERE category_id = '.$cat_id.'
 ;';
   pwg_query($query);
   
@@ -688,7 +688,7 @@ SELECT DISTINCT id
   FROM '.CATEGORIES_TABLE.' AS c
     INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
     ON c.id = cf.category_id
-  WHERE smart_update < DATE_SUB(NOW(), INTERVAL '.$conf['SmartAlbums']['update_timeout'].' DAY)
+  WHERE updated < DATE_SUB(NOW(), INTERVAL '.$conf['SmartAlbums']['update_timeout'].' DAY)
 ;';
   
   // regenerate photo list

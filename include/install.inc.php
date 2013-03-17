@@ -45,7 +45,8 @@ function smart_albums_install()
   `category_id` smallint(5) unsigned NOT NULL,
   `type` varchar(16) NOT NULL,
   `cond` varchar(16) NULL,
-  `value` text
+  `value` text NULL,
+  `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 ;');
   
@@ -56,11 +57,19 @@ function smart_albums_install()
     pwg_query('ALTER TABLE `' . IMAGE_CATEGORY_TABLE . '` ADD `smart` ENUM(\'true\', \'false\') NOT NULL DEFAULT \'false\';');
   }
   
-  // new column on category table
+  // remove column on category table, moved to category filters table
   $result = pwg_query('SHOW COLUMNS FROM `' . CATEGORIES_TABLE . '` LIKE "smart_update";');
+  if (pwg_db_num_rows($result))
+  {
+    pwg_query('UPDATE `' . $prefixeTable . 'category_filters` AS f SET updated = ( SELECT smart_update FROM `' . CATEGORIES_TABLE . '` AS c WHERE c.id = f.category_id );');
+    pwg_query('ALTER TABLE `' . CATEGORIES_TABLE . '` DROP `smart_update`;');
+  }
+  
+  // new column on category filters table
+  $result = pwg_query('SHOW COLUMNS FROM `' . $prefixeTable . 'category_filters` LIKE "updated";');
   if (!pwg_db_num_rows($result))
   {      
-    pwg_query('ALTER TABLE `' . CATEGORIES_TABLE . '` ADD `smart_update` DATETIME NOT NULL;');
+    pwg_query('ALTER TABLE `' . $prefixeTable . 'category_filters` ADD `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"');
   }
   
   // date filters renamed in 2.0
