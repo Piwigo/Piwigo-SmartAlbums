@@ -57,19 +57,19 @@ function smart_albums_install()
     pwg_query('ALTER TABLE `' . IMAGE_CATEGORY_TABLE . '` ADD `smart` ENUM(\'true\', \'false\') NOT NULL DEFAULT \'false\';');
   }
   
+  // new column on category filters table
+  $result = pwg_query('SHOW COLUMNS FROM `' . $prefixeTable . 'category_filters` LIKE "updated";');
+  if (!pwg_db_num_rows($result))
+  {      
+    pwg_query('ALTER TABLE `' . $prefixeTable . 'category_filters` ADD `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"');
+  }
+  
   // remove column on category table, moved to category filters table
   $result = pwg_query('SHOW COLUMNS FROM `' . CATEGORIES_TABLE . '` LIKE "smart_update";');
   if (pwg_db_num_rows($result))
   {
     pwg_query('UPDATE `' . $prefixeTable . 'category_filters` AS f SET updated = ( SELECT smart_update FROM `' . CATEGORIES_TABLE . '` AS c WHERE c.id = f.category_id );');
     pwg_query('ALTER TABLE `' . CATEGORIES_TABLE . '` DROP `smart_update`;');
-  }
-  
-  // new column on category filters table
-  $result = pwg_query('SHOW COLUMNS FROM `' . $prefixeTable . 'category_filters` LIKE "updated";');
-  if (!pwg_db_num_rows($result))
-  {      
-    pwg_query('ALTER TABLE `' . $prefixeTable . 'category_filters` ADD `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"');
   }
   
   // date filters renamed in 2.0
