@@ -87,4 +87,7 @@ $lang['Is in'] = 'ls in';
 $lang['Is not'] = 'ls not';
 $lang['Is not in'] = 'ls not in';
 $lang['Max. number of photos'] = 'Nombre màxim de fotos';
+$lang['Regex is malformed'] = 'Regex és incorrecte';
+$lang['Regular expression'] = 'Expressió regular';
+$lang['Update albums every %s days'] = 'Actualitzar àlbums cada %s dies';
 ?>
