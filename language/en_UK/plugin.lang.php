@@ -1,8 +1,6 @@
 <?php
 
 $lang['No filter selected'] = 'No filter selected';
-$lang['%d photo'] = '%d photo';
-$lang['%d photos'] = '%d photos';
 $lang['All these tags'] = 'All these tags';
 $lang['One of these tags'] = 'One of these tags';
 $lang['None of these tags'] = 'None of these tags';
@@ -62,5 +60,8 @@ $lang['Filters'] = 'Filters';
 $lang['Exclude SmartAlbums from permissions management'] = 'Exclude SmartAlbums from permissions management';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.';
 $lang['Update albums every %s days'] = 'Update albums every %s days';
+$lang['Invalid number of days'] = 'Invalid number of days';
+$lang['Mode'] = 'Mode';
+$lang['Select albums...'] = 'Select albums...';
 
 ?>

@@ -9,7 +9,7 @@ define('IN_ADMIN', true);
 include_once(PHPWG_ROOT_PATH.'include/common.inc.php');
 include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
 
-if (!is_admin()) die('Hacking attempt!');
+is_admin() or die('Hacking attempt!');
 
 
 if (isset($_POST['filters']))
@@ -17,16 +17,16 @@ if (isset($_POST['filters']))
   $filters = array();
   $page['errors'] = array();
   $limit_is_set = false;
-  
+
   foreach ($_POST['filters'] as $filter)
   {
     if (($filter = smart_check_filter($filter)) != false)
     {
-      array_push($filters, $filter);
+      $filters[] = $filter;
     }
     else
     {
-      echo '<span class="filter_error">'.$page['errors'][ count($page['errors'])-1 ].'</span>';
+      echo '<span class="filter_error">'. array_pop($page['errors']) .'</span>';
       exit;
     }
   }

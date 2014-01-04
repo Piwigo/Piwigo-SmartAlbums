@@ -7,12 +7,12 @@
   padding-top:0;
 }
 #batchManagerGlobal #filtersList li.token-input-input-token {
-  margin-bottom:-3px !important; 
+  margin-bottom:-3px !important;
 }
 
 #batchManagerGlobal .filter_dimensions .ui-slider-horizontal {
-    margin: 5px 0 3px 0;
-    width: 500px;
+  margin:5px 0 3px 0;
+  width:400px;
 }
 
 .new_smart {

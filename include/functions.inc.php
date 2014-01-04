@@ -1,5 +1,5 @@
 <?php
-if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+defined('SMART_PATH') or die('Hacking attempt!');
 
 /*
  * Associates images to the category according to the filters
@@ -9,15 +9,15 @@ if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
 function smart_make_associations($cat_id)
 {
   $query = '
-DELETE FROM '.IMAGE_CATEGORY_TABLE.' 
-  WHERE 
-    category_id = '.$cat_id.' 
+DELETE FROM '.IMAGE_CATEGORY_TABLE.'
+  WHERE
+    category_id = '.$cat_id.'
     AND smart = true
 ;';
   pwg_query($query);
-  
+
   $images = smart_get_pictures($cat_id);
-  
+
   if (count($images) != 0)
   {
     foreach ($images as $img)
@@ -29,13 +29,13 @@ DELETE FROM '.IMAGE_CATEGORY_TABLE.'
         );
     }
     mass_inserts(
-      IMAGE_CATEGORY_TABLE, 
-      array_keys($datas[0]), 
+      IMAGE_CATEGORY_TABLE,
+      array_keys($datas[0]),
       $datas,
       array('ignore'=>true)
       );
   }
-  
+
   // representant, try to not overwrite if still in images list
   $query = '
 SELECT representative_picture_id
@@ -43,20 +43,20 @@ SELECT representative_picture_id
   WHERE id = '.$cat_id.'
 ;';
   list($rep_id) = pwg_db_fetch_row(pwg_query($query));
-  
-  if ( !in_array($rep_id, $images) )
+
+  if (!in_array($rep_id, $images))
   {
     include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
     set_random_representant(array($cat_id));
   }
-  
+
   $query = '
 UPDATE '.CATEGORY_FILTERS_TABLE.'
   SET updated = NOW()
   WHERE category_id = '.$cat_id.'
 ;';
   pwg_query($query);
-  
+
   return $images;
 }
 
@@ -68,19 +68,20 @@ UPDATE '.CATEGORY_FILTERS_TABLE.'
 function smart_make_all_associations()
 {
   global $conf;
-  
-  if ( defined('SMART_NOT_UPDATE') OR !$conf['SmartAlbums']['update_on_upload'] ) return;
-  
+
+  if (defined('SMART_NOT_UPDATE'))
+  {
+    return;
+  }
+
   // get categories with smart filters
   $query = '
-SELECT DISTINCT id
-  FROM '.CATEGORIES_TABLE.' AS c
-    INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
-    ON c.id = cf.category_id
+SELECT DISTINCT category_id
+  FROM '.CATEGORY_FILTERS_TABLE.'
 ;';
-  
+
   // regenerate photo list
-  $smart_cats = array_from_query($query, 'id');
+  $smart_cats = query2array($query, null, 'category_id');
   array_map('smart_make_associations', $smart_cats);
 }
 
@@ -96,18 +97,21 @@ function smart_get_pictures($cat_id, $filters = null)
   global $conf;
 
   /* get filters */
-  if ($filters === null)
+  if (!isset($filters))
   {
     $query = '
-SELECT * 
-  FROM '.CATEGORY_FILTERS_TABLE.' 
-  WHERE category_id = '.$cat_id.' 
+SELECT *
+  FROM '.CATEGORY_FILTERS_TABLE.'
+  WHERE category_id = '.$cat_id.'
   ORDER BY type ASC, cond ASC
 ;';
     $result = pwg_query($query);
-    
-    if (!pwg_db_num_rows($result)) return array();
-    
+
+    if (!pwg_db_num_rows($result))
+    {
+      return array();
+    }
+
     $filters = array();
     while ($row = pwg_db_fetch_assoc($result))
     {
@@ -122,13 +126,16 @@ SELECT *
   {
     return array();
   }
-  
+
   $mode = 'and';
-  
+
   /* build constrains */
   ## generate 'join', 'where' arrays and 'limit' string to create the SQL query
   ## inspired by PicsEngine 3 by Michael Villar
   $i_tags = 1;
+  $join = array();
+  $where = array();
+
   foreach ($filters as $filter)
   {
     switch ($filter['type'])
@@ -142,13 +149,13 @@ SELECT *
           case 'all':
           {
             $tags_arr = explode(',', $filter['value']);
-            foreach($tags_arr as $value)
+            foreach ($tags_arr as $value)
             {
               $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
               $where[] = 'it'.$i_tags.'.tag_id = '.$value;
               $i_tags++;
             }
-            
+
             break;
           }
           // search images which tags are in the list
@@ -157,7 +164,7 @@ SELECT *
             $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
             $where[] = 'it'.$i_tags.'.tag_id IN ('.$filter['value'].')';
             $i_tags++;
-            
+
             break;
           }
           // exclude images which tags are in the list
@@ -166,7 +173,7 @@ SELECT *
             $sub_query = '
       SELECT it'.$i_tags.'.image_id
         FROM '.IMAGE_TAG_TABLE.' AS it'.$i_tags.'
-        WHERE 
+        WHERE
           it'.$i_tags.'.image_id = i.id AND
           it'.$i_tags.'.tag_id IN ('.$filter['value'].')
         GROUP BY it'.$i_tags.'.image_id
@@ -174,7 +181,7 @@ SELECT *
             $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
             $where[] = 'NOT EXISTS ('.$sub_query.')';
             $i_tags++;
-            
+
             break;
           }
           // exclude images which tags are not in the list and search images which have all tags
@@ -183,7 +190,7 @@ SELECT *
             $sub_query = '
       SELECT it'.$i_tags.'.image_id
         FROM '.IMAGE_TAG_TABLE.' AS it'.$i_tags.'
-        WHERE 
+        WHERE
           it'.$i_tags.'.image_id = i.id AND
           it'.$i_tags.'.tag_id NOT IN ('.$filter['value'].')
         GROUP BY it'.$i_tags.'.image_id
@@ -191,7 +198,7 @@ SELECT *
             $join[] = IMAGE_TAG_TABLE.' AS it'.$i_tags.' ON i.id = it'.$i_tags.'.image_id';
             $where[] = 'NOT EXISTS ('.$sub_query.')';
             $i_tags++;
-            
+
             $tags_arr = explode(',', $filter['value']);
             foreach($tags_arr as $value)
             {
@@ -199,14 +206,14 @@ SELECT *
               $where[] = 'it'.$i_tags.'.tag_id = '.$value;
               $i_tags++;
             }
-            
+
             break;
           }
         }
-        
+
         break;
       }
-    
+
       // date
       case 'date':
       {
@@ -231,10 +238,10 @@ SELECT *
             $where[] = 'date_creation > "'.$filter['value'].' 23:59:59"';
             break;
         }
-        
+
         break;
       }
-      
+
       // name
       case 'name':
       {
@@ -262,10 +269,10 @@ SELECT *
             $where[] = 'name REGEXP "'.$filter['value'].'"';
             break;
         }
-        
+
         break;
       }
-      
+
       // album
       case 'album':
       {
@@ -278,13 +285,13 @@ SELECT *
             foreach($albums_arr as $value)
             {
               $sub_query = '
-      SELECT image_id 
+      SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
         WHERE category_id = '.$value.'
       ';
               $where[] = 'i.id IN ('.$sub_query.')';
             }
-            
+
             break;
           }
           // search images existing in one of these albums
@@ -296,7 +303,7 @@ SELECT *
         WHERE category_id IN('.$filter['value'].')
       ';
             $where[] = 'i.id IN ('.$sub_query.')';
-            
+
             break;
           }
           // exclude images existing in one of these albums
@@ -308,7 +315,7 @@ SELECT *
         WHERE category_id IN('.$filter['value'].')
       ';
             $where[] = 'i.id NOT IN ('.$sub_query.')';
-            
+
             break;
           }
           // exclude images existing on other albums, and search images existing in all albums
@@ -320,30 +327,30 @@ SELECT *
         WHERE category_id NOT IN('.$filter['value'].')
       ';
             $where[] = 'i.id NOT IN ('.$sub_query.')';
-            
+
             $albums_arr = explode(',', $filter['value']);
             foreach($albums_arr as $value)
             {
               $sub_query = '
-      SELECT image_id 
+      SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
         WHERE category_id = '.$value.'
       ';
               $where[] = 'i.id IN ('.$sub_query.')';
             }
-            
+
             break;
           }
         }
-        
+
         break;
       }
-      
+
       // dimensions
       case 'dimensions':
       {
         $filter['value'] = explode(',', $filter['value']);
-        
+
         switch ($filter['cond'])
         {
           case 'width':
@@ -357,7 +364,7 @@ SELECT *
             break;
         }
       }
-      
+
       // author
       case 'author':
       {
@@ -383,10 +390,10 @@ SELECT *
             $where[] = 'author REGEXP "'.$filter['value'].'"';
             break;
         }
-        
+
         break;
       }
-      
+
       // hit
       case 'hit':
       {
@@ -399,10 +406,10 @@ SELECT *
             $where[] = 'hit >= '.$filter['value'].'';
             break;
         }
-        
+
         break;
       }
-      
+
       // rating_score
       case 'rating_score':
       {
@@ -415,24 +422,24 @@ SELECT *
             $where[] = 'rating_score >= '.$filter['value'].'';
             break;
         }
-        
+
         break;
       }
-      
+
       // level
       case 'level':
       {
         $where[] = 'level = '.$filter['value'].'';
         break;
       }
-      
+
       // limit
       case 'limit':
       {
         $limit = '0, '.$filter['value'];
         break;
       }
-      
+
       // mode
       case 'mode':
       {
@@ -441,18 +448,18 @@ SELECT *
       }
     }
   }
-  
+
   /* bluid query */
   $MainQuery = '
 SELECT i.id
   FROM '.IMAGES_TABLE.' AS i';
-    
-    if (isset($join))
+
+    if (count($join))
     {
       $MainQuery.= '
     LEFT JOIN '.implode("\n    LEFT JOIN ", $join);
     }
-    if (isset($where))
+    if (count($where))
     {
       $MainQuery.= '
   WHERE
@@ -470,8 +477,8 @@ SELECT i.id
     file_put_contents(SMART_PATH.'dump_filters.txt', print_r($filters, true));
     file_put_contents(SMART_PATH.'dump_query.sql', $MainQuery);
   }
-  
-  return array_from_query($MainQuery, 'id');
+
+  return query2array($MainQuery, null, 'id');
 }
 
 
@@ -483,11 +490,11 @@ SELECT i.id
 function smart_check_filter($filter)
 {
   global $page, $limit_is_set, $level_is_set;
+
   $error = false;
-  
   if (!isset($limit_is_set)) $limit_is_set = false;
   if (!isset($level_is_set)) $level_is_set = false;
-  
+
   switch ($filter['type'])
   {
     # tags
@@ -495,8 +502,7 @@ function smart_check_filter($filter)
     {
       if ($filter['value'] == null)
       {
-        $error = true;
-        array_push($page['errors'], l10n('No tag selected'));
+        $page['errors'][] = l10n('No tag selected');
       }
       else
       {
@@ -510,8 +516,7 @@ function smart_check_filter($filter)
     {
       if (!preg_match('#([0-9]{4})-([0-9]{2})-([0-9]{2})#', $filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Date string is malformed'));
+        $page['errors'][] = l10n('Date string is malformed');
       }
       break;
     }
@@ -520,13 +525,11 @@ function smart_check_filter($filter)
     {
       if (empty($filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Name is empty'));
+        $page['errors'][] = l10n('Name is empty');
       }
-      else if ( $filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false )
+      else if ($filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false)
       {
-        $error = true;
-        array_push($page['errors'], l10n('Regex is malformed'));
+        $page['errors'][] = l10n('Regex is malformed');
       }
       break;
     }
@@ -535,8 +538,7 @@ function smart_check_filter($filter)
     {
       if (@$filter['value'] == null)
       {
-        $error = true;
-        array_push($page['errors'], l10n('No album selected'));
+        $page['errors'][] = l10n('No album selected');
       }
       else
       {
@@ -547,7 +549,7 @@ function smart_check_filter($filter)
     # dimensions
     case 'dimensions':
     {
-      if ( empty($filter['value']['min']) or empty($filter['value']['max']) )
+      if (empty($filter['value']['min']) or empty($filter['value']['max']))
       {
         $error = true;
       }
@@ -562,13 +564,11 @@ function smart_check_filter($filter)
     {
       if (empty($filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Author is empty'));
+        $page['errors'][] = l10n('Author is empty');
       }
-      else if ( $filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false )
+      else if ($filter['cond']=='regex' and @preg_match('/'.$filter['value'].'/', null)===false)
       {
-        $error = true;
-        array_push($page['errors'], l10n('Regex is malformed'));
+        $page['errors'][] = l10n('Regex is malformed');
       }
       else
       {
@@ -579,20 +579,18 @@ function smart_check_filter($filter)
     # hit
     case 'hit':
     {
-      if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      if (!preg_match('#([0-9]+)#', $filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Hits must be an integer'));
+        $page['errors'][] = l10n('Hits must be an integer');
       }
       break;
     }
     # rating_score
     case 'rating_score':
     {
-      if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      if (!preg_match('#([0-9]+)#', $filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Rating score must be an integer'));
+        $page['errors'][] = l10n('Rating score must be an integer');
       }
       break;
     }
@@ -601,8 +599,7 @@ function smart_check_filter($filter)
     {
       if ($level_is_set == true) // only one level is allowed, first is saved
       {
-        $error = true;
-        array_push($page['errors'], l10n('You can\'t use more than one level filter'));
+        $page['errors'][] = l10n('You can\'t use more than one level filter');
       }
       else
       {
@@ -616,17 +613,15 @@ function smart_check_filter($filter)
     {
       if ($limit_is_set == true) // only one limit is allowed, first is saved
       {
-        $error = true;
-        array_push($page['errors'], l10n('You can\'t use more than one limit filter'));
+        $page['errors'][] = l10n('You can\'t use more than one limit filter');
       }
-      else if (!preg_match('#([0-9]{1,})#', $filter['value']))
+      else if (!preg_match('#([0-9]+)#', $filter['value']))
       {
-        $error = true;
-        array_push($page['errors'], l10n('Limit must be an integer'));
+        $page['errors'][] = l10n('Limit must be an integer');
       }
-      else 
+      else
       {
-        $filter['cond'] = 'level';
+        $filter['cond'] = 'limit';
         $limit_is_set = true;
       }
       break;
@@ -637,16 +632,16 @@ function smart_check_filter($filter)
       $filter['cond'] = 'mode';
       break;
     }
-    
+
     default:
     {
       $error = true;
       break;
     }
   }
-  
-  
-  if ($error == false)
+
+
+  if (!$error && empty($page['errors']))
   {
     return $filter;
   }
@@ -655,45 +650,3 @@ function smart_check_filter($filter)
     return false;
   }
 }
-
-
-/**
- * clean table when categories are deleted
- */
-function smart_delete_categories($ids)
-{
-  $query = '
-DELETE FROM '.CATEGORY_FILTERS_TABLE.'
-  WHERE category_id IN('.implode(',', $ids).')
-;';
-  pwg_query($query);
-}
-
-/**
- * update images list periodically
- */
-function smart_periodic_update()
-{
-  global $conf;
-  
-  // we only search for old albums every hour, nevermind which user is connected
-  if ($conf['SmartAlbums']['last_update'] > time() - 3600) return;
-  
-  $conf['SmartAlbums']['last_update'] = time();
-  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
-  
-  // get categories with smart filters
-  $query = '
-SELECT DISTINCT id
-  FROM '.CATEGORIES_TABLE.' AS c
-    INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
-    ON c.id = cf.category_id
-  WHERE updated < DATE_SUB(NOW(), INTERVAL '.$conf['SmartAlbums']['update_timeout'].' DAY)
-;';
-  
-  // regenerate photo list
-  $smart_cats = array_from_query($query, 'id');
-  array_map('smart_make_associations', $smart_cats);
-}
-
-?>

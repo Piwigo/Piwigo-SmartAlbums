@@ -1,5 +1,5 @@
 <?php
-if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+defined('SMART_PATH') or die('Hacking attempt!');
 
 global $conf, $template, $page;
 
@@ -24,5 +24,3 @@ else
 $template->assign('SMART_PATH', SMART_PATH);
 
 $template->assign_var_from_handle('ADMIN_CONTENT', 'SmartAlbums_content');
-
-?>

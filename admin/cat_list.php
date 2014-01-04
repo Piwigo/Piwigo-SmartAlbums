@@ -1,5 +1,5 @@
 <?php
-if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+defined('SMART_PATH') or die('Hacking attempt!');
 
 if (isset($_GET['hide_messages']))
 {
@@ -15,7 +15,7 @@ $self_url = SMART_ADMIN . '-cat_list';
 
 $categories = array();
 $query = '
-SELECT 
+SELECT
     id,
     name,
     permalink,
@@ -50,7 +50,7 @@ else if (isset($_POST['submitAdd']))
 
   if (isset($output_create['error']))
   {
-    array_push($page['errors'], $output_create['error']);
+    $page['errors'][] = $output_create['error'];
   }
   else
   {
@@ -68,26 +68,26 @@ else if (isset($_GET['smart_generate']))
     foreach ($categories as $category)
     {
       $associated_images = smart_make_associations($category['id']);
-      array_push($page['infos'], 
-        sprintf(l10n('%d photos associated to album %s'), 
-          count($associated_images), 
-          '&laquo;'.trigger_event('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
-          )
+
+      $page['infos'][] = l10n(
+        '%d photos associated to album %s',
+        count($associated_images),
+        '&laquo;'.trigger_event('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
         );
     }
   }
   /* regenerate photo list | one category */
   else
   {
-    $associated_images = smart_make_associations($_GET['smart_generate']);    
-    array_push($page['infos'], 
-      sprintf(l10n('%d photos associated to album %s'), 
-        count($associated_images), 
-        '&laquo;'.trigger_event('render_category_name', $categories[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
-        )
+    $associated_images = smart_make_associations($_GET['smart_generate']);
+
+    $page['infos'][] = l10n(
+      '%d photos associated to album %s',
+      count($associated_images),
+      '&laquo;'.trigger_event('render_category_name', $categories[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
       );
   }
-  
+
   define('SMART_NOT_UPDATE', 1);
   invalidate_user_cache();
 }
@@ -99,7 +99,7 @@ $template->assign(array(
   'F_ACTION' => $self_url,
   'PWG_TOKEN' => get_pwg_token(),
  ));
- 
+
 // retrieve all existing categories for album creation
 $query = '
 SELECT id,name,uppercats,global_rank
@@ -107,16 +107,15 @@ SELECT id,name,uppercats,global_rank
 ;';
 
 display_select_cat_wrapper(
-  $query,
-  null,
+  $query, null,
   'category_options'
   );
-  
+
 if ($conf['SmartAlbums']['show_list_messages'])
 {
-  array_push($page['warnings'], l10n('Only SmartAlbums are displayed on this page'));
-  array_push($page['warnings'], sprintf(l10n('To order albums please go the main albums <a href="%s">management page</a>'), $base_url.'cat_list'));
-  array_push($page['warnings'], '<a href="'.$self_url.'&hide_messages">['.l10n('Don\'t show this message again').']</a>');
+  $page['warnings'][] = l10n('Only SmartAlbums are displayed on this page');
+  $page['warnings'][] = sprintf(l10n('To order albums please go the main albums <a href="%s">management page</a>'), $base_url.'cat_list');
+  $page['warnings'][] = '<a href="'.$self_url.'&hide_messages">['.l10n('Don\'t show this message again').']</a>';
 }
 
 // +-----------------------------------------------------------------------+
@@ -124,11 +123,11 @@ if ($conf['SmartAlbums']['show_list_messages'])
 // +-----------------------------------------------------------------------+
 
 $categories_count_images = array();
-if ( count($categories) )
+if (count($categories))
 {
   $query = '
-SELECT 
-    category_id, 
+SELECT
+    category_id,
     COUNT(image_id) AS total_images
   FROM '.IMAGE_CATEGORY_TABLE.'
   WHERE category_id IN ('.implode(',', array_keys($categories)).')
@@ -153,10 +152,8 @@ foreach ($categories as $category)
       'U_DELETE'    => $self_url.'&amp;delete='.$category['id'].'&amp;pwg_token='.get_pwg_token(),
       'U_SMART'     => $self_url.'&amp;smart_generate='.$category['id'],
     );
-  
+
   $template->append('categories', $tpl_cat);
 }
 
-$template->set_filename('SmartAlbums_content', dirname(__FILE__).'/template/cat_list.tpl');
-
-?>
+$template->set_filename('SmartAlbums_content', realpath(SMART_PATH . 'admin/template/cat_list.tpl'));

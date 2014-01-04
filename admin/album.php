@@ -1,27 +1,5 @@
 <?php
-// +-----------------------------------------------------------------------+
-// | Piwigo - a PHP based photo gallery                                    |
-// +-----------------------------------------------------------------------+
-// | Copyright(C) 2008-2012 Piwigo Team                  http://piwigo.org |
-// | Copyright(C) 2003-2008 PhpWebGallery Team    http://phpwebgallery.net |
-// | Copyright(C) 2002-2003 Pierrick LE GALL   http://le-gall.net/pierrick |
-// +-----------------------------------------------------------------------+
-// | This program is free software; you can redistribute it and/or modify  |
-// | it under the terms of the GNU General Public License as published by  |
-// | the Free Software Foundation                                          |
-// |                                                                       |
-// | This program is distributed in the hope that it will be useful, but   |
-// | WITHOUT ANY WARRANTY; without even the implied warranty of            |
-// | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU      |
-// | General Public License for more details.                              |
-// |                                                                       |
-// | You should have received a copy of the GNU General Public License     |
-// | along with this program; if not, write to the Free Software           |
-// | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
-// | USA.                                                                  |
-// +-----------------------------------------------------------------------+
-
-if(!defined("PHPWG_ROOT_PATH")) die ("Hacking attempt!");
+defined('SMART_PATH') or die('Hacking attempt!');
 
 // +-----------------------------------------------------------------------+
 // | Basic checks                                                          |
@@ -32,14 +10,15 @@ check_status(ACCESS_ADMINISTRATOR);
 $page['active_menu'] = get_active_menu('album');
 
 check_input_parameter('cat_id', $_GET, false, PATTERN_ID);
+$cat_id = $_GET['cat_id'];
 
-$admin_album_base_url = get_root_url().'admin.php?page=album-'.$_GET['cat_id'];
-$self_url = SMART_ADMIN.'-album&amp;cat_id='.$_GET['cat_id'];
+$admin_album_base_url = get_root_url().'admin.php?page=album-'.$cat_id;
+$self_url = SMART_ADMIN.'-album&amp;cat_id='.$cat_id;
 
 $query = '
 SELECT *
   FROM '.CATEGORIES_TABLE.'
-  WHERE id = '.$_GET['cat_id'].'
+  WHERE id = '.$cat_id.'
 ;';
 $category = pwg_db_fetch_assoc(pwg_query($query));
 
@@ -47,6 +26,13 @@ if (!isset($category['id']))
 {
   die("unknown album");
 }
+
+// category must be virtual
+if ($category['dir'] != NULL)
+{
+  die("physical album");
+}
+
 
 // +-----------------------------------------------------------------------+
 // | Tabs                                                                  |
@@ -59,14 +45,6 @@ $tabsheet->select('smartalbum');
 $tabsheet->assign();
 
 
-$cat_id = $_GET['cat_id'];
-
-// category must be virtual
-if ($category['dir'] != NULL)
-{
-  die("physical album");
-}
-
 // +-----------------------------------------------------------------------+
 // | Save Filters                                                          |
 // +-----------------------------------------------------------------------+
@@ -77,33 +55,36 @@ if (isset($_POST['submitFilters']))
   {
     var_dump($_POST['filters']);
   }
-  
+
   // test if it was a Smart Album
   $query = '
-SELECT DISTINCT category_id 
-  FROM '.CATEGORY_FILTERS_TABLE.' 
+SELECT DISTINCT category_id
+  FROM '.CATEGORY_FILTERS_TABLE.'
   WHERE category_id = '.$cat_id.'
 ;';
   $was_smart = pwg_db_num_rows(pwg_query($query));
-  
+
   /* this album is no longer a SmartAlbum */
-  if ( $was_smart AND !isset($_POST['is_smart']) )
+  if ($was_smart and !isset($_POST['is_smart']))
   {
     pwg_query('DELETE FROM '.IMAGE_CATEGORY_TABLE.' WHERE category_id = '.$cat_id.' AND smart = true;');
     pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE category_id = '.$cat_id.';');
+
     set_random_representant(array($cat_id));
+
+    define('SMART_NOT_UPDATE', 1);
     invalidate_user_cache();
   }
   /* no filter selected */
-  else if ( isset($_POST['is_smart']) AND empty($_POST['filters']) )
+  else if (isset($_POST['is_smart']) and empty($_POST['filters']))
   {
-    array_push($page['errors'], l10n('No filter selected'));
+    $page['errors'][] = l10n('No filter selected');
   }
   /* everything is fine */
-  else if ( isset($_POST['is_smart']) )
+  else if (isset($_POST['is_smart']))
   {
     pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE category_id = '.$cat_id.';');
-    
+
     $inserts = array();
     foreach ($_POST['filters'] as $filter)
     {
@@ -113,19 +94,19 @@ SELECT DISTINCT category_id
         $inserts[] = $filter;
       }
     }
-    
+
     mass_inserts(
-      CATEGORY_FILTERS_TABLE, 
-      array('category_id', 'type', 'cond', 'value'), 
+      CATEGORY_FILTERS_TABLE,
+      array('category_id', 'type', 'cond', 'value'),
       $inserts,
       array('ignore'=>true)
       );
-    
+
     $associated_images = smart_make_associations($cat_id);
     $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
-    
-    array_push($page['infos'], sprintf(l10n('%d photos associated to album %s'), count($associated_images), ''));
-    
+
+    $page['infos'][] = l10n('%d photos associated to album %s', count($associated_images), '');
+
     define('SMART_NOT_UPDATE', 1);
     invalidate_user_cache();
   }
@@ -224,11 +205,11 @@ $template->assign('options', $options);
 
 /* get filters for this album */
 $query = '
-SELECT * 
-  FROM '.CATEGORY_FILTERS_TABLE.' 
+SELECT *
+  FROM '.CATEGORY_FILTERS_TABLE.'
   WHERE category_id = '.$cat_id.'
-  ORDER BY 
-    type ASC, 
+  ORDER BY
+    type ASC,
     cond ASC
 ;';
 $result = pwg_query($query);
@@ -249,9 +230,9 @@ SELECT id, name
   FROM '.TAGS_TABLE.'
   WHERE id IN('.$filter['value'].')
 ;';
-    $filter['value'] = get_taglist($query); 
+    $filter['value'] = get_taglist($query);
   }
-  
+
   $template->append('filters', $filter);
 }
 
@@ -259,7 +240,7 @@ SELECT id, name
 /* format types */
 $template->assign('format_options', array(
   'portrait' => l10n('Portrait'),
-  'square'   => l10n('Square'),
+  'square'   => l10n('square'),
   'lanscape' => l10n('Landscape'),
   'panorama' => l10n('Panorama'),
   ));
@@ -273,10 +254,10 @@ $template->assign('all_tags', get_taglist($query));
 
 /* all albums */
 $query = '
-SELECT 
-    id, 
-    name, 
-    uppercats, 
+SELECT
+    id,
+    name,
+    uppercats,
     global_rank
   FROM '.CATEGORIES_TABLE.'
 ;';
@@ -302,9 +283,12 @@ $result = pwg_query($query);
 
 while ($row = pwg_db_fetch_assoc($result))
 {
-  $widths[] = $row['width'];
-  $heights[] = $row['height'];
-  $ratios[] = floor($row['width'] * 100 / $row['height']) / 100;
+  if ($row['width']>0 && $row['height']>0)
+  {
+    $widths[] = $row['width'];
+    $heights[] = $row['height'];
+    $ratios[] = floor($row['width'] / $row['height'] * 100) / 100;
+  }
 }
 
 $widths = array_unique($widths);
@@ -353,13 +337,13 @@ foreach ($ratios as $ratio)
   }
 }
 
-foreach (array_keys($ratio_categories) as $ratio_category)
+foreach ($ratio_categories as $ratio_name => $ratio_values)
 {
-  if (count($ratio_categories[$ratio_category]) > 0)
+  if (count($ratio_values) > 0)
   {
-    $dimensions['ratio_'.$ratio_category] = array(
-      'min' => $ratio_categories[$ratio_category][0],
-      'max' => $ratio_categories[$ratio_category][count($ratio_categories[$ratio_category]) - 1]
+    $dimensions['ratio_'.$ratio_name] = array(
+      'min' => $ratio_values[0],
+      'max' => array_pop($ratio_values),
       );
   }
 }
@@ -370,10 +354,10 @@ $template->assign('dimensions', $dimensions);
 if ($template->get_template_vars('IMAGE_COUNT') == null)
 {
   $query = '
-SELECT count(1) 
-  FROM '.IMAGE_CATEGORY_TABLE.' 
-  WHERE 
-    category_id = '.$cat_id.' 
+SELECT count(1)
+  FROM '.IMAGE_CATEGORY_TABLE.'
+  WHERE
+    category_id = '.$cat_id.'
     AND smart = true
 ';
 
@@ -395,6 +379,4 @@ $template->assign(array(
   'CATEGORIES_NAV' => get_cat_display_name_cache($category['uppercats'], SMART_ADMIN.'-album&amp;cat_id='),
 ));
 
-$template->set_filename('SmartAlbums_content', dirname(__FILE__).'/template/album.tpl');
-
-?>
+$template->set_filename('SmartAlbums_content', realpath(SMART_PATH . 'admin/template/album.tpl'));

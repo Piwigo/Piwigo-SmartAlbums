@@ -1,10 +1,47 @@
 <?php
-if (!defined('PHPWG_ROOT_PATH')) die('Hacking attempt!');
+defined('SMART_PATH') or die('Hacking attempt!');
 
 /**
- * Remove picture that musn't be displayed from $page['items']
+ * clean table when categories are deleted
+ */
+function smart_delete_categories($ids)
+{
+  $query = '
+DELETE FROM '.CATEGORY_FILTERS_TABLE.'
+  WHERE category_id IN('.implode(',', $ids).')
+;';
+  pwg_query($query);
+}
+
+/**
+ * update images list periodically
+ */
+function smart_periodic_update()
+{
+  global $conf;
+
+  // we only search for old albums every hour, nevermind which user is connected
+  if ($conf['SmartAlbums']['last_update'] > time() - 3600) return;
+
+  $conf['SmartAlbums']['last_update'] = time();
+  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
+
+  // get categories with smart filters
+  $query = '
+SELECT DISTINCT category_id
+  FROM '.CATEGORY_FILTERS_TABLE.'
+  WHERE updated < DATE_SUB(NOW(), INTERVAL '.$conf['SmartAlbums']['update_timeout'].' DAY)
+;';
+
+  // regenerate photo list
+  $smart_cats = query2array($query, null, 'category_id');
+  array_map('smart_make_associations', $smart_cats);
+}
+
+/**
+ * Remove picture that must not be displayed from $page['items']
  *
- * here we get all pictures that current user could see 
+ * here we get all pictures that current user could see
  * if SmartAlbums doesn't exist, and make intersect with pictures
  * actually displayed
  */
@@ -20,16 +57,13 @@ function smart_init_page_items()
       (isset($page['flat']))
     )
   ) {
-  
+
     $query = '
-SELECT DISTINCT(cat.id) AS id
-  FROM '.CATEGORIES_TABLE.' AS cat
-    INNER JOIN '.IMAGE_CATEGORY_TABLE.' AS img
-    ON img.category_id = cat.id
-  WHERE img.smart = "true"
+SELECT DISTINCT category_id
+  FROM '.CATEGORY_FILTERS_TABLE.'
 ;';
-    $smart_albums = array_from_query($query, 'id');
-      
+    $smart_albums = query2array($query, null, 'category_id');
+
     if (count($smart_albums) > 0 and !is_admin())
     {
       // add SmartAlbums to forbidden categories
@@ -37,8 +71,8 @@ SELECT DISTINCT(cat.id) AS id
       $user['forbidden_categories'] = explode(',', $user['forbidden_categories']);
       $user['forbidden_categories'] = array_unique(array_merge($user['forbidden_categories'], $smart_albums));
       $user['forbidden_categories'] = implode(',', $user['forbidden_categories']);
-    
-      if ( isset($page['category']) )
+
+      if (isset($page['category']))
       {
         $query = '
 SELECT id
@@ -50,12 +84,12 @@ SELECT id
         'visible_categories' => 'id',
         )
       );
-        $subcat_ids = array_from_query($query, 'id');
+        $subcat_ids = query2array($query, null, 'id');
         $subcat_ids[] = 0;
         $where_sql = 'category_id IN ('.implode(',',$subcat_ids).')';
         // remove categories from forbidden because just checked above
         $forbidden = get_sql_condition_FandF(
-          array( 
+          array(
             'visible_images' => 'id'
             ),
           'AND'
@@ -85,13 +119,11 @@ SELECT DISTINCT(image_id)
   '.$conf['order_by'].'
 ;';
 
-      $page['items_wo_sa'] = array_from_query($query, 'image_id');
+      $page['items_wo_sa'] = query2array($query, null, 'image_id');
       $page['items'] = array_intersect($page['items'], $page['items_wo_sa']);
-      
+
       // restore forbidden categories
       $user['forbidden_categories'] = $user['forbidden_categories_old'];
     }
   }
 }
-
-?>
