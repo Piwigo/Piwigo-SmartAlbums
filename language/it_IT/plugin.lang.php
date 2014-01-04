@@ -1,8 +1,6 @@
 <?php
 
 $lang['No filter selected'] = 'Nessun filtro selezionato';
-$lang['%d photo'] = '%d foto';
-$lang['%d photos'] = '%d foto';
 $lang['All these tags'] = 'Tutti i tag';
 $lang['One of these tags'] = 'Uno dei tag';
 $lang['None of these tags'] = 'Nessun tag';
@@ -43,7 +41,6 @@ $lang['You can\'t use more than one level filter'] = 'Potete scegliere un solo l
 $lang['Hits'] = 'Numero di visite';
 $lang['Max. number of photos'] = 'Numero massimo di elementi';
 $lang['For "Is (not) in", separate each author by a comma'] = 'Per "E\'(non) è nel", separare ogni autore da una virgola';
-$lang['limit_filter'] = 'Massimo numero di foto';
 $lang['This album is a SmartAlbum'] = 'Questo album è uno SmartAlbum';
 $lang['Add filters here'] = 'Aggiungere i filtri quì';
 $lang['Count'] = 'Contare';
@@ -64,4 +61,7 @@ $lang['No album selected'] = 'Nessun album selezionato';
 $lang['Update albums every %s days'] = 'Aggiornamento album ogni %s giorni';
 $lang['Regular expression'] = 'Espressione regolare';
 $lang['Regex is malformed'] = 'Regex non è corretto';
+$lang['Invalid number of days'] = 'Numero di giorni non valido';
+$lang['Mode'] = 'Mode';
+$lang['Select albums...'] = 'Album...';
 ?>
