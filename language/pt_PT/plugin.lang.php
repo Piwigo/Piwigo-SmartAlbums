@@ -20,9 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d foto';
 $lang['%d photos associated to album %s'] = '%d fotos associadas ao album %s';
-$lang['%d photos'] = '%d fotos';
 $lang['Add filters here'] = 'Adicionar filtros aqui';
 $lang['Added after'] = 'Adicionado depois';
 $lang['Added before'] = 'Adicionado antes';
@@ -75,7 +73,6 @@ $lang['Max. number of photos'] = 'Número máximo de fotos';
 $lang['Exclude SmartAlbums from permissions management'] = 'Excluiros Albuns Smartdas permissões';
 $lang['Rating score must be an integer'] = 'A avaliação deve ser um número integro';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Albuns Smart são considerados privados ara todos, e um utilizadorerá ver o conteúdo apenas se xistente noutro album onde ele tenha acesso';
-$lang['limit_filter'] = 'Número máximo de fotos';
 $lang['All these albums'] = 'Todos estes albuns';
 $lang['No album selected'] = 'Não existem albuns selecionados';
 $lang['None of these albums'] = 'Nenhum destes albuns';
@@ -84,4 +81,7 @@ $lang['Only these albums'] = 'Apenas estes albuns';
 $lang['Regex is malformed'] = 'Regex está mal formado ';
 $lang['Regular expression'] = 'Expressão regular';
 $lang['Update albums every %s days'] = 'Actualizar álbuns todos os %s dias';
+$lang['Invalid number of days'] = 'Número de dias inválido';
+$lang['Mode'] = 'Modo';
+$lang['Select albums...'] = 'Selecionar albuns...';
 ?>
