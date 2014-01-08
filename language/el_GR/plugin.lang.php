@@ -20,7 +20,6 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d φωτογραφία';
 $lang['%d photos associated to album %s'] = '%d φωτογραφίες που σχετίζονται με το άλμπουμ %s';
 $lang['Added after'] = 'Προστέθηκε μετά από';
 $lang['Added before'] = 'Προστέθηκε πριν';
@@ -35,7 +34,6 @@ $lang['No tag selected'] = 'Δεν έχει επιλεγεί ετικέτα';
 $lang['None of these tags'] = 'Καμία από αυτές τις ετικέτες';
 $lang['One of these tags'] = 'Μία από αυτές τις ετικέτες';
 $lang['Only these tags'] = 'Μόνο αυτές οι λέξεις-κλειδιά';
-$lang['%d photos'] = '%d φωτογραφίες';
 $lang['Add filters here'] = 'Προσθέστε φίλτρα εδώ';
 $lang['All SmartAlbums'] = 'Όλα τα SmartAlbums';
 $lang['Count'] = 'Αρίθμηση';
@@ -74,7 +72,6 @@ $lang['Filters'] = 'Φίλτρα';
 $lang['Exclude SmartAlbums from permissions management'] = 'Εξαίρεση των SmartAlbums από τη διαχείριση δικαιωμάτων';
 $lang['Rating score must be an integer'] = 'Η Βαθμολογία κατάταξης πρέπει να είναι ακέραιος';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Τα SmartAlbums θεωρούνται ιδιωτικά για όλους, και ο χρήστης μπορεί να δει το περιεχόμενο τους εαν είναι διαθέσιμο μόνο σε ένα άλμπουμ που έχει πρόσβαση.';
-$lang['limit_filter'] = 'Μέγιστος αριθμός φωτογραφιών';
 $lang['Only these albums'] = 'Μόνο αυτά τα λευκώματα';
 $lang['One of these albums'] = 'Ένα από αυτά τα λευκώματα';
 $lang['None of these albums'] = 'Κανένα από αυτά τα λευκώματα';
@@ -83,4 +80,7 @@ $lang['All these albums'] = 'Όλα αυτά τα λευκώματα';
 $lang['Regex is malformed'] = 'Η Κανονική Έκφραση έχει λανθασμένη μορφή';
 $lang['Regular expression'] = 'Κανονικές Εκφράσεις';
 $lang['Update albums every %s days'] = 'Ενημέρωση λευκωμάτων κάθε %s μέρες';
+$lang['Select albums...'] = 'Επιλέξτε λεύκωμα ...';
+$lang['Mode'] = 'Τρόπος λειτουργίας';
+$lang['Invalid number of days'] = 'Μη έγκυρος αριθμός ημερών';
 ?>
