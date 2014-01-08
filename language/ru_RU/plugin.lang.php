@@ -20,9 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d фотография';
 $lang['%d photos associated to album %s'] = '%d фотографий, связанных с альбомом %s';
-$lang['%d photos'] = '%d фотографий';
 $lang['Add filters here'] = 'Добавить фильтр здесь';
 $lang['Added after'] = 'Добавлено ​​после';
 $lang['Added before'] = 'Добавлено ​​до';
@@ -74,7 +72,6 @@ $lang['Filters'] = 'Фильтры';
 $lang['Exclude SmartAlbums from permissions management'] = 'Исключить Умные Альбомы из управления правам доступа';
 $lang['Rating score must be an integer'] = 'Оценка должна быть целым числом';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Умные Альбомы считаются приватными для всех и пользователь может видеть их содержание только если изображения доступны ему в другом альбоме. ';
-$lang['limit_filter'] = 'Макс. количество изображений';
 $lang['No album selected'] = 'Не выбран ни один альбом';
 $lang['None of these albums'] = 'Ни один из этих альбомов';
 $lang['One of these albums'] = 'Один из этих альбомов';
@@ -83,4 +80,7 @@ $lang['All these albums'] = 'Все эти альбомы';
 $lang['Regex is malformed'] = 'Регулярное выражение неправильное';
 $lang['Regular expression'] = 'Регулярное выражение';
 $lang['Update albums every %s days'] = 'Обновлять альбомы каждые %s дней';
+$lang['Invalid number of days'] = 'Неправильный номер дней';
+$lang['Mode'] = 'Режим';
+$lang['Select albums...'] = 'Выбор альбомов...';
 ?>
