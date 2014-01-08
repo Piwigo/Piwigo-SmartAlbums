@@ -22,8 +22,6 @@
 // +-----------------------------------------------------------------------+
 $lang['Contains'] = 'İçermekte';
 $lang['%d photos associated to album %s'] = '%d fotoğraf %s albümüne ilişkilendirildi';
-$lang['%d photos'] = '%d fotoğraf';
-$lang['%d photo'] = '%d fotoğraf';
 $lang['can cause slowdowns'] = 'yavaşlamaya sebep olur';
 $lang['Above'] = 'Yukarıdaki';
 $lang['Add filters here'] = 'Buraya filtre ekle';
@@ -74,7 +72,6 @@ $lang['Max. number of photos'] = 'Maks. fotoğraf sayısı';
 $lang['Exclude SmartAlbums from permissions management'] = 'SmartAlbums\'ü izin yönetiminden hariç tut';
 $lang['Rating score must be an integer'] = 'Rating skoru tamsayı olmalıdır';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums herkes için özel olarak kabul edilir ve bir kullanıcı sadece başka bir albümde erişim hakkı varsa onun içeriğini görebilir.';
-$lang['limit_filter'] = 'Maks. fotoğraf sayısı';
 $lang['All these albums'] = 'Tüm bu albümler';
 $lang['No album selected'] = 'Hiç bir albüm seçilmedi';
 $lang['None of these albums'] = 'Bu albümlerin hiçbiri';
@@ -83,4 +80,7 @@ $lang['Only these albums'] = 'Sadece bu albümler';
 $lang['Regex is malformed'] = 'Düzenli ifade bozuk';
 $lang['Regular expression'] = 'Düzenli ifade';
 $lang['Update albums every %s days'] = 'Her %s günde albümleri güncelle';
+$lang['Select albums...'] = 'Albümleri seçin...';
+$lang['Mode'] = 'Mod';
+$lang['Invalid number of days'] = 'Geçersiz gün yasısı';
 ?>
