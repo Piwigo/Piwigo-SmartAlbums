@@ -21,6 +21,9 @@ else
   include(SMART_PATH . 'admin/'.$page['tab'].'.php');
 }
 
-$template->assign('SMART_PATH', SMART_PATH);
+$template->assign(array(
+  'SMART_PATH' => SMART_PATH,
+  'SMART_ABS_PATH' => realpath(SMART_PATH) . '/',
+  ));
 
 $template->assign_var_from_handle('ADMIN_CONTENT', 'SmartAlbums_content');
