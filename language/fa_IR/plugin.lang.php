@@ -43,4 +43,6 @@ $lang['Is in'] = 'هست در';
 $lang['Filters'] = 'پالایش';
 $lang['Hits'] = 'باز خورد';
 $lang['Is'] = 'هست';
+$lang['Select albums...'] = 'انتخاب البوم ها';
+$lang['SmartAlbum added'] = ' افزودن البوم هوشمند';
 ?>
