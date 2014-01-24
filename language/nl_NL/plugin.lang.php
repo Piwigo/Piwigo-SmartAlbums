@@ -63,4 +63,5 @@ $lang['Select albums...'] = 'Geselecteerde albums...';
 $lang['Invalid number of days'] = 'Incorrect aantal dagen';
 $lang['Update albums on file upload'] = 'Werk albums bij bij het uploaden van bestanden';
 $lang['Mode'] = 'Manier';
+$lang['Regenerate photos list of all SmartAlbums'] = 'Regenereer foto lijst van alle SmartAlbums';
 ?>
