@@ -21,8 +21,6 @@
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
 $lang['%d photos associated to album %s'] = '%d fotiek spojen&yacute;ch s albumom %s';
-$lang['%d photo'] = '%d fotka';
-$lang['%d photos'] = '%d fotiek';
 $lang['Add filters here'] = 'Pridať filtre';
 $lang['Added after'] = 'Pridané po';
 $lang['Added before'] = 'Pridané pred';
@@ -74,7 +72,6 @@ $lang['Max. number of photos'] = 'Max. po&#269;et fotiek';
 $lang['Exclude SmartAlbums from permissions management'] = 'Vylúčiť SmartAlbumy z riadenia oprávnení';
 $lang['Rating score must be an integer'] = 'Stav hodnotenia musí byť celé číslo';
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbumy su považované za osobné pre všetkých, a užívateľ môže vidieť ich obsah iba ak sú k dispozícii v inom albume ku ktorému má prístup.';
-$lang['limit_filter'] = 'Max. počet fotiek';
 $lang['Only these albums'] = 'Len tieto albumy';
 $lang['One of these albums'] = 'Jeden z týchto albumov';
 $lang['None of these albums'] = 'Žiaden z týchto albumov';
@@ -83,4 +80,7 @@ $lang['All these albums'] = 'Všetky tieto albumy';
 $lang['Update albums every %s days'] = 'Aktualizovať albumy každých %s dní';
 $lang['Regex is malformed'] = 'Regex je chybne vytvorený';
 $lang['Regular expression'] = 'Správny vzorec';
+$lang['Select albums...'] = 'Označiť albumy...';
+$lang['Mode'] = 'Mód';
+$lang['Invalid number of days'] = 'Nesprávne číslo dňa';
 ?>
