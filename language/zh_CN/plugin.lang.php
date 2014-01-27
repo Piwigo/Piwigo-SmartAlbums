@@ -34,8 +34,6 @@ $lang['Name is empty'] = '名称为空';
 $lang['No album selected'] = '未选择相册';
 $lang['No filter selected'] = '未选择过滤器';
 $lang['No tag selected'] = '未选择标签';
-$lang['%d photo'] = '%d 张相片';
-$lang['%d photos'] = '%d 张相片';
 $lang['%d photos associated to album %s'] = '%d 张相片关联到 %s 相册';
 $lang['Above'] = '以上';
 $lang['Add filters here'] = '在此添加过滤器';
@@ -82,4 +80,7 @@ $lang['can cause slowdowns'] = '可能引起处理速度下降';
 $lang['Regex is malformed'] = '正则表达式异常';
 $lang['Regular expression'] = '正则表达式';
 $lang['Update albums every %s days'] = '第 %s 表更新一次相册';
+$lang['Invalid number of days'] = '无效的天数';
+$lang['Select albums...'] = '选择相册...';
+$lang['Mode'] = '模式';
 ?>
