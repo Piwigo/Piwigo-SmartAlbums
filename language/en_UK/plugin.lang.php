@@ -61,7 +61,10 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Exclude SmartAlbums 
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.';
 $lang['Update albums every %s days'] = 'Update albums every %s days';
 $lang['Invalid number of days'] = 'Invalid number of days';
-$lang['Mode'] = 'Mode';
 $lang['Select albums...'] = 'Select albums...';
+$lang['Photos must match all filters'] = 'Photos must match all filters';
+$lang['Photos must match at least one filter'] = 'Photos must match at least one filter';
+$lang['No filter'] = 'No filter';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'The sort order is only used in addition to the limit filter, it does not impact the final display order';
 
 ?>

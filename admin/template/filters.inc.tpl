@@ -154,7 +154,7 @@
 
   <span class="filter-value">
     <input type="text" name="filters[iiii][value]" size="30"/>
-    <i>{'For "Is (not) in", separate each author by a comma'|translate}</i>
+    <br><i>{'For "Is (not) in", separate each author by a comma'|translate}</i>
   </span>
 </li>
 </div>
@@ -175,7 +175,7 @@
   </span>
 
   <span class="filter-value">
-    <input type="text" name="filters[iiii][value]" size="5"/>
+    <input type="number" name="filters[iiii][value]" size="5"/>
   </span>
 </li>
 </div>
@@ -196,7 +196,7 @@
   </span>
 
   <span class="filter-value">
-    <input type="text" name="filters[iiii][value]" size="5"/>
+    <input type="number" name="filters[iiii][value]" size="5"/>
   </span>
 </li>
 </div>
@@ -230,9 +230,17 @@
   </span>
 
   <input type="hidden" name="filters[iiii][cond]" value="limit"/>
-
-  <span class="filter-value">
-    <input type="text" name="filters[iiii][value]" size="5"/>
+  
+  <span class="filter-value" style="width:200px;">
+    <input type="number" name="filters[iiii][value]" size="5"/>
+  </span>
+  
+  <span class="filter-cond" style="width:auto;">
+    <b>{'Sort order'|translate}</b>
+    <select name="filters[iiii][cond]">
+      {html_options options=$options.limit.options}
+    </select>
+    <br><i>{'The sort order is only used in addition to the limit filter, it does not impact the final display order'|translate}</i>
   </span>
 </li>
 </div>

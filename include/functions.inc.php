@@ -437,6 +437,7 @@ SELECT *
       case 'limit':
       {
         $limit = '0, '.$filter['value'];
+        if (!empty($filter['cond'])) $order_by = $filter['cond'];
         break;
       }
 
@@ -468,7 +469,7 @@ SELECT i.id
 
   $MainQuery.= '
   GROUP BY i.id
-  '.$conf['order_by'].'
+  '.(isset($order_by) ? "ORDER BY ".$order_by : $conf['order_by']).'
   '.(isset($limit) ? "LIMIT ".$limit : null).'
 ;';
 
@@ -621,7 +622,6 @@ function smart_check_filter($filter)
       }
       else
       {
-        $filter['cond'] = 'limit';
         $limit_is_set = true;
       }
       break;

@@ -27,12 +27,15 @@ var addFilter = (function($){
   });
 
   $('#removeFilters').click(function() {
-    $('#filtersList li').each(function() {
-      $(this).remove();
-    });
+    $('#filtersList li:not(.empty)').remove();
+    $('#filtersList li.empty').show();
+
+    $("#addFilter option[value='limit']").removeAttr('disabled');
+    $("#addFilter option[value='level']").removeAttr('disabled');
 
     limit_level=0;
     level_count=0;
+
     return false;
   });
 
@@ -52,8 +55,10 @@ var addFilter = (function($){
   function add_filter(type, cond, value) {
     count++;
 
-    var content = $("#filtersRepo #filter_"+type).html().replace(/iiii/g, count);
-    $block = $($.parseHTML(content)).appendTo("#filtersList");
+    $('#filtersList li.empty').hide();
+
+    var content = $("#filtersRepo #filter_"+type).html().replace(/iiii/g, count),
+        $block = $($.parseHTML(content)).appendTo("#filtersList");
 
     if (cond) {
       select_cond($block, type, cond);
@@ -96,8 +101,8 @@ var addFilter = (function($){
   }
 
   function select_dimensions($block, cond, value) {
-    console.log($block, cond, value);
     cond = cond || 'width';
+    var values;
 
     $block.find(">.filter-value>span").hide();
     $block.find(".dimension_"+cond).show();
@@ -112,8 +117,8 @@ var addFilter = (function($){
   }
 
   function select_options($block, value) {
-    values = value.split(',');
-    for (j in values) {
+    var values = value.split(',');
+    for (var j in values) {
       $block.find(".filter-value option[value='"+ values[j] +"']").attr('selected', 'selected');
     }
   }
@@ -123,7 +128,8 @@ var addFilter = (function($){
   function init_jquery_handlers($block) {
     // remove filter
     $block.find(".removeFilter").click(function() {
-      type = $(this).next("input").val();
+      var type = $(this).next("input").val();
+
       if (type == 'limit') {
         limit_count=1;
         $("#addFilter option[value='limit']").removeAttr('disabled');
@@ -241,9 +247,10 @@ var addFilter = (function($){
 }(jQuery));
 
 {if isset($new_smart)}
-function doBlink(obj,start,finish) {
+function doBlink(obj, start, finish) {
   jQuery(obj).fadeOut(400).fadeIn(400);
-  if(start!=finish) {
+
+  if (start != finish) {
     doBlink(obj,start+1,finish);
   }
   else {
@@ -270,8 +277,17 @@ doBlink('.new_smart', 0, 3);
 
   <fieldset id="SmartAlbum_options" style="margin-top:1em;{if !isset($filters) AND !isset($new_smart)}display:none;{/if}">
     <legend>{'Filters'|translate}</legend>
+    
+    <div>
+      <label><input type="radio" name="filters[0][value]" value="and" {if $filter_mode=='and'}checked="checked"{/if}> {'Photos must match all filters'|translate}</label>
+      <label><input type="radio" name="filters[0][value]" value="or" {if $filter_mode=='or'}checked="checked"{/if}> {'Photos must match at least one filter'|translate}</label>
+      <input type="hidden" name="filters[0][type]" value="mode">
+      <input type="hidden" name="filters[0][cond]" value="mode">
+    </div>
 
+    <fieldset>
     <ul id="filtersList">
+      <li class="empty">{'No filter'|translate}</li>
     {foreach from=$filters item=filter}{strip}
       {if $filter.type == 'tags'}
         {capture assign='value'}{foreach from=$filter.value item=tag}<option value="{$tag.id}" class="selected">{$tag.name}</option>{/foreach}{/capture}
@@ -294,14 +310,7 @@ doBlink('.new_smart', 0, 3);
       {footer_script}addFilter('{$filter.type}', '{$filter.cond}', '{$value|escape:javascript}');{/footer_script}
     {/strip}{/foreach}
     </ul>
-
-    <div>
-      <b>{'Mode'|translate} :</b>
-      <label><input type="radio" name="filters[0][value]" value="and" {if $filter_mode=='and'}checked="checked"{/if}> AND</label>
-      <label><input type="radio" name="filters[0][value]" value="or" {if $filter_mode=='or'}checked="checked"{/if}> OR</label>
-      <input type="hidden" name="filters[0][type]" value="mode">
-      <input type="hidden" name="filters[0][cond]" value="mode">
-    </div>
+    </fieldset>
 
     <p class="actionButtons">
       <select id="addFilter">
@@ -324,7 +333,7 @@ doBlink('.new_smart', 0, 3);
   </fieldset>
 
   <p class="actionButtons" id="applyFilterBlock">
-    <input class="submit" type="submit" value="{'Submit'|translate}" name="submitFilters"/>
+    <input class="submit" type="submit" value="{'Save'|translate}" name="submitFilters"/>
     <input class="submit" type="submit" value="{'Count'|translate}" name="countImages" {if !isset($filters) AND !isset($new_smart)}style="display:none;"{/if}/>
     <span class="count_images_wrapper" {if !isset($filters) AND !isset($new_smart)}style="display:none;"{/if}><span class="count_image">{$IMAGE_COUNT}</span></span>
   </p>

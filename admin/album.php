@@ -197,7 +197,23 @@ $options = array(
     ),
   'limit' => array(
     'name' => l10n('Max. number of photos'),
-    'options' => array(),
+    'options' => array(
+      ''                    => '-- ' . l10n('Default') . ' --',
+      'file ASC'            => l10n('File name, A &rarr; Z'),
+      'file DESC'           => l10n('File name, Z &rarr; A'),
+      'name ASC'            => l10n('Photo title, A &rarr; Z'),
+      'name DESC'           => l10n('Photo title, Z &rarr; A'),
+      'date_creation DESC'  => l10n('Date created, new &rarr; old'),
+      'date_creation ASC'   => l10n('Date created, old &rarr; new'),
+      'date_available DESC' => l10n('Date posted, new &rarr; old'),
+      'date_available ASC'  => l10n('Date posted, old &rarr; new'),
+      'rating_score DESC'   => l10n('Rating score, high &rarr; low'),
+      'rating_score ASC'    => l10n('Rating score, low &rarr; high'),
+      'hit DESC'            => l10n('Visits, high &rarr; low'),
+      'hit ASC'             => l10n('Visits, low &rarr; high'),
+      'id ASC'              => l10n('Numeric identifier, 1 &rarr; 9'),
+      'id DESC'             => l10n('Numeric identifier, 9 &rarr; 1'),
+      ),
     ),
   );
 $template->assign('options', $options);

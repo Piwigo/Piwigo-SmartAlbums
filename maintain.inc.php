@@ -61,7 +61,7 @@ class SmartAlbums_maintain extends PluginMaintain
 'CREATE TABLE IF NOT EXISTS `' . $this->table . '` (
   `category_id` smallint(5) unsigned NOT NULL,
   `type` varchar(16) NOT NULL,
-  `cond` varchar(16) NULL,
+  `cond` varchar(32) NULL,
   `value` text NULL,
   `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
@@ -113,6 +113,10 @@ SELECT category_id
         pwg_query('UPDATE `' . $this->table . '` SET cond = "' . $new . '" WHERE type = "date" AND cond = "' . $old . '";');
       }
     }
+    
+    // limit filter extended in 2.2.1
+    pwg_query('UPDATE `' . $this->table . '` SET cond = "" WHERE type = "limit" AND cond = "limit";');
+    pwg_query('ALTER TABLE `' . $this->table . '` CHANGE `cond` `cond` VARCHAR(32) NULL ;');
 
     $this->installed = true;
   }

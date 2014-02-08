@@ -42,7 +42,7 @@ $lang['Author is empty'] = 'L\'auteur est vide';
 $lang['Hits must be an integer'] = 'Le nombre de vues doit être un entier';
 $lang['Limit must be an integer'] = 'La nombre d\'éléments doit être un entier';
 $lang['Rating score must be an integer'] = 'Le score doit être un entier';
-$lang['Regex is malformed'] = 'Regex malformée';
+$lang['Regex is malformed'] = 'Regex mal formée';
 $lang['You can\'t use more than one limit filter'] = 'Vous ne pouvez choisir qu\'une seule limite de nombre d\'éléments';
 $lang['You can\'t use more than one level filter'] = 'Vous ne pouvez choisir qu\'un seul niveau de confidentialité';
 $lang['Hits'] = 'Nombre de vues';
@@ -61,7 +61,10 @@ $lang['Exclude SmartAlbums from permissions management'] = 'Exclure les SmartAlb
 $lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'Les SmartAlbums sont considérés comme privés pour tout le monde, et un utilisateur ne peut voir leur contenu que si disponible dans un autre album auquel il a accès.';
 $lang['Update albums every %s days'] = 'Mettre à jour les albums tous les %s jours';
 $lang['Invalid number of days'] = 'Nombre de jour invalide';
-$lang['Mode'] = 'Mode';
 $lang['Select albums...'] = 'Albums...';
+$lang['Photos must match all filters'] = 'Les photos doivent respecter tous les filtres';
+$lang['Photos must match at least one filter'] = 'Les photos doivent respecter au moins un filtre';
+$lang['No filter'] = 'Aucun filtre';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'L\'ordre de tri est uniquement utilisé pour le nombre max. d\'éléments, il n\'impacte pas l\'ordre d\'affichage';
 
 ?>
