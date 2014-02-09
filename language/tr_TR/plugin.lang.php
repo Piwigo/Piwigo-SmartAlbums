@@ -81,6 +81,9 @@ $lang['Regex is malformed'] = 'Düzenli ifade bozuk';
 $lang['Regular expression'] = 'Düzenli ifade';
 $lang['Update albums every %s days'] = 'Her %s günde albümleri güncelle';
 $lang['Select albums...'] = 'Albümleri seçin...';
-$lang['Mode'] = 'Mod';
 $lang['Invalid number of days'] = 'Geçersiz gün yasısı';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Sıralama düzeni sadece filtreye sınırlama getirmek içindir, nihai görünüm sıralamasını etkilemez.';
+$lang['No filter'] = 'Filtre yok';
+$lang['Photos must match all filters'] = 'Fotoğraflar tüm filtrelerle eşleşmeli';
+$lang['Photos must match at least one filter'] = 'Fotoğraflar en az bir filtreyle eşleşmeli';
 ?>
