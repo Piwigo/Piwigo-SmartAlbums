@@ -63,7 +63,8 @@ class SmartAlbums_maintain extends PluginMaintain
   `type` varchar(16) NOT NULL,
   `cond` varchar(32) NULL,
   `value` text NULL,
-  `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00"
+  `updated` DATETIME NOT NULL DEFAULT "1970-01-01 00:00:00",
+  KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8
 ;');
 
