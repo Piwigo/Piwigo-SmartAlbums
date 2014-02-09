@@ -81,6 +81,9 @@ $lang['Update albums every %s days'] = 'Aktualizovať albumy každých %s dní';
 $lang['Regex is malformed'] = 'Regex je chybne vytvorený';
 $lang['Regular expression'] = 'Správny vzorec';
 $lang['Select albums...'] = 'Označiť albumy...';
-$lang['Mode'] = 'Mód';
 $lang['Invalid number of days'] = 'Nesprávne číslo dňa';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Zoradenie je použité iba ako doplnok k filtru, to nemá vplyv na konečné poradie zobrazenia';
+$lang['Photos must match at least one filter'] = 'Fotky musia obsahovať najmenej jeden filter';
+$lang['Photos must match all filters'] = 'Fotky musia obsahovať všetky filtre';
+$lang['No filter'] = 'Žiaden filter';
 ?>
