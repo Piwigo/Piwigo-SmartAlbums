@@ -62,6 +62,9 @@ $lang['Update albums every %s days'] = 'Aggiornamento album ogni %s giorni';
 $lang['Regular expression'] = 'Espressione regolare';
 $lang['Regex is malformed'] = 'Regex non è corretto';
 $lang['Invalid number of days'] = 'Numero di giorni non valido';
-$lang['Mode'] = 'Mode';
 $lang['Select albums...'] = 'Album...';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'L\'ordinamento viene utilizzato solo in aggiunta al filtro limite, esso non cambierà l\'ordine di visualizzazione finale';
+$lang['Photos must match at least one filter'] = 'Le foto devono corrispondere con almeno un filtro';
+$lang['Photos must match all filters'] = 'Le foto devono corrispondere con tutti i filtri';
+$lang['No filter'] = 'Nessun filtro';
 ?>
