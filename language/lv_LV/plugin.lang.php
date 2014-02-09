@@ -66,4 +66,5 @@ $lang['Select albums...'] = 'Albūmu izvēle';
 $lang['Photos must match at least one filter'] = 'Fotogrāfijām jāsakrīt vismaz ar vienu no filtriem';
 $lang['Photos must match all filters'] = 'Fotogrāfijām jāsakrīt ar visiem filtriem';
 $lang['No filter'] = 'Bez filtra';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Kārtošanas secība tiek izmantota tikai papildus robežvērtības filtram, tas neietekmē galīgo rādīšanas secību';
 ?>
