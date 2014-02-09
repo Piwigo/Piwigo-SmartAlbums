@@ -20,9 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d zdjęcie';
 $lang['%d photos associated to album %s'] = '%d zdjęcia związane z albumem %s';
-$lang['%d photos'] = '%d zdjęcia';
 $lang['Add filters here'] = 'Dodaj filtry';
 $lang['Added after'] = 'Dodane potem';
 $lang['Added before'] = 'Dodane przed';
@@ -72,7 +70,6 @@ $lang['create a new SmartAlbum'] = 'stwórz nowy SmartAlbum';
 $lang['Hits'] = 'Wyświetlenia';
 $lang['Max. number of photos'] = 'Maksymalna liczba zdjęć';
 $lang['Rating score must be an integer'] = 'Ocena musi być liczbą całkowitą';
-$lang['limit_filter'] = 'Maksymalna ilość zdjęć';
 $lang['All these albums'] = 'Wszystkie te albumy';
 $lang['Exclude SmartAlbums from permissions management'] = 'Wyklucz SmartAlbums z zarządzania uprawnieniami';
 $lang['No album selected'] = 'Nie wybrano żadnego albumu';
@@ -83,4 +80,9 @@ $lang['SmartAlbums are considered private for everyone, and a user can see it\'s
 $lang['Regex is malformed'] = 'Wyrażenie regularne jest niepoprawne';
 $lang['Regular expression'] = 'Wyrażenie regularne';
 $lang['Update albums every %s days'] = 'Aktualizuj albumy co %s dni';
+$lang['Invalid number of days'] = 'Nieprawidłowa liczba dni';
+$lang['No filter'] = 'Brak filtru';
+$lang['Photos must match all filters'] = 'Zdjęcia muszą pasować do wszystkich filtrów';
+$lang['Photos must match at least one filter'] = 'Zdjęcie musi pasować przynajmniej do jednego filtru';
+$lang['Select albums...'] = 'Wybierz albumy...';
 ?>
