@@ -62,6 +62,8 @@ $lang['Regex is malformed'] = 'Fehlerhafter regulärer Ausdruck';
 $lang['Regular expression'] = 'Regulärer Ausdruck';
 $lang['Update albums every %s days'] = 'Album Update alle %s Tage';
 $lang['Invalid number of days'] = 'Ungültige Anzahl an Tagen';
-$lang['Mode'] = 'Verfahren';
 $lang['Select albums...'] = 'Wähle Alben...';
+$lang['No filter'] = 'Ohne Filter';
+$lang['Photos must match all filters'] = 'Alle Filter müssen für die Fotos zutreffen';
+$lang['Photos must match at least one filter'] = 'Mindestens ein Filter muss für die Fotos zutreffen';
 ?>
