@@ -63,5 +63,7 @@ $lang['Regular expression'] = 'parasta izpausme';
 $lang['Update albums every %s days'] = 'Atjaunināt albūmus katras %s dienas ';
 $lang['Invalid number of days'] = 'Kļūdains dienu skaits';
 $lang['Select albums...'] = 'Albūmu izvēle';
-$lang['Mode'] = 'Režīms';
+$lang['Photos must match at least one filter'] = 'Fotogrāfijām jāsakrīt vismaz ar vienu no filtriem';
+$lang['Photos must match all filters'] = 'Fotogrāfijām jāsakrīt ar visiem filtriem';
+$lang['No filter'] = 'Bez filtra';
 ?>
