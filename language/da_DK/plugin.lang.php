@@ -81,6 +81,9 @@ $lang['Regex is malformed'] = 'Regex er misdannet';
 $lang['Regular expression'] = 'Regulært udtryk';
 $lang['Update albums every %s days'] = 'Opdater albummer hver %s dage';
 $lang['Invalid number of days'] = 'Ugyldigt antal dage';
-$lang['Mode'] = 'Tilstand';
 $lang['Select albums...'] = 'Vælg albummer ...';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Sorteringsrækkefølgen anvendes kun som tillæg til det begrænsende filter, det påvirker ikke den endelige visningsrækkefølge';
+$lang['No filter'] = 'Intet filter';
+$lang['Photos must match all filters'] = 'Fotografier skal matche alle filtre';
+$lang['Photos must match at least one filter'] = 'Fotografier skal matche mindst et filter';
 ?>
