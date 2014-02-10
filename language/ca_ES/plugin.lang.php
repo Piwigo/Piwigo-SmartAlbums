@@ -20,11 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d foto';
 $lang['%d photos associated to album %s'] = '%d fotos associades a l\'àlbum %s';
-$lang['%d photos'] = '%d fotos';
-$lang['can cause slowdowns on admin pages'] = 'Pot causar retards en les pàgines d\'administració';
-$lang['Add a SmartAlbum'] = 'Afegir un SmartAlbum';
 $lang['Add filters here'] = 'Afegeix filtres aquí';
 $lang['Added after'] = 'Afegit després de';
 $lang['Added before'] = 'Afegit abans de';
@@ -34,7 +30,6 @@ $lang['All these tags'] = 'Totes aquestes etiquetes';
 $lang['Count'] = 'Compta';
 $lang['Created after'] = 'Creat després de';
 $lang['Created before'] = 'Creat abans de';
-$lang['Created on'] = 'Creat el';
 $lang['Date string is malformed'] = 'La cadena de caracters que representa la data és incorrecte';
 $lang['Don\'t show this message again'] = 'No tornis a mostrar aquest missatge de nou';
 $lang['Limit must be an integer'] = 'El límit ha de ser un nombre enter';
@@ -49,12 +44,7 @@ $lang['Regenerate photos list of this SmartAlbum'] = 'Regenera la llista de foto
 $lang['SmartAlbum added'] = 'S\'ha afegit l\'SmartAlbum';
 $lang['SmartAlbum deleted'] = 'S\'ha eliminat l\'SmartAlbum';
 $lang['This album is a SmartAlbum'] = 'Aquest àlbum és un SmartAlbum';
-$lang['To order albums please go the main albums management page'] = 'Per ordenar els àlbums cal fer-ho des de la pàgina d\'administració principal dels àlbums <a href="admin.php?page=cat_list"></a>';
 $lang['Update albums on file upload'] = 'Actualitza els àlbums en pujar els arxius';
-$lang['You can\'t use more than one limit'] = 'No es pot utilitzar més d\'un límit';
-$lang['date filter'] = 'Filtre per data';
-$lang['limit filter'] = 'Filtre per límit';
-$lang['tags filter'] = 'Filtre per etiquetes';
 $lang['Name is empty'] = 'El camp nom és buit';
 $lang['No album selected'] = 'No s\'ha seleccionat cap àlbum';
 $lang['None of these albums'] = 'Cap d\'aquests àlbums';
@@ -90,4 +80,8 @@ $lang['Max. number of photos'] = 'Nombre màxim de fotos';
 $lang['Regex is malformed'] = 'Regex és incorrecte';
 $lang['Regular expression'] = 'Expressió regular';
 $lang['Update albums every %s days'] = 'Actualitzar àlbums cada %s dies';
+$lang['Invalid number of days'] = 'Número invàlid de dies';
+$lang['No filter'] = 'No filtris';
+$lang['Photos must match all filters'] = 'Les imatges han de concordar amb tots els filtres';
+$lang['Photos must match at least one filter'] = 'Les imatges han de concordar amb almenys un filtre';
 ?>
