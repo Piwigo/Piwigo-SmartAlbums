@@ -82,6 +82,9 @@ $lang['Regex is malformed'] = 'Regex está mal formado ';
 $lang['Regular expression'] = 'Expressão regular';
 $lang['Update albums every %s days'] = 'Actualizar álbuns todos os %s dias';
 $lang['Invalid number of days'] = 'Número de dias inválido';
-$lang['Mode'] = 'Modo';
 $lang['Select albums...'] = 'Selecionar albuns...';
+$lang['No filter'] = 'Sem filtro';
+$lang['Photos must match all filters'] = 'Fotos devem corresponder aos filtros';
+$lang['Photos must match at least one filter'] = 'As foter devem corresponder pelo menos a um filtro';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'A ordem de apresentação apenas é usada em adição ao filtro limite, não tem qualquer implicação no ordenamento da visão final.';
 ?>
