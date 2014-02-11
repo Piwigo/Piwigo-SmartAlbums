@@ -55,7 +55,6 @@ $lang['SmartAlbums are considered private for everyone, and a user can see it\'s
 $lang['All these albums'] = 'Tất cả album này';
 $lang['Filters'] = 'Bộ lọc';
 $lang['Invalid number of days'] = 'Số ngày không hợp lệ';
-$lang['Mode'] = 'Chế độ';
 $lang['No album selected'] = 'Không có album được chọn';
 $lang['None of these albums'] = 'Không trong số album này';
 $lang['One of these albums'] = 'Một trong số album này';
@@ -64,4 +63,8 @@ $lang['Rating score must be an integer'] = 'Điểm bình chọn phải là mộ
 $lang['Regular expression'] = 'Biểu thức thông dụng';
 $lang['Select albums...'] = 'Chọn album...';
 $lang['Update albums every %s days'] = 'Cập nhật các album mỗi %s ngày';
+$lang['No filter'] = 'Không lọc';
+$lang['Photos must match all filters'] = 'Ảnh phải thỏa mãn tất cả bộ lọc';
+$lang['Photos must match at least one filter'] = 'Ảnh phải thỏa mãn ít nhất một bộ lọc';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Thứ tự sắp xếp chỉ được dùng để bổ sung cho hạn chế bộ lọc, không ảnh hưởng đến thứ tự hiển thị sau cùng';
 ?>
