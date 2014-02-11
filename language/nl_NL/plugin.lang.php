@@ -62,6 +62,9 @@ $lang['Update albums every %s days'] = 'Werk het album elke %s dagen bij';
 $lang['Select albums...'] = 'Geselecteerde albums...';
 $lang['Invalid number of days'] = 'Incorrect aantal dagen';
 $lang['Update albums on file upload'] = 'Werk albums bij bij het uploaden van bestanden';
-$lang['Mode'] = 'Manier';
 $lang['Regenerate photos list of all SmartAlbums'] = 'Regenereer foto lijst van alle SmartAlbums';
+$lang['No filter'] = 'Geen filter';
+$lang['Photos must match all filters'] = 'Foto\'s moeten overeenkomen met alle filters';
+$lang['Photos must match at least one filter'] = 'Foto\'s moeten overeenkomen met minstens één filter';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'De sorteervolgorde wordt alleen gebruikt als toevoeging aan de grensfilter, het heeft geen invloed op de uiteindelijke weergavevolgorde';
 ?>
