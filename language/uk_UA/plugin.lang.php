@@ -20,8 +20,6 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d зображення';
-$lang['%d photos'] = '%d зображень';
 $lang['%d photos associated to album %s'] = '%s зображення, пов\'язані з альбомом %s';
 $lang['Add filters here'] = 'Додати фільтр тут';
 $lang['Added after'] = 'Додано після';
@@ -57,7 +55,6 @@ $lang['To order albums please go the main albums <a href="%s">management page</a
 $lang['You can\'t use more than one level filter'] = 'Ви не можете використовувати більше одного рівня фільтра';
 $lang['You can\'t use more than one limit filter'] = 'Ви не можете використовувати більше одного обмеження фільтра';
 $lang['can cause slowdowns'] = 'може викликати уповільнення';
-$lang['limit_filter'] = 'Макс. кількість зображень';
 $lang['Doesn\'t begin with'] = 'Не починати з';
 $lang['Doesn\'t contain'] = 'Не містить';
 $lang['Doesn\'t end with'] = 'Не закінчуються';
@@ -83,4 +80,10 @@ $lang['Only these albums'] = 'Тільки ці альбоми';
 $lang['Regex is malformed'] = 'Регулярне вираження неправильне';
 $lang['Regular expression'] = 'Регулярне вираження';
 $lang['Update albums every %s days'] = 'Оновлювати альбоми кожні %s днів';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Порядок сортування використовується тільки на додаток до умов відбору, він не впливає на остаточний порядок відображення';
+$lang['Photos must match at least one filter'] = 'Зображення повинні відповідати принаймні одному фільтру';
+$lang['Invalid number of days'] = 'Неправильна кількість днів';
+$lang['No filter'] = 'Без фільтра';
+$lang['Photos must match all filters'] = 'Зображення повинні відповідати всім фільтрам';
+$lang['Select albums...'] = 'Виберіть альбоми...';
 ?>
