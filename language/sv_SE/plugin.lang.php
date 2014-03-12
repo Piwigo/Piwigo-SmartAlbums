@@ -76,7 +76,10 @@ $lang['Created before'] = 'Skapad före';
 $lang['Date string is malformed'] = 'Ogiltig datum sträng';
 $lang['Doesn\'t begin with'] = 'Börjar inte med';
 $lang['Above'] = 'Ovanför';
-$lang['%d photos'] = '%d foton';
-$lang['%d photo'] = '%d foto';
 $lang['%d photos associated to album %s'] = '%d foton associerade med album %s';
+$lang['Select albums...'] = 'Välj album...';
+$lang['No filter'] = 'Inget filter';
+$lang['Photos must match all filters'] = 'Foton måste matcha alla filter';
+$lang['Photos must match at least one filter'] = 'Foton måste matcha minst ett filter';
+$lang['Invalid number of days'] = 'Ogiltigt antal dagar';
 ?>
