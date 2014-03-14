@@ -82,4 +82,5 @@ $lang['No filter'] = 'Inget filter';
 $lang['Photos must match all filters'] = 'Foton måste matcha alla filter';
 $lang['Photos must match at least one filter'] = 'Foton måste matcha minst ett filter';
 $lang['Invalid number of days'] = 'Ogiltigt antal dagar';
+$lang['SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'] = 'SmartAlbums räknas som privata. Andra användare kan bara se de foton som de har behörighet till ifrån andra album.';
 ?>
