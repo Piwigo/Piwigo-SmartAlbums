@@ -84,4 +84,6 @@ $lang['Invalid number of days'] = 'Número invàlid de dies';
 $lang['No filter'] = 'No filtris';
 $lang['Photos must match all filters'] = 'Les imatges han de concordar amb tots els filtres';
 $lang['Photos must match at least one filter'] = 'Les imatges han de concordar amb almenys un filtre';
+$lang['Select albums...'] = 'Seleccioneu àlbums...';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'L\'ordre d\'ordenació només s\'utilitza en complement amb el límit del filtre, no amb l\'ordre amb que es visualitza';
 ?>
