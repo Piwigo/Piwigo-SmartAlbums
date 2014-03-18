@@ -1,0 +1,1 @@
+Skapa enkelt dynamiska album med hjälp av taggar, datum, eller andra kriterier
