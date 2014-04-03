@@ -26,12 +26,12 @@
 #filtersList {
   padding-left:0px;
 }
-#filtersList li {
+#filtersList>li {
   padding:3px 0;
   border-bottom:1px dotted rgba(100, 100, 100, 0.5);
   display:block;
 }
-#filtersList li>span {
+#filtersList>li>span {
   display:inline-block;
   vertical-align:middle;
 }

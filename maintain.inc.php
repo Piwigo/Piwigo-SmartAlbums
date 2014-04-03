@@ -118,6 +118,12 @@ SELECT category_id
     // limit filter extended in 2.2.1
     pwg_query('UPDATE `' . $this->table . '` SET cond = "" WHERE type = "limit" AND cond = "limit";');
     pwg_query('ALTER TABLE `' . $this->table . '` CHANGE `cond` `cond` VARCHAR(32) NULL ;');
+    
+    $result = pwg_query('SELECT COUNT(*) FROM `' . $this->table . '` WHERE type="album" AND (value NOT LIKE "true,%" OR value NOT LIKE "false,%");');
+    if (pwg_db_num_rows(pwg_query($query)))
+    {
+      pwg_query('UPDATE `' . $this->table . '` SET value = CONCAT("false,", value) WHERE type="album";');
+    }
 
     $this->installed = true;
   }

@@ -81,6 +81,8 @@
     <select name="filters[iiii][value][]" class="albumSelect" multiple="multiple" data-placeholder="{'Select albums...'|translate}">
       {html_options options=$all_albums}
     </select>
+    
+    <label><input type="checkbox" name="filters[iiii][recursive]"> {'include child albums'|translate}</label>
   </span>
 </li>
 </div>

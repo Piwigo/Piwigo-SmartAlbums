@@ -276,18 +276,25 @@ SELECT *
       // album
       case 'album':
       {
+        $filter['values'] = explode(',', $filter['value']);
+        $filter['recursive'] = array_shift($filter['values']) == "true";
+        $filter['value'] = implode(',', $filter['values']);
+
         switch ($filter['cond'])
         {
           // search images existing in all albums
           case 'all':
           {
-            $albums_arr = explode(',', $filter['value']);
-            foreach($albums_arr as $value)
+            foreach ($filter['values'] as $value)
             {
+              if ($filter['recursive'])
+              {
+                $value = get_subcat_ids_query(array($value));
+              }
               $sub_query = '
       SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
-        WHERE category_id = '.$value.'
+        WHERE category_id IN('.$value.')
       ';
               $where[] = 'i.id IN ('.$sub_query.')';
             }
@@ -297,10 +304,18 @@ SELECT *
           // search images existing in one of these albums
           case 'one':
           {
+            if ($filter['recursive'])
+            {
+              $value = get_subcat_ids_query($filter['values']);
+            }
+            else
+            {
+              $value = $filter['value'];
+            }
             $sub_query = '
       SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
-        WHERE category_id IN('.$filter['value'].')
+        WHERE category_id IN('.$value.')
       ';
             $where[] = 'i.id IN ('.$sub_query.')';
 
@@ -309,10 +324,18 @@ SELECT *
           // exclude images existing in one of these albums
           case 'none':
           {
+            if ($filter['recursive'])
+            {
+              $value = get_subcat_ids_query($filter['values']);
+            }
+            else
+            {
+              $value = $filter['value'];
+            }
             $sub_query = '
       SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
-        WHERE category_id IN('.$filter['value'].')
+        WHERE category_id IN('.$value.')
       ';
             $where[] = 'i.id NOT IN ('.$sub_query.')';
 
@@ -321,16 +344,27 @@ SELECT *
           // exclude images existing on other albums, and search images existing in all albums
           case 'only':
           {
+            if ($filter['recursive'])
+            {
+              $value = get_subcat_ids_query($filter['values']);
+            }
+            else
+            {
+              $value = $filter['value'];
+            }
             $sub_query = '
       SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
-        WHERE category_id NOT IN('.$filter['value'].')
+        WHERE category_id NOT IN('.$value.')
       ';
             $where[] = 'i.id NOT IN ('.$sub_query.')';
 
-            $albums_arr = explode(',', $filter['value']);
-            foreach($albums_arr as $value)
+            foreach ($filter['values'] as $value)
             {
+              if ($filter['recursive'])
+              {
+                $value = get_subcat_ids_query(array($value));
+              }
               $sub_query = '
       SELECT image_id
         FROM '.IMAGE_CATEGORY_TABLE.'
@@ -543,6 +577,7 @@ function smart_check_filter($filter)
       }
       else
       {
+        array_unshift($filter['value'], boolean_to_string(isset($filter['recursive'])));
         $filter['value'] = implode(',', $filter['value']);
       }
       break;
@@ -649,4 +684,28 @@ function smart_check_filter($filter)
   {
     return false;
   }
+}
+
+/**
+ * Returns SQL query returning all subcategory identifiers of given category ids
+ *
+ * @param int[] $ids
+ * @return int[]
+ */
+function get_subcat_ids_query($ids)
+{
+  $query = '
+SELECT DISTINCT(id)
+  FROM '.CATEGORIES_TABLE.'
+  WHERE ';
+  foreach ($ids as $num => $category_id)
+  {
+    if ($num > 0)
+    {
+      $query.= '
+    OR ';
+    }
+    $query.= 'uppercats '.DB_REGEX_OPERATOR.' \'(^|,)'.$category_id.'(,|$)\'';
+  }
+  return $query;
 }

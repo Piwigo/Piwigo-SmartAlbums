@@ -69,7 +69,12 @@ var addFilter = (function($){
         $block.find(".filter-value .tagSelect").html(value);
       }
       else if (type == "album") {
+        var values = value.split(','),
+            recursive = values.splice(0, 1)[0];
+        value = values.join(',');
+
         select_options($block, value);
+        $block.find('.filter-value input[type="checkbox"]').prop('checked', recursive=="true");
       }
       else if (type == "level") {
         select_options($block, value);
