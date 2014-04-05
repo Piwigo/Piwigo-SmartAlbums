@@ -119,8 +119,10 @@ SELECT category_id
     pwg_query('UPDATE `' . $this->table . '` SET cond = "" WHERE type = "limit" AND cond = "limit";');
     pwg_query('ALTER TABLE `' . $this->table . '` CHANGE `cond` `cond` VARCHAR(32) NULL ;');
     
+    // add recursive marker for album filter (2.2.2)
     $result = pwg_query('SELECT COUNT(*) FROM `' . $this->table . '` WHERE type="album" AND (value NOT LIKE "true,%" OR value NOT LIKE "false,%");');
-    if (pwg_db_num_rows(pwg_query($query)))
+    list($count) = pwg_db_fetch_row($result);
+    if ($count>0)
     {
       pwg_query('UPDATE `' . $this->table . '` SET value = CONCAT("false,", value) WHERE type="album";');
     }
