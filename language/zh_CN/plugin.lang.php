@@ -82,5 +82,7 @@ $lang['Regular expression'] = '正则表达式';
 $lang['Update albums every %s days'] = '第 %s 表更新一次相册';
 $lang['Invalid number of days'] = '无效的天数';
 $lang['Select albums...'] = '选择相册...';
-$lang['Mode'] = '模式';
-?>
+$lang['No filter'] = '没有过滤器';
+$lang['Photos must match all filters'] = '相片必须与所有过滤器匹配';
+$lang['Photos must match at least one filter'] = '相片必须至少与一个过滤器匹配';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = '排序顺序只适用于额外的限制过滤器，它不影响最终的显示顺序';
