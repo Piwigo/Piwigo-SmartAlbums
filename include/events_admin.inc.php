@@ -81,7 +81,7 @@ SELECT DISTINCT id, name
         $page['infos'][] = l10n(
           '%d photos associated to album %s',
           count($associated_images),
-          '&laquo;'.trigger_event('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
+          '&laquo;'.trigger_change('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
           );
       }
     }
@@ -93,7 +93,7 @@ SELECT DISTINCT id, name
       $page['infos'][] = l10n(
         '%d photos associated to album %s',
         count($associated_images),
-        '&laquo;'.trigger_event('render_category_name', $smart_cats[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
+        '&laquo;'.trigger_change('render_category_name', $smart_cats[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
         );
     }
 

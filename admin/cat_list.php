@@ -72,7 +72,7 @@ else if (isset($_GET['smart_generate']))
       $page['infos'][] = l10n(
         '%d photos associated to album %s',
         count($associated_images),
-        '&laquo;'.trigger_event('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
+        '&laquo;'.trigger_change('render_category_name', $category['name'], 'admin_cat_list').'&raquo;'
         );
     }
   }
@@ -84,7 +84,7 @@ else if (isset($_GET['smart_generate']))
     $page['infos'][] = l10n(
       '%d photos associated to album %s',
       count($associated_images),
-      '&laquo;'.trigger_event('render_category_name', $categories[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
+      '&laquo;'.trigger_change('render_category_name', $categories[ $_GET['smart_generate'] ]['name'], 'admin_cat_list').'&raquo;'
       );
   }
 
