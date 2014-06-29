@@ -16,7 +16,6 @@ define('SMART_ID',      'SmartAlbums');
 define('SMART_PATH',    PHPWG_PLUGINS_PATH . SMART_ID . '/');
 define('CATEGORY_FILTERS_TABLE', $prefixeTable . 'category_filters');
 define('SMART_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SMART_ID);
-define('SMART_VERSION', 'auto');
 // define('SMART_DEBUG',   true);
 
 
@@ -43,15 +42,11 @@ function smart_init()
 {
   global $conf;
 
-  include_once(SMART_PATH . 'maintain.inc.php');
-  $maintain = new SmartAlbums_maintain(SMART_ID);
-  $maintain->autoUpdate(SMART_VERSION, 'install');
-
   if (defined('IN_ADMIN'))
   {
     load_language('plugin.lang', SMART_PATH);
   }
-  $conf['SmartAlbums'] = unserialize($conf['SmartAlbums']);
+  $conf['SmartAlbums'] = safe_unserialize($conf['SmartAlbums']);
 
   if (script_basename() == 'index' and $conf['SmartAlbums']['smart_is_forbidden'])
   {

@@ -18,7 +18,7 @@ if (isset($_POST['submit']))
     'smart_is_forbidden' => isset($_POST['smart_is_forbidden']),
     );
 
-  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
+  conf_update_param('SmartAlbums', $conf['SmartAlbums']);
   $page['infos'][] = l10n('Information data registered in database');
 }
 

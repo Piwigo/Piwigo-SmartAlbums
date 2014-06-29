@@ -24,7 +24,7 @@ function smart_periodic_update()
   if ($conf['SmartAlbums']['last_update'] > time() - 3600) return;
 
   $conf['SmartAlbums']['last_update'] = time();
-  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
+  conf_update_param('SmartAlbums', $conf['SmartAlbums']);
 
   // get categories with smart filters
   $query = '

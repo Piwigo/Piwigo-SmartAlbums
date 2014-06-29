@@ -3,8 +3,6 @@ defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
 class SmartAlbums_maintain extends PluginMaintain
 {
-  private $installed = false;
-
   private $default_conf = array(
     'update_on_upload' => false,
     'update_on_date' => true,
@@ -21,22 +19,21 @@ class SmartAlbums_maintain extends PluginMaintain
     global $prefixeTable;
 
     parent::__construct($plugin_id);
-
     $this->table = $prefixeTable . 'category_filters';
   }
 
   function install($plugin_version, &$errors=array())
   {
-    global $conf, $prefixeTable;
+    global $conf;
 
     if (empty($conf['SmartAlbums']))
     {
-      $conf['SmartAlbums'] = serialize($this->default_conf);
-      conf_update_param('SmartAlbums', $conf['SmartAlbums']);
+      $this->default_conf['last_update'] = time();
+      conf_update_param('SmartAlbums', $this->default_conf, true);
     }
     else
     {
-      $new_conf = is_string($conf['SmartAlbums']) ? unserialize($conf['SmartAlbums']) : $conf['SmartAlbums'];
+      $new_conf = safe_unserialize($conf['SmartAlbums']);
 
       // new param in 2.0.2
       if (!isset($new_conf['smart_is_forbidden']))
@@ -52,8 +49,7 @@ class SmartAlbums_maintain extends PluginMaintain
         $new_conf['last_update'] = 0;
       }
 
-      $conf['SmartAlbums'] = serialize($new_conf);
-      conf_update_param('SmartAlbums', $conf['SmartAlbums']);
+      conf_update_param('SmartAlbums', $new_conf, true);
     }
 
     // new table
@@ -126,20 +122,11 @@ SELECT category_id
     {
       pwg_query('UPDATE `' . $this->table . '` SET value = CONCAT("false,", value) WHERE type="album";');
     }
-
-    $this->installed = true;
   }
 
-  function activate($plugin_version, &$errors=array())
+  function update($old_version, $new_version, &$errors=array())
   {
-    if (!$this->installed)
-    {
-      $this->install($plugin_version, $errors);
-    }
-  }
-
-  function deactivate()
-  {
+    $this->install($new_version, $errors);
   }
 
   function uninstall()

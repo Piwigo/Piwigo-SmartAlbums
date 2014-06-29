@@ -4,7 +4,7 @@ defined('SMART_PATH') or die('Hacking attempt!');
 if (isset($_GET['hide_messages']))
 {
   $conf['SmartAlbums']['show_list_messages'] = false;
-  conf_update_param('SmartAlbums', serialize($conf['SmartAlbums']));
+  conf_update_param('SmartAlbums', $conf['SmartAlbums']);
 }
 
 // +-----------------------------------------------------------------------+
