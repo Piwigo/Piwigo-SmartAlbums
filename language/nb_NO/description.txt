@@ -1,0 +1,1 @@
+Lager enkelt dynamiske albumer med taggs, dato og andre kriterier
