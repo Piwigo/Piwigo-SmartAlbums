@@ -10,13 +10,23 @@ Author URI: http://www.strangeplanet.fr
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
 
+if (basename(dirname(__FILE__)) != 'SmartAlbums')
+{
+  add_event_handler('init', 'smartalbums_error');
+  function smartalbums_error()
+  {
+    global $page;
+    $page['errors'][] = 'SmartAlbums folder name is incorrect, uninstall the plugin and rename it to "SmartAlbums"';
+  }
+  return;
+}
+
 global $prefixeTable;
 
-define('SMART_ID',      'SmartAlbums');
-define('SMART_PATH',    PHPWG_PLUGINS_PATH . SMART_ID . '/');
+define('SMART_PATH',  PHPWG_PLUGINS_PATH . 'SmartAlbums/');
+define('SMART_ADMIN', get_root_url() . 'admin.php?page=plugin-SmartAlbums');
+// define('SMART_DEBUG', true);
 define('CATEGORY_FILTERS_TABLE', $prefixeTable . 'category_filters');
-define('SMART_ADMIN',   get_root_url() . 'admin.php?page=plugin-' . SMART_ID);
-// define('SMART_DEBUG',   true);
 
 
 add_event_handler('init', 'smart_init');
