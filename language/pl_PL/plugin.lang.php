@@ -85,4 +85,4 @@ $lang['No filter'] = 'Brak filtru';
 $lang['Photos must match all filters'] = 'Zdjęcia muszą pasować do wszystkich filtrów';
 $lang['Photos must match at least one filter'] = 'Zdjęcie musi pasować przynajmniej do jednego filtru';
 $lang['Select albums...'] = 'Wybierz albumy...';
-?>
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'Kolejność sortowania jest tylko używana jako dodatek do filtra limitu, nie wplywa ona na końcową kolejność wyświetlania';
