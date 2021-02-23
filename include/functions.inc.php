@@ -483,6 +483,12 @@ SELECT *
       }
     }
   }
+  
+  /* Filter pictures contained by public categories, which are folders on the file system */
+  $join[] = IMAGE_CATEGORY_TABLE.' AS ictPublic ON i.id = ictPublic.image_id' ;
+  $join[] = CATEGORIES_TABLE.' AS ctPublic ON ictPublic.category_id = ctPublic.id' ;
+  $where[] = 'ctPublic.status = \'public\'  AND  ctPublic.dir IS NOT NULL  AND  ctPublic.site_id ' ;
+  /* */
 
   /* bluid query */
   $MainQuery = '
