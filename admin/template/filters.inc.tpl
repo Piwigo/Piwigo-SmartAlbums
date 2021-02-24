@@ -246,3 +246,14 @@
   </span>
 </li>
 </div>
+
+<!-- public_physical -->
+<div id="filter_public_physical">
+<li id="filter_iiii" class="filter_public_physical">
+  <span class="filter-title">
+    <a href="#" class="removeFilter" title="{'remove this filter'|translate}"><span>[x]</span></a>
+    <input type="hidden" name="filters[iiii][type]" value="public_physical"/>
+    {$options.public_physical.name}
+  </span>
+</li>
+</div>

@@ -481,6 +481,14 @@ SELECT *
         $mode = $filter['value'];
         break;
       }
+      
+      // public_physical
+      case 'public_physical':
+      {
+        $join[] = CATEGORIES_TABLE.' AS cPublic ON i.storage_category_id = cPublic.id' ;
+        $where[] = 'cPublic.status = \'public\'' ;
+
+        break;
     }
   }
   
@@ -530,11 +538,12 @@ SELECT i.id
  */
 function smart_check_filter($filter)
 {
-  global $page, $limit_is_set, $level_is_set;
+  global $page, $limit_is_set, $level_is_set, $fppa_is_set;
 
   $error = false;
   if (!isset($limit_is_set)) $limit_is_set = false;
   if (!isset($level_is_set)) $level_is_set = false;
+  if (!isset($fppa_is_set)) $fppa_is_set = false;
 
   switch ($filter['type'])
   {
@@ -671,6 +680,19 @@ function smart_check_filter($filter)
     case 'mode':
     {
       $filter['cond'] = 'mode';
+      break;
+    }
+    # public_physical
+    case 'public_physical':
+    {
+      if ($fppa_is_set == true) // only one fppa is allowed, first is saved
+      {
+        $page['errors'][] = l10n('You can\'t use more than one "From public physical albums" filter');
+      }
+      else
+      {
+        $fppa_is_set = true;
+      }
       break;
     }
 

@@ -215,6 +215,9 @@ $options = array(
       'id DESC'             => l10n('Numeric identifier, 9 &rarr; 1'),
       ),
     ),
+  'public_physical' => array(
+      'name' => l10n('From public physical albums'),
+    ),
   );
 $template->assign('options', $options);
 

@@ -331,6 +331,7 @@ doBlink('.new_smart', 0, 3);
         <option value="rating_score">{'Rating score'|translate}</option>
         <option value="level">{'Privacy level'|translate}</option>
         <option value="limit">{'Max. number of photos'|translate}</option>
+        <option value="public_physical">{'From public physical albums'|translate}</option>
       </select>
       <a id="removeFilters">{'Remove all filters'|translate}</a>
       {if isset($new_smart)}<span class="new_smart">{'Add filters here'|translate}</span>{/if}
