@@ -1,1 +1,1 @@
-Jednoduch&eacute; vytv&aacute;ranie dynamick&yacute;ch albumov s kľ&uacute;&#269;ov&yacute;mi slovami, d&aacute;tumom a in&yacute;mi krit&eacute;riami
+Jednoduché vytváranie dynamických albumov s využitím štítkov, dátumov a iných vlastností
