@@ -20,9 +20,7 @@
 // | Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, |
 // | USA.                                                                  |
 // +-----------------------------------------------------------------------+
-$lang['%d photo'] = '%d kép';
 $lang['%d photos associated to album %s'] = '%d kép társítva a(z) %s albumhoz';
-$lang['%d photos'] = '%d kép';
 $lang['can cause slowdowns'] = 'lassulást okozhat';
 $lang['Above'] = 'Felett';
 $lang['Add filters here'] = 'Adjon hozzá szűrőt!';
@@ -71,7 +69,6 @@ $lang['You can\'t use more than one limit filter'] = 'Nem használható egyszerr
 $lang['create a new SmartAlbum'] = 'Új intelligens album létrehozása';
 $lang['Hits'] = 'Találatok száma';
 $lang['Max. number of photos'] = 'Képek max. száma';
-$lang['limit_filter'] = 'Képek maximális száma';
 $lang['Rating score must be an integer'] = 'Az értékelés pontszáma egész szám legyen!';
 $lang['None of these albums'] = 'Ezen albumok egyike sem';
 $lang['One of these albums'] = 'Ezen albumok egyike';
@@ -83,4 +80,9 @@ $lang['SmartAlbums are considered private for everyone, and a user can see it\'s
 $lang['Regex is malformed'] = 'Hibás reguláris (Regex) kifejezés';
 $lang['Regular expression'] = 'Reguláris kifejezés';
 $lang['Update albums every %s days'] = 'Albumok frissítése %s naponta';
-?>
+$lang['Invalid number of days'] = 'Érvénytelen a napok száma';
+$lang['No filter'] = 'Nincs szűrés';
+$lang['Photos must match all filters'] = 'Fotók minden szűrésnek megfeleljenek';
+$lang['Photos must match at least one filter'] = 'Fotók legalább egy szűrésnek megfeleljenek';
+$lang['Select albums...'] = 'Albumválasztó...';
+$lang['The sort order is only used in addition to the limit filter, it does not impact the final display order'] = 'A rendezés csak szűrés esetén használható';
