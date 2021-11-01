@@ -23,18 +23,6 @@ function smart_tab($sheets, $id)
 }
 
 /**
- * admin plugins menu link
- */
-function smart_admin_menu($menu)
-{
-  $menu[] = array(
-    'NAME' => 'SmartAlbums',
-    'URL' => SMART_ADMIN,
-    );
-  return $menu;
-}
-
-/**
  * Add a link into categories list to regenerate associations
  */
 function smart_cat_list()

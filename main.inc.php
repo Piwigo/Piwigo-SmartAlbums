@@ -6,6 +6,7 @@ Description: Easily create dynamic albums with tags, date and other criteria
 Plugin URI: auto
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
+Has Settings: true
 */
 
 defined('PHPWG_ROOT_PATH') or die('Hacking attempt!');
@@ -38,7 +39,6 @@ if (defined('IN_ADMIN'))
   include_once(SMART_PATH.'include/events_admin.inc.php');
   add_event_handler('loc_begin_cat_list', 'smart_cat_list');
   add_event_handler('tabsheet_before_select','smart_tab', EVENT_HANDLER_PRIORITY_NEUTRAL, 2);
-  add_event_handler('get_admin_plugin_menu_links', 'smart_admin_menu');
 }
 
 include_once(SMART_PATH.'include/events.inc.php');
