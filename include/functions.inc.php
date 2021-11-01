@@ -8,6 +8,38 @@ defined('SMART_PATH') or die('Hacking attempt!');
  */
 function smart_make_associations($cat_id)
 {
+  global $logger;
+
+  $logger->debug(__FUNCTION__);
+  // is the current album thumbnail associated to the album? If not, then we won't
+  // refresh it after associations reset. It would mean the album thumbnail is
+  // already in another album.
+  $album_thumbnail_was_in_album = false;
+
+  $query = '
+SELECT representative_picture_id
+  FROM '.CATEGORIES_TABLE.'
+  WHERE id = '.$cat_id.'
+;';
+  list($rep_id) = pwg_db_fetch_row(pwg_query($query));
+
+  if (!empty($rep_id))
+  {
+    $query = '
+SELECT
+    COUNT(*)
+  FROM '.IMAGE_CATEGORY_TABLE.'
+  WHERE category_id = '.$cat_id.'
+    AND image_id = '.$rep_id.'
+;';
+    list($count) = pwg_db_fetch_row(pwg_query($query));
+
+    if ($count > 0)
+    {
+      $album_thumbnail_was_in_album = true;
+    }
+  }
+
   $query = '
 DELETE FROM '.IMAGE_CATEGORY_TABLE.'
   WHERE
@@ -36,18 +68,16 @@ DELETE FROM '.IMAGE_CATEGORY_TABLE.'
       );
   }
 
-  // representant, try to not overwrite if still in images list
-  $query = '
-SELECT representative_picture_id
-  FROM '.CATEGORIES_TABLE.'
-  WHERE id = '.$cat_id.'
-;';
-  list($rep_id) = pwg_db_fetch_row(pwg_query($query));
-
-  if (!in_array($rep_id, $images))
+  if ($album_thumbnail_was_in_album)
   {
-    include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
-    set_random_representant(array($cat_id));
+    $logger->debug(__FUNCTION__.' album thumbnail was in album');
+    // if the album thumbnail was already in the album and is still in the album, then do nothing here
+    if (!in_array($rep_id, $images))
+    {
+      $logger->debug(__FUNCTION__.' and is no longer in album, so we reset the album thumbnail');
+      include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
+      set_random_representant(array($cat_id));
+    }
   }
 
   $query = '
