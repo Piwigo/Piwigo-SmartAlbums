@@ -10,6 +10,7 @@ jQuery("#addAlbumClose").click(function(){
 });
 {/footer_script}
 
+{assign var='color_tab' value=["icon-red", "icon-blue", "icon-yellow", "icon-purple", "icon-green"]}
 
 <div class="titrePage">
 	<h2>SmartAlbums</h2>
@@ -48,28 +49,22 @@ jQuery("#addAlbumClose").click(function(){
 
 {if count($categories) }
 
-  <ul class="categoryUl">
+  <div class="search-album-result">
 
     {foreach from=$categories item=category}
-    <li class="categoryLi virtual_cat" id="cat_{$category.ID}">
-      <!-- category {$category.ID} -->
-      <p class="albumTitle">
-        <strong><a href="{$category.U_CHILDREN}" title="{'manage sub-albums'|translate}">{$category.NAME}</a></strong>
-        <img src="{$SMART_PATH}admin/template/lightning.png">
-        {'%d photos'|translate:$category.IMG_COUNT}
+    <div class="search-album-elem" style="">
+      <span class="search-album-icon icon-folder-open {$color_tab[$category.ID % 5]}"></span>
+      <p class="search-album-name">
+        {$category.NAME}</a>
+        <img src="{$SMART_PATH}admin/template/lightning.png"> {'%d photos'|translate:$category.IMG_COUNT}
       </p>
+      <div class="search-album-action-cont">
+        <div class="search-album-action">
+          <a class="icon-cog" href="{$category.U_SMART}" title="{$category.LAST_UPDATE}">{'Regenerate photos list of this SmartAlbum'|translate}</a>
+        </div>
+      </div>
+    </div>
 
-      <p class="albumActions">
-        <a href="{$category.U_EDIT}">{'Edit'|translate}</a>
-        | <a href="{$category.U_SMART}" title="{$category.LAST_UPDATE}">{'Regenerate photos list of this SmartAlbum'|translate}</a>
-        {if isset($category.U_DELETE) }
-        | <a href="{$category.U_DELETE}" onclick="return confirm('{'Are you sure?'|translate|escape:javascript}');">{'delete album'|translate}</a>
-        {/if}
-        {if cat_admin_access($category.ID)}
-        | <a href="{$category.U_JUMPTO}">{'jump to album'|translate} ?</a>
-        {/if}
-      </p>
-    </li>
     {/foreach}
   </ul>
 {/if}
