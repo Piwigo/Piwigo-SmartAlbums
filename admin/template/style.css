@@ -35,6 +35,17 @@
   display:inline-block;
   vertical-align:middle;
 }
+#filtersList>li .removeFilter {
+  position: relative;
+  top: 0;
+}
+#filtersList>li .removeFilter::before {
+  content: '';
+}
+#filtersList>li .removeFilter span {
+  display:inline-block;
+  vertical-align:middle;
+}
 
 .filter-title {
   padding-left:10px;
