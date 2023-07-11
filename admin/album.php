@@ -390,6 +390,7 @@ if (isset($_GET['new_smart']))
 
 $template->assign(array(
   'COUNT_SCRIPT_URL' => SMART_PATH.'include/count_images.php',
+  'CAT_ID' => $cat_id,
   'level_options' => get_privacy_level_options(),
   'F_ACTION' => $self_url,
   'CATEGORIES_NAV' => get_cat_display_name_cache($category['uppercats'], SMART_ADMIN.'-album&amp;cat_id='),
