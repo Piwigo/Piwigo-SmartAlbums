@@ -3,7 +3,7 @@
 Plugin Name: SmartAlbums
 Version: auto
 Description: Easily create dynamic albums with tags, date and other criteria
-Plugin URI: auto
+Plugin URI: http://piwigo.org/ext/extension_view.php?eid=544
 Author: Mistic
 Author URI: http://www.strangeplanet.fr
 Has Settings: true
