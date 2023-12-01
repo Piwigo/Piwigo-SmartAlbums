@@ -293,6 +293,7 @@ doBlink('.new_smart', 0, 3);
     <fieldset>
     <ul id="filtersList">
       <li class="empty">{'No filter'|translate}</li>
+{if isset($filters)}
     {foreach from=$filters item=filter}{strip}
       {if $filter.type == 'tags'}
         {capture assign='value'}{foreach from=$filter.value item=tag}<option value="{$tag.id}" class="selected">{$tag.name}</option>{/foreach}{/capture}
@@ -314,6 +315,7 @@ doBlink('.new_smart', 0, 3);
 
       {footer_script}addFilter('{$filter.type}', '{$filter.cond}', '{$value|escape:javascript}');{/footer_script}
     {/strip}{/foreach}
+{/if}
     </ul>
     </fieldset>
 
