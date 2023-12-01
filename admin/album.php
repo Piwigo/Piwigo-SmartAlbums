@@ -393,7 +393,8 @@ $template->assign(array(
   'CAT_ID' => $cat_id,
   'level_options' => get_privacy_level_options(),
   'F_ACTION' => $self_url,
-  'CATEGORIES_NAV' => get_cat_display_name_cache($category['uppercats'], SMART_ADMIN.'-album&amp;cat_id='),
+  'ADMIN_PAGE_TITLE' => l10n('Edit album').' <strong>'.$category['name'].'</strong>',
+  'ADMIN_PAGE_OBJECT_ID' => '#'.$category['id'],
 ));
 
 $template->set_filename('SmartAlbums_content', realpath(SMART_PATH . 'admin/template/album.tpl'));

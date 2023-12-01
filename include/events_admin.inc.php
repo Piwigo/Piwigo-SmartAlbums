@@ -13,7 +13,7 @@ function smart_tab($sheets, $id)
     if ($category['dir'] == null)
     {
       $sheets['smartalbum'] = array(
-        'caption' => 'SmartAlbum',
+        'caption' => '<span class="icon-fire"></span>SmartAlbum',
         'url' => SMART_ADMIN.'-album&amp;cat_id='.$_GET['cat_id'],
         );
     }

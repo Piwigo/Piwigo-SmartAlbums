@@ -267,11 +267,6 @@ doBlink('.new_smart', 0, 3);
 {/if}
 {/footer_script}
 
-
-<div class="titrePage">
-  <h2><span style="letter-spacing:0">{$CATEGORIES_NAV}</span> &#8250; {'Edit album'|translate} [SmartAlbum]</h2>
-</div>
-
 <noscript>
   <div class="errors"><ul><li>JavaScript required!</li></ul></div>
 </noscript>

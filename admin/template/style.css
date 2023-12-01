@@ -91,3 +91,11 @@
   .chzn-choices .search-field input {
     padding-bottom:1px !important;
   }
+
+#batchManagerGlobal .actionButtons {
+  display: block;
+}
+
+#batchManagerGlobal #applyFilterBlock {
+  width: auto;
+}

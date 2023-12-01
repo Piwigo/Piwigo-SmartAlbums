@@ -27,14 +27,14 @@ jQuery(".showInfo").tipTip({
         <label>
           <input type="checkbox" name="update_on_upload" value="true" {if $update_on_upload}checked="checked"{/if}/>
           <b>{'Update albums on file upload'|translate}</b>
-          <a class="icon-info-circled-1 showInfo" title="{'can cause slowdowns'|translate}"></a>
+          <span class="icon-help-circled tiptip" title="{'can cause slowdowns'|translate}" style="cursor:help"></span>
         </label>
       </li>
       <li>
         <label>
           <input type="checkbox" name="smart_is_forbidden" value="true" {if $smart_is_forbidden}checked="checked"{/if}/>
           <b>{'Exclude SmartAlbums from permissions management'|translate}</b>
-          <a class="icon-info-circled-1 showInfo" title="{'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'|translate}"></a>
+          <span class="icon-help-circled tiptip" title="{'SmartAlbums are considered private for everyone, and a user can see it\'s content only if available in another album he has access to.'|translate}" style="cursor:help"></span>
         </label>
       </li>
     </ul>
