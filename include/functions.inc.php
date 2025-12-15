@@ -741,3 +741,119 @@ SELECT DISTINCT(id)
   }
   return $query;
 }
+
+/**
+ * Returns all filters options
+ */
+function smart_get_options()
+{
+  return array(
+    'tags' => array(
+      'name' => l10n('Tags'),
+      'options' => array(
+        'all'   => l10n('All these tags'),
+        'one'   => l10n('One of these tags'),
+        'none'  => l10n('None of these tags'),
+        'only'  => l10n('Only these tags'),
+      ),
+      'example' => array('value' => array('tag1', 'tag2')),
+    ),
+    'date' => array(
+      'name' => l10n('Date'),
+      'options' => array(
+        'the_post'     => l10n('Added on'),
+        'before_post'  => l10n('Added before'),
+        'after_post'   => l10n('Added after'),
+        'the_taken'    => l10n('Created on'),
+        'before_taken' => l10n('Created before'),
+        'after_taken'  => l10n('Created after'),
+      ),
+      'example' => array('value' => '2024-12-11'),
+    ),
+    'name' => array(
+      'name' => l10n('Photo name'),
+      'options' => array(
+        'contain'     => l10n('Contains'),
+        'begin'       => l10n('Begins with'),
+        'end'         => l10n('Ends with'),
+        'not_contain' => l10n('Doesn\'t contain'),
+        'not_begin'   => l10n('Doesn\'t begin with'),
+        'not_end'     => l10n('Doesn\'t end with'),
+        'regex'       => l10n('Regular expression'),
+      ),
+      'example' => array('value' => 'holiday'),
+    ),
+    'album' => array(
+      'name' => l10n('Album'),
+      'options' => array(
+        'all'   => l10n('All these albums'),
+        'one'   => l10n('One of these albums'),
+        'none'  => l10n('None of these albums'),
+        'only'  => l10n('Only these albums'),
+      ),
+      'example' => array('value' => array(42, 51), 'recursive' => true),
+    ),
+    'dimensions' => array(
+      'name' => l10n('Dimensions'),
+      'options' => array(
+        'width'  => l10n('Width'),
+        'height' => l10n('Height'),
+        'ratio'  => l10n('Ratio') . ' (' . l10n('Width') . '/' . l10n('Height') . ')',
+      ),
+      'example' => array('value' => array('min' => 800, 'max' => 1600)),
+    ),
+    'author' => array(
+      'name' => l10n('Author'),
+      'options' => array(
+        'is'      => l10n('Is'),
+        'in'      => l10n('Is in'),
+        'not_is'  => l10n('Is not'),
+        'not_in'  => l10n('Is not in'),
+        'regex'   => l10n('Regular expression'),
+      ),
+      'example' => array('value' => 'George'),
+    ),
+    'hit' => array(
+      'name' => l10n('Hits'),
+      'options' => array(
+        'less' => l10n('Bellow'),
+        'more' => l10n('Above'),
+      ),
+      'example' => array('value' => 100),
+    ),
+    'rating_score' => array(
+      'name' => l10n('Rating score'),
+      'options' => array(
+        'less' => l10n('Bellow'),
+        'more' => l10n('Above'),
+      ),
+      'example' => array('value' => 4),
+    ),
+    'level' => array(
+      'name' => l10n('Privacy level'),
+      'options' => array(),
+      'example' => array('value' => 2),
+    ),
+    'limit' => array(
+      'name' => l10n('Max. number of photos'),
+      'options' => array(
+        ''                    => '-- ' . l10n('Default') . ' --',
+        'file ASC'            => l10n('File name, A &rarr; Z'),
+        'file DESC'           => l10n('File name, Z &rarr; A'),
+        'name ASC'            => l10n('Photo title, A &rarr; Z'),
+        'name DESC'           => l10n('Photo title, Z &rarr; A'),
+        'date_creation DESC'  => l10n('Date created, new &rarr; old'),
+        'date_creation ASC'   => l10n('Date created, old &rarr; new'),
+        'date_available DESC' => l10n('Date posted, new &rarr; old'),
+        'date_available ASC'  => l10n('Date posted, old &rarr; new'),
+        'rating_score DESC'   => l10n('Rating score, high &rarr; low'),
+        'rating_score ASC'    => l10n('Rating score, low &rarr; high'),
+        'hit DESC'            => l10n('Visits, high &rarr; low'),
+        'hit ASC'             => l10n('Visits, low &rarr; high'),
+        'id ASC'              => l10n('Numeric identifier, 1 &rarr; 9'),
+        'id DESC'             => l10n('Numeric identifier, 9 &rarr; 1'),
+      ),
+      'example' => array('value' => 50, 'cond' => 'date_creation DESC'),
+    ),
+  );
+}
