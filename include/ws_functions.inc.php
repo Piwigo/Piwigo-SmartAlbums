@@ -48,10 +48,12 @@ function smart_create($params)
 {
   global $page;
 
+  $cat_id = pwg_db_real_escape_string($params['category_id']);
+
   $query = '
 SELECT id
   FROM '.CATEGORIES_TABLE.'
-  WHERE id = '.pwg_db_real_escape_string($params['category_id']).'
+  WHERE id = '.$cat_id.'
 ;';
 
   $category = pwg_db_fetch_assoc(pwg_query($query));
@@ -60,6 +62,8 @@ SELECT id
   {
     return new PwgError(404, 'Category not found');
   }
+
+  pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE category_id = '.$cat_id.';');
 
   if (!preg_match('/^(and)$|^(or)$/', $params['filter_type']))
   {
