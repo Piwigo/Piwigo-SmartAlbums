@@ -56,19 +56,6 @@ if (isset($_POST['submitFilters']))
     var_dump($_POST['filters']);
   }
 
-  $inserts = array();
-  foreach ($_POST['filters'] as $filter)
-  {
-    if (($filter = smart_check_filter($filter)) != false)
-    {
-      $filter['category_id'] = $cat_id;
-      $inserts[] = $filter;
-    }
-  }
-
-  // echo '<pre>'; print_r($inserts); echo '</pre>';
-  // exit;
-
   // test if it was a Smart Album
   $query = '
 SELECT DISTINCT category_id
