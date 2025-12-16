@@ -76,12 +76,25 @@ SELECT id
   {
     return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid JSON filters : ' . json_last_error_msg());
   }
+
+  $smart_options = smart_get_options();
   
   foreach ($filters as $filter)
   {
     if (!isset($filter['value']) or !isset($filter['cond']) or !isset($filter['type']))
     {
       return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid filters formats. Accepted formats: value, cond, type');
+    }
+
+    $filter['value'] = pwg_db_real_escape_string($filter['value']);
+    $filter['cond'] = pwg_db_real_escape_string($filter['cond']);
+    $filter['type'] = pwg_db_real_escape_string($filter['type']);
+
+    $valid_cond = isset($smart_options[ $filter['type'] ][ 'options' ][ $filter['cond'] ]);
+
+    if (!$valid_cond)
+    {
+      return new PwgError(WS_ERR_INVALID_PARAM, 'Invalid cond for '.$filter['type']);
     }
 
     if (($filter = smart_check_filter($filter)) != false)
