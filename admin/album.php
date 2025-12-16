@@ -103,6 +103,7 @@ SELECT DISTINCT category_id
       );
 
     $associated_images = smart_make_associations($cat_id);
+    set_random_representant(array($cat_id));
     $template->assign('IMAGE_COUNT', l10n_dec('%d photo', '%d photos', count($associated_images)));
 
     $page['infos'][] = l10n('%d photos associated to album %s', count($associated_images), '');
