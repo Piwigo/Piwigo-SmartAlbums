@@ -127,3 +127,60 @@ SELECT DISTINCT(image_id)
     }
   }
 }
+
+/**
+ * clean table when tags are deleted
+ */
+function smart_delete_tags($ids)
+{
+  if (empty($ids)) return true;
+  
+  $query = '
+  SELECT 
+  id,
+  value
+  FROM ' . CATEGORY_FILTERS_TABLE . '
+  WHERE type = "tags"
+  AND value ' . DB_REGEX_OPERATOR . ' \'(^|,)(' . implode('|', $ids) . ')(,|$)\'
+  ';
+  
+  $updates = [];
+  $deletes = [];
+
+  $smart_tags = query2array($query, 'id', 'value');
+  foreach ($smart_tags as $smart_id => $smart_tags_id)
+  {
+    $smart_tags_ids = explode(',', $smart_tags_id);
+    $new_smart_tags_ids = array_diff($smart_tags_ids, $ids);
+
+    if (empty($new_smart_tags_ids))
+    {
+      $deletes[] = $smart_id;
+    }
+    else
+    {
+      $updates[] = array(
+        'id' => $smart_id,
+        'value' => implode(',', $new_smart_tags_ids),
+      );
+    }
+  }
+
+  // update tags filter
+  if (!empty($updates))
+  {
+    mass_updates(
+      CATEGORY_FILTERS_TABLE,
+      array('primary' => array('id'), 'update' => array('value')),
+      $updates
+    );
+  }
+
+  // delete tags filter
+  if (!empty($deletes))
+  {
+    pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE type = "tags" and id IN('.implode(',', $deletes).')');
+  }
+
+  return true;
+}

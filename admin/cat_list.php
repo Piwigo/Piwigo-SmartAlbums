@@ -16,18 +16,18 @@ $self_url = SMART_ADMIN . '-cat_list';
 $categories = array();
 $query = '
 SELECT
-    id,
-    name,
-    permalink,
-    dir,
+    cat.id,
+    cat.name,
+    cat.permalink,
+    cat.dir,
     cf.updated
   FROM '.CATEGORIES_TABLE.' AS cat
   INNER JOIN '.CATEGORY_FILTERS_TABLE.' AS cf
     ON cf.category_id = cat.id
-  GROUP BY id
-  ORDER BY global_rank ASC
+  GROUP BY cat.id
+  ORDER BY cat.global_rank ASC
 ;';
-$categories = hash_from_query($query, 'id');
+$categories = query2array($query, 'id');
 
 // +-----------------------------------------------------------------------+
 // |                    virtual categories management                      |
@@ -133,7 +133,7 @@ SELECT
   WHERE category_id IN ('.implode(',', array_keys($categories)).')
   GROUP BY category_id
 ;';
-  $categories_count_images = simple_hash_from_query($query, 'category_id', 'total_images');
+  $categories_count_images = query2array($query, 'category_id', 'total_images');
 }
 
 $template->assign('categories', array());

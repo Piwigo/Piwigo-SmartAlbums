@@ -122,6 +122,17 @@ SELECT category_id
     {
       pwg_query('UPDATE `' . $this->table . '` SET value = CONCAT("false,", value) WHERE type="album" AND value NOT LIKE "true,%" AND value NOT LIKE "false,%";');
     }
+
+    // add primary key id in category_filters table
+    $query = pwg_query('SHOW COLUMNS FROM `' . $this->table . '` LIKE "id";');
+    if (!pwg_db_num_rows($query))
+    {
+      pwg_query(
+        'ALTER TABLE `' . $this->table . '`
+        ADD COLUMN `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+        ADD PRIMARY KEY (`id`);'
+      );
+    }
   }
 
   function update($old_version, $new_version, &$errors=array())

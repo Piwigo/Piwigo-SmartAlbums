@@ -33,6 +33,7 @@ define('CATEGORY_FILTERS_TABLE', $prefixeTable . 'category_filters');
 add_event_handler('init', 'smart_init');
 add_event_handler('init', 'smart_periodic_update');
 add_event_handler('delete_categories', 'smart_delete_categories');
+add_event_handler('delete_tags', 'smart_delete_tags');
 
 $ws_functions = SMART_PATH.'include/ws_functions.inc.php';
 add_event_handler('ws_add_methods', 'smart_add_methods', EVENT_HANDLER_PRIORITY_NEUTRAL, $ws_functions);

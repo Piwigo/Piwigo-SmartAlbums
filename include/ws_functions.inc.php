@@ -113,6 +113,7 @@ SELECT id
   }
 
   $inserts['cond'] = array(
+    'category_id' => $cat_id,
     'type' => 'mode',
     'cond' => 'mode',
     'value' => $params['filter_type']
