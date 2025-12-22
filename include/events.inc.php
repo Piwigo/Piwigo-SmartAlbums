@@ -136,12 +136,12 @@ function smart_delete_tags($ids)
   if (empty($ids)) return true;
   
   $query = '
-  SELECT 
+SELECT 
   id,
   value
   FROM ' . CATEGORY_FILTERS_TABLE . '
-  WHERE type = "tags"
-  AND value ' . DB_REGEX_OPERATOR . ' \'(^|,)(' . implode('|', $ids) . ')(,|$)\'
+    WHERE type = "tags"
+    AND value ' . DB_REGEX_OPERATOR . ' \'(^|,)(' . implode('|', $ids) . ')(,|$)\'
   ';
   
   $updates = [];
@@ -180,6 +180,46 @@ function smart_delete_tags($ids)
   if (!empty($deletes))
   {
     pwg_query('DELETE FROM '.CATEGORY_FILTERS_TABLE.' WHERE type = "tags" and id IN('.implode(',', $deletes).')');
+  }
+
+  return true;
+}
+
+function smart_merge_tags($tag_id, $merged_tags_ids)
+{
+  if (empty($merged_tags_ids)) return true;
+
+  $query = '
+SELECT 
+  id,
+  value
+  FROM ' . CATEGORY_FILTERS_TABLE . '
+    WHERE type = "tags"
+    AND value ' . DB_REGEX_OPERATOR . ' \'(^|,)(' . implode('|', $merged_tags_ids) . ')(,|$)\'
+  ';
+
+  $smart_tags = query2array($query, 'id', 'value');
+
+  $updates = [];
+  foreach($smart_tags as $smart_id => $smart_tags_id)
+  {
+    $smart_tags_ids = explode(',', $smart_tags_id);
+    $new_smart_tags_ids = array_diff($smart_tags_ids, $merged_tags_ids);
+    $new_smart_tags_ids[] = $tag_id;
+    
+    $updates[] = array(
+      'id' => $smart_id,
+      'value' => implode(',', $new_smart_tags_ids),
+    );
+  }
+
+  if (!empty($updates))
+  {
+    mass_updates(
+      CATEGORY_FILTERS_TABLE,
+      array('primary' => array('id'), 'update' => array('value')),
+      $updates
+    );
   }
 
   return true;
