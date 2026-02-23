@@ -67,3 +67,7 @@ $lang['Date string is malformed'] = '날짜 문자열이 잘못되었습니다';
 $lang['Doesn\'t begin with'] = '시작하지 않음';
 $lang['Doesn\'t contain'] = '포함하지 않음';
 $lang['Doesn\'t end with'] = '끝나지 않음';
+$lang['Is'] = '예';
+$lang['Is in'] = '다음 목록 중 하나에 해당함';
+$lang['Is not'] = '아니요';
+$lang['Is not in'] = '다음 목록에 포함되지 않음';
