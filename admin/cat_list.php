@@ -114,7 +114,7 @@ display_select_cat_wrapper(
 if ($conf['SmartAlbums']['show_list_messages'])
 {
   $page['warnings'][] = l10n('Only SmartAlbums are displayed on this page');
-  $page['warnings'][] = sprintf(l10n('To order albums please go the main albums <a href="%s">management page</a>'), $base_url.'cat_list');
+  $page['warnings'][] = sprintf(l10n('To order albums please go the main albums <a href="%s">management page</a>'), $base_url.'albums');
   $page['warnings'][] = '<a href="'.$self_url.'&hide_messages">['.l10n('Don\'t show this message again').']</a>';
 }
 

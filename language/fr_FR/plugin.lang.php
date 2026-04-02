@@ -31,7 +31,7 @@ $lang['SmartAlbum deleted'] = 'SmartAlbum supprimé';
 $lang['SmartAlbum added'] = 'SmartAlbum ajouté';
 $lang['%d photos associated to album %s'] = '%d photos associées à l\'album %s';
 $lang['Only SmartAlbums are displayed on this page'] = 'Seuls les SmartAlbums sont affichés sur cette page';
-$lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Pour trier les SmartAlbums veuillez vous rendre sur la page principale de <a href="%s">gestion des albums</a>';
+$lang['To order albums please go the main albums <a href="%s">management page</a>'] = 'Pour trier les albums veuillez vous rendre sur la page principale de <a href="%s">gestion des albums</a>';
 $lang['Don\'t show this message again'] = 'Ne plus afficher ce message';
 $lang['All SmartAlbums'] = 'Tous les  SmartAlbums';
 $lang['No tag selected'] = 'Aucun tag sélectionné';
