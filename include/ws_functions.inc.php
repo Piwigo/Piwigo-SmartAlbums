@@ -46,7 +46,7 @@ function smart_add_methods($arr)
  */
 function smart_create($params)
 {
-  global $page;
+  global $page, $conf;
 
   $cat_id = pwg_db_real_escape_string($params['category_id']);
 
@@ -126,7 +126,12 @@ SELECT id
     array('ignore'=>true)
   );
 
-  smart_make_associations($category['id']);
+  // If update_on_upload is active, the associations will already be regenerated
+  // by triggering invalidate_user_cache
+  if (!$conf['SmartAlbums']['update_on_upload'])
+  {
+    smart_make_associations($category['id']);
+  }
 
   invalidate_user_cache();
   return array(

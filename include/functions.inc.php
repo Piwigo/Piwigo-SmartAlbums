@@ -8,9 +8,10 @@ defined('SMART_PATH') or die('Hacking attempt!');
  */
 function smart_make_associations($cat_id)
 {
-  global $logger;
+  global $logger, $conf;
 
-  $logger->debug(__FUNCTION__);
+  $logger->debug(__FUNCTION__.' starts for category_id='.$cat_id);
+
   // is the current album thumbnail associated to the album? If not, then we won't
   // refresh it after associations reset. It would mean the album thumbnail is
   // already in another album.
@@ -25,19 +26,7 @@ SELECT representative_picture_id
 
   if (!empty($rep_id))
   {
-    $query = '
-SELECT
-    COUNT(*)
-  FROM '.IMAGE_CATEGORY_TABLE.'
-  WHERE category_id = '.$cat_id.'
-    AND image_id = '.$rep_id.'
-;';
-    list($count) = pwg_db_fetch_row(pwg_query($query));
-
-    if ($count > 0)
-    {
-      $album_thumbnail_was_in_album = true;
-    }
+    $album_thumbnail_was_in_album = smart_is_image_in_album($rep_id, $cat_id);
   }
 
   $query = '
@@ -68,16 +57,32 @@ DELETE FROM '.IMAGE_CATEGORY_TABLE.'
       );
   }
 
+  $do_set_representant = false;
+
   if ($album_thumbnail_was_in_album)
   {
-    $logger->debug(__FUNCTION__.' album thumbnail was in album');
+    $logger->debug(__FUNCTION__.' album thumbnail was in album #'.$cat_id);
     // if the album thumbnail was already in the album and is still in the album, then do nothing here
-    if (!in_array($rep_id, $images))
+    if (!smart_is_image_in_album($rep_id, $cat_id))
     {
-      $logger->debug(__FUNCTION__.' and is no longer in album, so we reset the album thumbnail');
-      include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
-      set_random_representant(array($cat_id));
+      $logger->debug(__FUNCTION__.' and is no longer in album #'.$cat_id.', so we reset the album thumbnail');
+      $do_set_representant = true;
     }
+    else
+    {
+      $logger->debug(__FUNCTION__.' and is still in album #'.$cat_id.', no change on album thumbnail');
+    }
+  }
+  elseif (empty($rep_id) and !$conf['allow_random_representative'])
+  {
+    $logger->debug(__FUNCTION__.' force an album thumbnail, none yet');
+    $do_set_representant = true;
+  }
+
+  if ($do_set_representant)
+  {
+    include_once(PHPWG_ROOT_PATH.'admin/include/functions.php');
+    set_random_representant(array($cat_id));
   }
 
   $query = '
@@ -90,6 +95,24 @@ UPDATE '.CATEGORY_FILTERS_TABLE.'
   return $images;
 }
 
+function smart_is_image_in_album($image_id, $cat_id)
+{
+  $query = '
+SELECT
+    COUNT(*)
+  FROM '.IMAGE_CATEGORY_TABLE.'
+  WHERE category_id = '.$cat_id.'
+    AND image_id = '.$image_id.'
+;';
+  list($count) = pwg_db_fetch_row(pwg_query($query));
+
+  if ($count > 0)
+  {
+    return true;
+  }
+
+  return false;
+}
 
 /*
  * Make associations for all SmartAlbums
