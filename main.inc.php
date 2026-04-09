@@ -71,5 +71,6 @@ function smart_init()
   if ($conf['SmartAlbums']['update_on_upload'])
   {
     add_event_handler('invalidate_user_cache', 'smart_make_all_associations');
+    $conf['is_smart_make_all_associations_bound_to_invalidate_user_cache'] = true;
   }
 }

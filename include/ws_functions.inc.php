@@ -126,9 +126,7 @@ SELECT id
     array('ignore'=>true)
   );
 
-  // If update_on_upload is active, the associations will already be regenerated
-  // by triggering invalidate_user_cache
-  if (!$conf['SmartAlbums']['update_on_upload'])
+  if (!($conf['is_smart_make_all_associations_bound_to_invalidate_user_cache'] ?? false))
   {
     smart_make_associations($category['id']);
   }
